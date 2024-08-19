@@ -8,8 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@sanity/cli": "^3.54.0",
+    "@sanity/client": "^6.21.3",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "core-js": "^3.8.3",
-    "vue": "^3.2.13"
+    "gsap": "^3.12.5",
+    "vue": "^3.2.13",
+    "vue-router": "^4.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

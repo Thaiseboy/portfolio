@@ -1,26 +1,54 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <HeaderComponent />
+    <section id="home">
+      <HomePage />
+    </section>
+    <section id="skills">
+      <SkillsPage />
+    </section>
+    <section id="project">
+      <ProjectPage />
+    </section>
+    <section id="contact">
+      <ContactPage />
+    </section>
+    <FooterComponent />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HeaderComponent from "@/components/HeaderComponent.vue";
+import FooterComponent from "@/components/FooterComponent.vue";
+import HomePage from "@/views/HomePage.vue";
+import SkillsPage from "@/views/SkillsPage.vue";
+import ProjectPage from "@/views/ProjectPage.vue";
+import ContactPage from "@/views/ContactPage.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    HeaderComponent,
+    FooterComponent,
+    HomePage,
+    SkillsPage,
+    ProjectPage,
+    ContactPage,
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background: linear-gradient(to bottom, rgb(29, 29, 29), rgb(80, 80, 80));
+  background-attachment: fixed;
+}
+
+section {
+  padding: 50px 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 </style>

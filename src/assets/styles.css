@@ -1,0 +1,26 @@
+
+/* Algemene tekststijlen */
+.text-gold {
+  color: #FFD700 ;
+}
+.text-white {
+    color: white;
+}
+.text-red {
+    color: red;
+}
+.font-weight-bold {
+  font-weight: bold; 
+}
+.cp {
+    cursor: pointer;
+}
+
+/* Letter typ header */
+@import url('https://fonts.googleapis.com/css2?family=Cairo+Play:wght@200..1000&family=Honk&family=Reem+Kufi+Ink&display=swap');
+.header-font {
+font-family: "Cairo Play", sans-serif;
+  font-optical-sizing: auto;
+}
+
+
