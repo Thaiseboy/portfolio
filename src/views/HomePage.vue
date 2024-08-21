@@ -16,10 +16,12 @@
           alt="Master Supakon"
           class="img-small mt-3"
         />
-        <div class="text-white">
-          <p>Based in the <span class="text-gold">Netherlands</span>, I'm a 
-          <span class="text-red">front-end developer</span> &#x1F4BB;</p>
-        </div>
+      <div class="text-white">
+        <p>
+          Based in the <span class="text-gold">Netherlands</span>, I'm a 
+          <span class="text-red">front-end developer</span> &#x1F4BB;
+        </p>
+      </div>
         <!-- Social Media Icons -->
         <div class="social-icons mt-3 d-flex justify-content-center">
           <a
@@ -133,6 +135,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   font-size: 1rem;
+  word-wrap: break-word; /* Zorgt ervoor dat tekst ombreekt binnen de container */
 }
 
 @media (max-width: 768px) {
@@ -143,6 +146,7 @@ export default {
   .tt {
     width: 100%;
     font-size: 0.9rem;
+    padding: 0 15px; /* Extra padding aan de zijkanten om te voorkomen dat tekst tegen de rand botst */
   }
 }
 </style>
