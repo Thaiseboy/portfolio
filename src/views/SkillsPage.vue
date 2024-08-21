@@ -64,8 +64,6 @@ async fetchSkills() {
   white-space: nowrap;
   padding: 20px;
   background: linear-gradient(to bottom, rgb(29,29,29), rgb(80,80,80));
-
-  /* Scrollbar verbergen */
   scrollbar-width: none; /* Voor Firefox */
   -ms-overflow-style: none;  /* Voor Internet Explorer en Edge */
 }
@@ -127,5 +125,34 @@ async fetchSkills() {
   font-weight: bold;
   line-height: 20px;
   margin-top: 5px;
+}
+
+/* Media queries voor mobiel */
+@media (max-width: 767px) {
+  .skills-container {
+    padding: 10px;
+  }
+
+  .skill-item {
+    width: 150px;
+    margin-right: 10px;
+    padding: 10px;
+  }
+
+  .skill-logo {
+    height: 70px;
+  }
+
+  .skill-details h3 {
+    font-size: 1rem;
+  }
+
+  .skill-details p {
+    font-size: 0.9rem;
+  }
+
+  .progress-bar {
+    font-size: 0.9rem;
+  }
 }
 </style>

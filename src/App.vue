@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <HeaderComponent />
+    <IconComponent />
     <section id="home">
       <HomePage />
     </section>
@@ -24,6 +25,7 @@ import HomePage from "@/views/HomePage.vue";
 import SkillsPage from "@/views/SkillsPage.vue";
 import ProjectPage from "@/views/ProjectPage.vue";
 import ContactPage from "@/views/ContactPage.vue";
+import IconComponent from "@/components/IconComponent.vue";
 
 export default {
   name: "App",
@@ -34,13 +36,14 @@ export default {
     SkillsPage,
     ProjectPage,
     ContactPage,
+    IconComponent,
   },
 };
 </script>
 
 <style>
 #app {
-  background: linear-gradient(to bottom, rgb(29, 29, 29), rgb(80, 80, 80));
+  background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(80, 80, 80));
   background-attachment: fixed;
 }
 

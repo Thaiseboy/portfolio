@@ -5,7 +5,7 @@
     <div class="contact-content">
       <!-- Link naar Social Media -->
       <div class="social-media-box">
-        <h2 class="text-white">Follow me</h2>
+        <h2 class="text-white text-center">Follow me</h2>
         <div class="social-icons">
           <a href="https://www.linkedin.com/in/get-ms-karanyawad" target="_blank" class="social-link">
             <i class="bi bi-linkedin" style="font-size: 30px;"></i> LinkedIn
@@ -19,13 +19,13 @@
         </div>
         <div class="personal-message mt-4">
           <img src="@/assets/foto/get2.jpeg" alt="Get" class="personal-photo" />
-          <p class="text-gold mt-2">See you soon!</p>
+          <p class="text-gold mt-2 text-center">See you soon!</p>
         </div>
       </div>
 
       <!-- Contact Formulier -->
       <div class="contact-form-box">
-        <h2 class="text-white">Have more questions?</h2>
+        <h2 class="text-white text-center">Have more questions?</h2>
         <form @submit.prevent="sendEmail" class="contact-form">
           <div class="form-group">
             <label for="name">Name:</label>
@@ -93,10 +93,12 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .contact-container {
   padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .h1 {
@@ -112,6 +114,8 @@ export default {
   border: 1px solid #FFD700;
   border-radius: 10px;
   background-color: #333;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .social-media-box, .contact-form-box {
@@ -129,6 +133,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  align-items: center;
 }
 
 .social-link {
@@ -163,6 +168,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: center;
 }
 
 .form-group label {
@@ -170,7 +176,7 @@ export default {
 }
 
 .form-control {
-  width: 100%;
+  width: 500px;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -187,10 +193,13 @@ export default {
   transition: background-color 0.3s ease;
   display: block;
   margin-top: 20px;
+  width: 100%;
+  text-align: center;
 }
 
 .btn-warning:hover {
-  background-color: #FFC107;
+  background-color: #ff0707;
+  color: white;
 }
 
 .cv-download {
@@ -200,6 +209,38 @@ export default {
 .cv-download button {
   font-size: 1.2rem;
   text-decoration: none;
-  color: white;
+  color: rgb(0, 0, 0);
+  width: 50%;
+}
+
+/* Media Queries voor Mobiel */
+@media (max-width: 767px) {
+  .contact-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .form-control {
+    width: 300px;
+  }
+
+  .social-media-box, .contact-form-box {
+    width: 100%;
+    text-align: center;
+  }
+
+  .social-icons {
+    align-items: center;
+  }
+
+  .social-link {
+    justify-content: center;
+  }
+
+  .contact-form {
+    width: 100%;
+  }
 }
 </style>

@@ -93,7 +93,7 @@ p {
 }
 
 .img-small {
-  width: 80%;
+  width: 60%;
   height: auto;
   object-fit: cover;
   border-radius: 10%;

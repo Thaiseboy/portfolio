@@ -18,7 +18,7 @@
 <script>
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import sanityClient from "@/sanityClient"; // Zorg ervoor dat je Sanity Client correct is ingesteld
+import sanityClient from "@/sanityClient"; 
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -82,8 +82,8 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   color: white;
-  opacity: 0; /* Zorg ervoor dat het item onzichtbaar is tot de animatie start */
-  transform: translateX(-200px); /* Zorgt ervoor dat het item buiten beeld begint */
+  opacity: 0; 
+  transform: translateX(-200px);
 }
 
 .project-image {
@@ -119,4 +119,33 @@ export default {
 .project-links a:hover {
   color: red;
 }
+
+/* Media queries voor mobiel */
+@media (max-width: 767px) {
+  .project-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .project-title {
+    order: -1;
+    margin-bottom: 10px;
+  }
+
+  .project-image {
+    margin: 0 auto 20px auto;
+    width: 100%;
+    height: auto;
+  }
+
+  .project-details {
+    margin-top: 10px;
+  }
+
+  .project-links a {
+    display: block; 
+    margin: 10px 0;
+  }
+}
+
 </style>
