@@ -2,7 +2,9 @@
   <div class="container">
     <div class="d-flex flex-column align-items-center justify-content-center py-5 mt-n3">
       <div class="text-center">
-        <h1 class="mb-2 text-white header-font font-weight-bold font-big"><span class="text-red font-weight-bold">Nice </span>to meet you! &#x1F601;</h1>
+        <h1 class="mb-2 text-white header-font font-weight-bold font-big">
+          <span class="text-red font-weight-bold">Nice </span>to meet you! &#x1F601;
+        </h1>
         <h2 class="text-gold mb-2 text-font">Hi, My name is Master Supakon Karanyawad</h2>
         <h2 class="text-gold text-font">
           but you can call me
@@ -14,8 +16,10 @@
           alt="Master Supakon"
           class="img-small mt-3"
         />
-        <p>Based in the <span class="text-gold">Netherlands</span>, I'm a <span class="text-red">front-end developer</span> &#x1F4BB;</p>
-
+        <div class="text-white">
+          <p>Based in the <span class="text-gold">Netherlands</span>, I'm a 
+          <span class="text-red">front-end developer</span> &#x1F4BB;</p>
+        </div>
         <!-- Social Media Icons -->
         <div class="social-icons mt-3 d-flex justify-content-center">
           <a
@@ -43,7 +47,7 @@
       </div>
     </div>
 
-    <div class="tt text-center mt-4">
+    <div class="tt text-center mt-4 text-white">
       <p>
         I am <span class="text-red">28</span> years old. I am an eager to learn and self-developed
         professional with a strong creative mind and an excellent team player.
@@ -82,31 +86,19 @@ export default {
 <style scoped>
 .container {
   background: linear-gradient(to bottom, rgb(29, 29, 29), rgb(80, 80, 80));
-}
-.text-left {
-  margin-left: 15%;
+  padding: 20px;
 }
 
 .font-big {
-  font-size: 80px;
-}
-
-.tn {
-  border-bottom: 3px solid white;
-}
-
-p {
-  margin-bottom: 15px;
-  color: white;
-  font-size: large;
+  font-size: 3rem;
 }
 
 .img-small {
-  width: 60%;
+  width: 100%;
+  max-width: 300px;
   height: auto;
   object-fit: cover;
   border-radius: 10%;
-
 }
 
 .icon-hover {
@@ -137,14 +129,20 @@ p {
 
 .tt {
   text-align: center;
-  margin-top: -20px;
-  width: 70%;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
+  font-size: 1rem;
 }
+
 @media (max-width: 768px) {
   .font-big {
-    font-size: 300%;
+    font-size: 2rem;
+  }
+
+  .tt {
+    width: 100%;
+    font-size: 0.9rem;
   }
 }
 </style>
