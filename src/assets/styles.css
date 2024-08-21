@@ -46,8 +46,6 @@
 html, body {
   width: 100%;
   height: 100%;
-  overflow-x: hidden; /* Voorkomt horizontale scroll */
-  touch-action: none; /* Schakelt ongewenste acties zoals pinch-to-zoom uit */
 }
 
 
