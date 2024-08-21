@@ -2,12 +2,11 @@
   <div class="container">
     <div class="d-flex flex-column align-items-center justify-content-center py-5 mt-n3">
       <div class="text-center">
-        <h1 class="mb-2 text-red header-font font-weight-bold">Nice to meet you!</h1>
-        <h2 class="text-gold mb-2 header-font">Hi, My name is Master Supakon Karanyawad</h2>
-        <h2 class="text-gold">
+        <h1 class="mb-2 text-white header-font font-weight-bold font-big"><span class="text-red font-weight-bold">Nice </span>to meet you! &#x1F601;</h1>
+        <h2 class="text-gold mb-2 text-font">Hi, My name is Master Supakon Karanyawad</h2>
+        <h2 class="text-gold text-font">
           but you can call me
-          <span class="tn text-red font-weight-bold">Get</span>
-          <i class="bi bi-rocket-takeoff"></i>
+          <span class="text-red font-weight-bold">Get &#x1F680;</span>
         </h2>
         <!-- Afbeelding -->
         <img
@@ -15,9 +14,7 @@
           alt="Master Supakon"
           class="img-small mt-3"
         />
-        <p class="header-font">
-          Based in the Netherlands, I'm a front-end developer
-        </p>
+        <p>Based in the <span class="text-gold">Netherlands</span>, I'm a <span class="text-red">front-end developer</span> &#x1F4BB;</p>
 
         <!-- Social Media Icons -->
         <div class="social-icons mt-3 d-flex justify-content-center">
@@ -46,9 +43,9 @@
       </div>
     </div>
 
-    <div class="tt header-font text-center mt-4">
+    <div class="tt text-center mt-4">
       <p>
-        I am 28 years old. I am an eager to learn and self-developed
+        I am <span class="text-red">28</span> years old. I am an eager to learn and self-developed
         professional with a strong creative mind and an excellent team player.
         My work experience has made me skilled in problem solving and coming up
         with innovative solutions.
@@ -57,7 +54,15 @@
         After a search for new challenges, I discovered the world of front-end
         development, which immediately aroused my interest. I now have over a
         year of experience with both front-end and back-end technologies,
-        including HTML5, CSS3, JavaScript, jQuery, PHP, MySQL, Java and Vue.js.
+        including 
+        <span class="text-red">&#x21A3;</span><span class="text-gold">HTML5</span> 
+        <span class="text-red">&#x21A3;</span><span class="text-gold">CSS3</span> 
+        <span class="text-red">&#x21A3;</span><span class="text-gold">JavaScript</span> 
+        <span class="text-red">&#x21A3;</span><span class="text-gold">jQuery</span> 
+        <span class="text-red">&#x21A3;</span><span class="text-gold">PHP</span> 
+        <span class="text-red">&#x21A3;</span><span class="text-gold">MySQL</span> 
+        <span class="text-red">&#x21A3;</span><span class="text-gold">Java</span> 
+        <span class="text-red">&#x21A3;</span><span class="text-gold">Vue.js</span>
       </p>
       <p>
         These skills allow me to develop entire web applications, from the user
@@ -80,6 +85,10 @@ export default {
 }
 .text-left {
   margin-left: 15%;
+}
+
+.font-big {
+  font-size: 80px;
 }
 
 .tn {
@@ -132,5 +141,10 @@ p {
   width: 70%;
   margin-left: auto;
   margin-right: auto;
+}
+@media (max-width: 768px) {
+  .font-big {
+    font-size: 300%;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="contact-container">
-    <h1 class="h1 mb-5 text-gold text-center header-font font-weight-bold">Get in Touch</h1>
+    <h1 class="mb-5 text-gold text-center header-font font-weight-bold"><span class="text-red font-weight-bold">Get</span> in Touch &#x1F933;</h1>
     
     <div class="contact-content">
       <!-- Link naar Social Media -->
@@ -215,6 +215,9 @@ export default {
 
 /* Media Queries voor Mobiel */
 @media (max-width: 767px) {
+    .header-font {
+    font-size:3rem;
+  }
   .contact-content {
     flex-direction: column;
     align-items: center;

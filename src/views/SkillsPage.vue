@@ -1,5 +1,5 @@
 <template>
-  <h1 class="h1 mb-5 text-gold text-center header-font font-weight-bold">Skills</h1>
+  <h1 class="mb-5 text-gold text-center header-font font-weight-bold">Skills &#x26A1;</h1>
   <div class="skills-container">
     <div class="skills-wrapper">
       <div
@@ -131,6 +131,10 @@ async fetchSkills() {
 @media (max-width: 767px) {
   .skills-container {
     padding: 10px;
+  }
+  
+  .header-font {
+    font-size:3rem;
   }
 
   .skill-item {

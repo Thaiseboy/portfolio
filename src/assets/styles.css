@@ -17,11 +17,40 @@
 }
 
 /* Letter typ header */
-@import url('https://fonts.googleapis.com/css2?family=Cairo+Play:wght@200..1000&family=Honk&family=Reem+Kufi+Ink&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 .header-font {
-font-family: "Cairo Play", sans-serif;
+  font-family: "Raleway", sans-serif;
   font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
 }
+/* Letter typ voor hele pagina */
+* {
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent; /* Voorkomt dat er een highlight is bij het tikken op elementen */
+  touch-action: manipulation; /* Zorgt ervoor dat alleen scroll- en zoomacties mogelijk zijn */
+  user-select: none; /* Voorkomt tekstselectie op de pagina */
+  -webkit-user-drag: none; /* Voorkomt dat afbeeldingen en andere elementen kunnen worden gesleept */
+}
+
+/* Zorg ervoor dat de html en body het volledige scherm beslaan */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* Voorkomt horizontale scroll */
+  touch-action: none; /* Schakelt ongewenste acties zoals pinch-to-zoom uit */
+}
+
+
 
 
 

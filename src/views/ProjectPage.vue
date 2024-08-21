@@ -1,10 +1,10 @@
 <template>
   <div class="projects-container">
-    <h1 class="h1 mb-5 text-gold text-center header-font font-weight-bold">Projects</h1>
+    <h1 class="mb-5 text-gold text-center header-font font-weight-bold">Projects &#x1F5C2;</h1>
     <div v-for="project in projects" :key="project._id" class="project-item">
       <img v-if="project.image" :src="project.image" alt="Project afbeelding" class="project-image"/>
       <div class="project-details">
-        <h2 class="project-title">{{ project.title }}</h2>
+        <h2 class="project-title font-weight-bold">{{ project.title }}</h2>
         <p class="project-description">{{ project.description }}</p>
         <div class="project-links">
           <a v-if="project.url" :href="project.url" target="_blank" class="text-gold">Bekijk project</a>
@@ -99,7 +99,7 @@ export default {
 }
 
 .project-title {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-bottom: 10px;
   color: #FFD700;
 }
@@ -118,10 +118,14 @@ export default {
 
 .project-links a:hover {
   color: red;
+  border-bottom: 2px solid white;
 }
 
 /* Media queries voor mobiel */
 @media (max-width: 767px) {
+  .header-font {
+    font-size:3rem;
+  }
   .project-item {
     flex-direction: column;
     text-align: center;
