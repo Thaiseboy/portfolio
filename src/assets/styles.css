@@ -50,10 +50,19 @@ html, body {
   overflow-x: hidden; 
 }
 
+p {
+  margin-bottom: 15px;
+  color: white;
+  font-size: large;
+  word-wrap: break-word; 
+  word-break: break-word;
+}
+
 /* Container breedte beperken om overschrijding te voorkomen */
 .container {
-  max-width: 100%; 
-  overflow-x: hidden; 
+  max-width: 100%;
+  overflow-x: hidden;
+  padding: 15px;
 }
 
 /* Specifieke fix voor mobiele apparaten */
