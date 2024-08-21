@@ -39,6 +39,7 @@ export default {
         url,
         github
       }`);
+      console.log(this.prjects);
       this.setupScrollAnimations();
     },
     setupScrollAnimations() {
@@ -82,8 +83,6 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   color: white;
-  opacity: 0; 
-  transform: translateX(-200px);
 }
 
 .project-image {
