@@ -43,13 +43,6 @@
   -webkit-user-drag: none; /* Voorkomt dat elementen kunnen worden gesleept */
 }
 
-/* Zorg ervoor dat html en body het volledige scherm beslaan en geen horizontale scroll */
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden; 
-}
-
 p {
   margin-bottom: 15px;
   color: white;

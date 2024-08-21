@@ -44,7 +44,17 @@ export default {
 <style>
 #app {
   background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(80, 80, 80));
+  background-color: rgb(0, 0, 0); /* Fallback voor oudere browsers */
   background-attachment: fixed;
+  min-height: 100vh; 
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; 
 }
 
 section {
@@ -54,4 +64,12 @@ section {
 html {
   scroll-behavior: smooth;
 }
+
+@media (max-width: 768px) {
+  #app {
+    background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(50, 50, 50));
+    background-attachment: scroll;
+  }
+}
 </style>
+

@@ -88,16 +88,20 @@ export default {
 <style scoped>
 .container {
   background: linear-gradient(to bottom, rgb(29, 29, 29), rgb(80, 80, 80));
-  padding: 20px;
 }
 
 .font-big {
-  font-size: 3rem;
+  font-size: 80px;
+}
+
+p {
+  margin-bottom: 15px;
+  color: white;
+  font-size: large;
 }
 
 .img-small {
-  width: 100%;
-  max-width: 300px;
+  width: 60%;
   height: auto;
   object-fit: cover;
   border-radius: 10%;
@@ -134,19 +138,16 @@ export default {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
-  font-size: 1rem;
-  word-wrap: break-word; /* Zorgt ervoor dat tekst ombreekt binnen de container */
 }
 
 @media (max-width: 768px) {
   .font-big {
-    font-size: 2rem;
+    font-size: 300%;
   }
-
+  
   .tt {
-    width: 100%;
-    font-size: 0.9rem;
-    padding: 0 15px; /* Extra padding aan de zijkanten om te voorkomen dat tekst tegen de rand botst */
+    width: 95%; 
   }
 }
 </style>
+
