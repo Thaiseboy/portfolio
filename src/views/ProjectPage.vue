@@ -31,22 +31,19 @@ export default {
   },
   methods: {
     async fetchProjects() {
-      try {
-        this.projects = await sanityClient.fetch(`*[_type == "project"]{
-          _id,
-          title,
-          description,
-          "image": image.asset->url,
-          url,
-          github
-        }`);
-        this.setupScrollAnimations();
-      } catch (error) {
-        console.error("Failed to fetch projects:", error);
-      }
+      this.projects = await sanityClient.fetch(`*[_type == "project"]{
+        _id,
+        title,
+        description,
+        "image": image.asset->url,
+        url,
+        github
+      }`);
+      this.setupScrollAnimations();
     },
     setupScrollAnimations() {
-      if (window.innerWidth > 768) {  // Alleen animaties op grotere schermen
+      // Gebruik een eenvoudige animatie voor desktop, maar voor mobiel zorg dat projecten direct zichtbaar zijn
+      if (window.innerWidth > 768) {
         this.$nextTick(() => {
           this.projects.forEach((project, index) => {
             const element = document.querySelectorAll('.project-item')[index];
@@ -88,8 +85,9 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   color: white;
-  opacity: 0; 
-  transform: translateX(-200px);
+  opacity: 1; 
+  transform: translateX(0); 
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .project-image {
@@ -130,11 +128,12 @@ export default {
 /* Media queries voor mobiel */
 @media (max-width: 767px) {
   .header-font {
-    font-size: 3rem;
+    font-size:3rem;
   }
   .project-item {
     flex-direction: column;
     text-align: center;
+    transform: none; 
   }
 
   .project-title {

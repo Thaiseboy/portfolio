@@ -41,6 +41,7 @@ export default {
 };
 </script>
 
+
 <style>
 #app {
   background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(80, 80, 80));
