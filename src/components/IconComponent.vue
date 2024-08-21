@@ -5,28 +5,28 @@
         <router-link
           class="nav-link text-gold font-weight-bold header-font"
           :to="{ hash: '#home' }"
-          ><i class="bi bi-house-door icon-large"></i></router-link
+          ><i class="bi bi-house-door icon-large"> Home</i></router-link
         >
       </li>
       <li class="nav-item mx-3">
         <router-link
           class="nav-link text-gold font-weight-bold header-font"
           :to="{ hash: '#skills' }"
-          ><i class="bi bi-tools icon-large"></i></router-link
+          ><i class="bi bi-tools icon-large"> Skills</i></router-link
         >
       </li>
       <li class="nav-item mx-3">
         <router-link
           class="nav-link text-gold font-weight-bold header-font"
           :to="{ hash: '#project' }"
-          ><i class="bi bi-folder2-open icon-large"></i></router-link
+          ><i class="bi bi-folder2-open icon-large"> Projects</i></router-link
         >
       </li>
       <li class="nav-item mx-3">
         <router-link
           class="nav-link text-gold font-weight-bold header-font"
           :to="{ hash: '#contact' }"
-          ><i class="bi bi-envelope icon-large"></i></router-link
+          ><i class="bi bi-envelope icon-large"> Contact</i></router-link
         >
       </li>
     </ul>

@@ -31,37 +31,42 @@ export default {
   },
   methods: {
     async fetchProjects() {
-      this.projects = await sanityClient.fetch(`*[_type == "project"]{
-        _id,
-        title,
-        description,
-        "image": image.asset->url,
-        url,
-        github
-      }`);
-      console.log(this.prjects);
-      this.setupScrollAnimations();
+      try {
+        this.projects = await sanityClient.fetch(`*[_type == "project"]{
+          _id,
+          title,
+          description,
+          "image": image.asset->url,
+          url,
+          github
+        }`);
+        this.setupScrollAnimations();
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+      }
     },
     setupScrollAnimations() {
-      this.$nextTick(() => {
-        this.projects.forEach((project, index) => {
-          const element = document.querySelectorAll('.project-item')[index];
-          gsap.fromTo(
-            element,
-            { x: -200, opacity: 0 },
-            {
-              x: 0,
-              opacity: 1,
-              duration: 1,
-              scrollTrigger: {
-                trigger: element,
-                start: "top 80%",
-                toggleActions: "play none none none",
-              },
-            }
-          );
+      if (window.innerWidth > 768) {  // Alleen animaties op grotere schermen
+        this.$nextTick(() => {
+          this.projects.forEach((project, index) => {
+            const element = document.querySelectorAll('.project-item')[index];
+            gsap.fromTo(
+              element,
+              { x: -200, opacity: 0 },
+              {
+                x: 0,
+                opacity: 1,
+                duration: 1,
+                scrollTrigger: {
+                  trigger: element,
+                  start: "top 80%",
+                  toggleActions: "play none none none",
+                },
+              }
+            );
+          });
         });
-      });
+      }
     },
   },
   mounted() {
@@ -83,6 +88,8 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   color: white;
+  opacity: 0; 
+  transform: translateX(-200px);
 }
 
 .project-image {
@@ -123,7 +130,7 @@ export default {
 /* Media queries voor mobiel */
 @media (max-width: 767px) {
   .header-font {
-    font-size:3rem;
+    font-size: 3rem;
   }
   .project-item {
     flex-direction: column;
@@ -150,5 +157,4 @@ export default {
     margin: 10px 0;
   }
 }
-
 </style>
