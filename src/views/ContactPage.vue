@@ -5,7 +5,7 @@
     <div class="contact-content">
       <!-- Link naar Social Media -->
       <div class="social-media-box">
-        <h2 class="text-white text-center">Follow me</h2>
+        <h2 class="text-white text-center">Follow me &#x1F447;</h2>
         <div class="social-icons">
           <a href="https://www.linkedin.com/in/get-ms-karanyawad" target="_blank" class="social-link">
             <i class="bi bi-linkedin" style="font-size: 30px;"></i> LinkedIn
@@ -25,7 +25,7 @@
 
       <!-- Contact Formulier -->
       <div class="contact-form-box">
-        <h2 class="text-white text-center">Have more questions?</h2>
+        <h2 class="text-white text-center">If you have more questions, feel free to ask &#x1F4E9;</h2>
         <form @submit.prevent="sendEmail" class="contact-form">
           <div class="form-group">
             <label for="name">Name:</label>

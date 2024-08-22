@@ -2,7 +2,7 @@
   <header class="text-gold py-5">
     <div class="container d-flex flex-column align-items-center">
       <div class="text-center">
-        <img src="@/assets/foto/getcoding1.png" alt="Logo" class="logo-img" />
+        <img src="@/assets/foto/logo.png" alt="Logo" class="logo-img" />
       </div>
     </div>
   </header>
@@ -17,7 +17,7 @@ export default {
 <style scoped>
 /* Logo Styling */
 .logo-img {
-  max-height: 140px;
+  max-height: 200px;
   margin: 300px;
 }
 
