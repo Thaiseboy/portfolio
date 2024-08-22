@@ -91,14 +91,14 @@ export default {
 }
 
 /* Icon breder uit elkaar voor grotere schermen */
-@media (min-width: 769px) {
+@media (min-width: 640px) {
   .nav-item {
     margin-right: 30px;
   }
 }
 
 /* Mobile Responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .icon-large {
     font-size: 2rem;
   }

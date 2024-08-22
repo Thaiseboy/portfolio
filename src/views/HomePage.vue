@@ -140,7 +140,7 @@ p {
   margin-right: auto;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .font-big {
     font-size: 300%;
   }

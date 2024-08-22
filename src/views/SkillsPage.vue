@@ -128,7 +128,7 @@ async fetchSkills() {
 }
 
 /* Media queries voor mobiel */
-@media (max-width: 767px) {
+@media (max-width: 640px) {
   .skills-container {
     padding: 10px;
   }

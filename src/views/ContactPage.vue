@@ -214,7 +214,7 @@ export default {
 }
 
 /* Media Queries voor Mobiel */
-@media (max-width: 767px) {
+@media (max-width: 640px) {
     .header-font {
     font-size:3rem;
   }
