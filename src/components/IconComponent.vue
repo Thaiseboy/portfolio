@@ -80,8 +80,14 @@ export default {
   top: 0;
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 10px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+  border-radius: 30px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  padding: 10px 20px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  width: fit-content; 
+  margin: 20px auto; 
 }
 
 /* Icon breder uit elkaar voor grotere schermen */

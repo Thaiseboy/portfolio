@@ -10,6 +10,16 @@ Deze portfolio-website dient als een persoonlijk visitekaartje waar bezoekers me
 - **Projecten:** Een overzicht van mijn recente projecten met gedetailleerde beschrijvingen en screenshots.
 - **Contact:** Een contactformulier en social media links, inclusief een mogelijkheid om mijn CV te downloaden.
 
+## Screenshots
+![Homepage](screenshots/homepage.png)
+![Skills Page](screenshots/skills.png)
+![Project Page](screenshots/projects.png)
+
+## Live Demo
+
+Bekijk de live versie van de website [hier](https://thaiseboy.netlify.app/).
+
+
 ## Technologieën
 Deze website is gebouwd met de volgende technologieën:
 - **Vue.js:** Het front-end framework gebruikt om de componenten en interactieve elementen van de website te bouwen.
@@ -18,6 +28,20 @@ Deze website is gebouwd met de volgende technologieën:
 - **Node.js:** Gebruikt voor de back-end services.
 - **CSS3:** Voor styling en lay-out.
 - **HTML5:** Voor de basisopbouw van de website.
+
+## Licentie
+Dit project is gelicenseerd onder de MIT-licentie - zie het [LICENSE](LICENSE) bestand voor details.
+
+## Bekende Problemen
+- Animaties kunnen op bepaalde mobiele apparaten niet optimaal werken.
+- In bepaalde browsers kunnen er lichte rendering issues optreden.
+
+## Toekomstige Verbeteringen
+- Toevoegen van meer projecten en updates aan de bestaande projecten.
+- Uitbreiden van de vaardigheden sectie met certificeringen.
+- Integratie met een backend API voor dynamische data.
+- Verbeterde toegankelijkheid en performance optimalisaties.
+
 
 ## Contact
 Heb je vragen of wil je contact met me opnemen? Je kunt me bereiken via:
