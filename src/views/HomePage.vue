@@ -38,13 +38,6 @@
           >
             <i class="bi bi-github" style="font-size: 50px"></i>
           </a>
-          <a
-            href="https://www.instagram.com/thaiseboy/"
-            target="_blank"
-            class="text-gold icon-hover"
-          >
-            <i class="bi bi-instagram" style="font-size: 50px"></i>
-          </a>
         </div>
       </div>
     </div>

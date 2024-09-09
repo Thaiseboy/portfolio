@@ -13,9 +13,6 @@
           <a href="https://github.com/Thaiseboy/Hi-" target="_blank" class="social-link">
             <i class="bi bi-github" style="font-size: 30px;"></i> GitHub
           </a>
-          <a href="https://www.instagram.com/thaiseboy/" target="_blank" class="social-link">
-            <i class="bi bi-instagram" style="font-size: 30px;"></i> Instagram
-          </a>
         </div>
         <div class="personal-message mt-4">
           <img src="@/assets/foto/get2.jpeg" alt="Get" class="personal-photo" />
