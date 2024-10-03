@@ -7,7 +7,7 @@
         <h2 class="project-title font-weight-bold">{{ project.title }}</h2>
         <p class="project-description">{{ project.description }}</p>
         <div class="project-links">
-          <a v-if="project.url" :href="project.url" target="_blank" class="text-gold">Bekijk project</a>
+          <a v-if="project.url" :href="project.url" target="_blank" class="text-gold">Explore project</a>
           <a v-if="project.github" :href="project.github" target="_blank" class="text-gold">GitHub</a>
         </div>
       </div>
