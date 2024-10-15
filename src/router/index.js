@@ -3,12 +3,15 @@ import HomePage from "@/views/HomePage.vue";
 import SkillsPage from "@/views/SkillsPage.vue";
 import ProjectPage from "@/views/ProjectPage.vue";
 import ContactPage from "@/views/ContactPage.vue";
+// Importeer de Sanity Studio component
+const SanityStudio = () => import("@/studio/schemaTypes"); 
 
 const routes = [
   { path: "/", name: "HomePage", component: HomePage },
   { path: "/skills", name: "SkillsPage", component: SkillsPage },
   { path: "/project", name: "ProjectPage", component: ProjectPage },
   { path: "/contact", name: "ContactPage", component: ContactPage },
+  { path: "/studio", name: "SanityStudio", component: SanityStudio },
 ];
 
 const router = createRouter({
@@ -18,7 +21,7 @@ const router = createRouter({
     if (to.hash) {
       return {
         el: to.hash,
-        behavior: "smooth", // Soepel scrollen
+        behavior: "smooth",
       };
     } else if (savedPosition) {
       return savedPosition;
