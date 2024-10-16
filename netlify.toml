@@ -1,4 +1,8 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
 [[redirects]]
   from = "/studio/*"
-  to = "/portfolio-thaiseboy/schemaTypes/index.html"
+  to = "/studio/index.html"
   status = 200
