@@ -52,4 +52,11 @@ export default {
     max-height: 7vh; 
   }
 }
+/* Landschapmodus voor mobiele apparaten */
+@media screen and (orientation: landscape) and (max-width: 900px) {
+  .logo-img {
+    max-height: 12vh; /* Zorg ervoor dat het logo kleiner is in landschapmodus */
+    max-width: 50vw; /* Limiteer de breedte tot 50% van de viewportbreedte */
+  }
+}
 </style>
