@@ -52,10 +52,5 @@ export default {
     max-height: 7vh; 
   }
 }
-/* Landschapmodus voor mobiele apparaten */
-@media screen and (max-aspect-ratio: 16/9) {
-  .logo-img {
-    max-height: 15vh; 
-  }
-}
+
 </style>
