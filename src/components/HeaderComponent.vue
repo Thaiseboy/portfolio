@@ -56,7 +56,6 @@ export default {
 @media screen and (max-aspect-ratio: 16/9) {
   .logo-img {
     max-height: 15vh; 
-    max-width: 50vw;
   }
 }
 </style>
