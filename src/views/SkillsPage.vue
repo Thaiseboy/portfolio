@@ -11,7 +11,7 @@
         <!-- Controleer of logo bestaat voordat je het weergeeft -->
 <img v-if="skill.logoUrl" 
      :src="skill.logoUrl" 
-     alt="logo" 
+     alt="`${skill.name} logo`" 
      class="skill-logo"/>
         <div v-else class="no-logo">
           <!-- Alternatieve weergave als er geen logo is -->
@@ -41,14 +41,18 @@ export default {
   },
   methods: {
 async fetchSkills() {
-  this.skills = await sanityClient.fetch(`*[_type == "skill"]{
-    _id,
-    name,
-    level,
-    "logoUrl": logo.asset->url,  // Haal de URL van het logo op
-    rating
-  }`);
-  console.log(this.skills);
+  try {
+    this.skills = await sanityClient.fetch(`*[_type == "skill"]{
+      _id,
+      name,
+      level,
+      "logoUrl": logo.asset->url,
+      rating
+    }`);
+    console.log(this.skills);
+  } catch (error) {
+    console.error("Error fetching skills:", error);
+  }
 }
 
   },
@@ -125,6 +129,7 @@ async fetchSkills() {
   font-weight: bold;
   line-height: 20px;
   margin-top: 5px;
+  font-size: 1rem; 
 }
 
 /* Media queries voor mobiel */
@@ -134,7 +139,7 @@ async fetchSkills() {
   }
   
   .header-font {
-    font-size:3rem;
+    font-size: 3rem;
   }
 
   .skill-item {
@@ -156,7 +161,34 @@ async fetchSkills() {
   }
 
   .progress-bar {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .header-font {
+    font-size: 2.5rem;
+  }
+
+  .skill-item {
+    width: 120px;
+    padding: 8px;
+  }
+
+  .skill-logo {
+    height: 60px;
+  }
+
+  .skill-details h3 {
     font-size: 0.9rem;
+  }
+
+  .skill-details p {
+    font-size: 0.8rem;
+  }
+
+  .progress-bar {
+    font-size: 0.7rem;
   }
 }
 </style>

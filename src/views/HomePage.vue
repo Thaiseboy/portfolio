@@ -84,6 +84,42 @@ export default {
 </script>
 
 <style scoped>
+/* Responsiveness */
+@media (max-width: 640px) {
+  .font-big {
+    font-size: 300%;
+  }
+  
+  .tt {
+    width: 95%; 
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 430px) {
+  .font-big {
+    font-size: 250%;
+  }
+
+  .img-small {
+    width: 70%;
+  }
+}
+
+@media (max-width: 320px) {
+  .font-big {
+    font-size: 200%;
+  }
+
+  .img-small {
+    width: 80%;
+  }
+
+  p {
+    font-size: medium;
+  }
+}
+
 .container {
   background: linear-gradient(to bottom, rgb(29, 29, 29), rgb(80, 80, 80));
 }
@@ -134,18 +170,7 @@ p {
 .tt {
   text-align: center;
   width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-@media (max-width: 640px) {
-  .font-big {
-    font-size: 300%;
-  }
-  
-  .tt {
-    width: 95%; 
-  }
+  margin: 0 auto;
 }
 </style>
 

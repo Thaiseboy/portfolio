@@ -128,8 +128,9 @@ export default {
 /* Media queries voor mobiel */
 @media (max-width: 640px) {
   .header-font {
-    font-size:3rem;
+    font-size: 2.5rem; 
   }
+
   .project-item {
     flex-direction: column;
     text-align: center;
@@ -137,14 +138,20 @@ export default {
   }
 
   .project-title {
+    font-size: 1.5rem; 
     order: -1;
     margin-bottom: 10px;
+  }
+
+  .project-description {
+    font-size: 1rem; 
   }
 
   .project-image {
     margin: 0 auto 20px auto;
     width: 100%;
     height: auto;
+    max-width: 300px; 
   }
 
   .project-details {
@@ -154,6 +161,29 @@ export default {
   .project-links a {
     display: block; 
     margin: 10px 0;
+    font-size: 1rem; 
+  }
+}
+
+@media (max-width: 320px) {
+  .header-font {
+    font-size: 2rem; 
+  }
+
+  .project-title {
+    font-size: 1.2rem;
+  }
+
+  .project-description {
+    font-size: 0.9rem;
+  }
+
+  .project-image {
+    max-width: 250px;
+  }
+
+  .project-links a {
+    font-size: 0.9rem;
   }
 }
 </style>

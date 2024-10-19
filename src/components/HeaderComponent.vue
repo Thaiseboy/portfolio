@@ -21,19 +21,25 @@ export default {
   margin: 300px;
 }
 
-.underline-none {
-  text-decoration: none;
-}
-
 /* Responsiveness */
 @media (max-width: 640px) {
   .logo-img {
     max-height: 90px;
-    margin: 250px
+    margin: 150px auto; 
   }
+}
 
-  .header-font {
-    font-size: 0.9rem;
+@media (max-width: 430px) {
+  .logo-img {
+    max-height: 100px;
+    margin: 100px auto;
+  }
+}
+
+@media (max-width: 320px) {
+  .logo-img {
+    max-height: 60px;
+    margin: 50px auto;
   }
 }
 </style>

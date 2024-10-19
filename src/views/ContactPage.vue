@@ -15,7 +15,7 @@
           </a>
         </div>
         <div class="personal-message mt-4">
-          <img src="@/assets/foto/get2.jpeg" alt="Get" class="personal-photo" />
+          <img src="@/assets/foto/get2.jpeg" alt="Photo of Get Karanyawad" class="personal-photo" />
           <p class="text-gold mt-2 text-center">See you soon!</p>
         </div>
       </div>
@@ -36,7 +36,7 @@
             <label for="message">Message:</label>
             <textarea id="message" v-model="form.message" required class="form-control"></textarea>
           </div>
-          <button type="submit" class="btn btn-warning">Submit</button>
+          <button type="submit" class="btn btn-warning" aria-label="Submit contact form">Submit</button>
         </form>
 
         <!-- CV Download Knop -->
@@ -64,12 +64,17 @@ export default {
   },
   methods: {
     async fetchCV() {
-      const result = await sanityClient.fetch(`*[_type == "cv"]{
-        "cvFile": cvFile.asset->url
-      }`);
-      if (result.length > 0) {
-        this.cvLink = result[0].cvFile;
-      }
+  try {
+    const result = await sanityClient.fetch(`*[_type == "cv"]{
+      "cvFile": cvFile.asset->url
+    }`);
+    if (result.length > 0) {
+      this.cvLink = result[0].cvFile;
+    }
+  } catch (error) {
+    console.error("Error fetching CV:", error);
+    alert("Sorry, there was an issue fetching the CV. Please try again later.");
+  }
     },
     async sendEmail() {
       const emailData = {
@@ -96,10 +101,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.h1 {
-  margin-bottom: 40px;
 }
 
 .contact-content {
@@ -190,7 +191,7 @@ export default {
   transition: background-color 0.3s ease;
   display: block;
   margin-top: 20px;
-  width: 100%;
+  width: 50%;
   text-align: center;
 }
 
@@ -212,9 +213,10 @@ export default {
 
 /* Media Queries voor Mobiel */
 @media (max-width: 640px) {
-    .header-font {
-    font-size:3rem;
+  .header-font {
+    font-size: 3rem;
   }
+
   .contact-content {
     flex-direction: column;
     align-items: center;
@@ -223,7 +225,7 @@ export default {
   }
 
   .form-control {
-    width: 300px;
+    width: 100%; /* Pas aan naar volledige breedte voor mobiel */
   }
 
   .social-media-box, .contact-form-box {
@@ -235,12 +237,36 @@ export default {
     align-items: center;
   }
 
-  .social-link {
-    justify-content: center;
+  .personal-photo {
+    width: 120px; /* Verklein de foto op mobiel */
+    height: 120px;
   }
 
-  .contact-form {
-    width: 100%;
+  .btn-warning {
+    width: 100%; /* Knoppen passen zich aan de volledige breedte aan */
+  }
+
+  .cv-download button {
+    width: 100%; /* Zorg ervoor dat de knop volledig breed wordt op mobiel */
+  }
+}
+
+@media (max-width: 320px) {
+  .header-font {
+    font-size: 2.5rem; /* Verklein de header op zeer kleine schermen */
+  }
+
+  .personal-photo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .form-control {
+    width: 90%; /* Maak invoervelden compacter */
+  }
+
+  .btn-warning {
+    width: 100%; /* Breder op zeer kleine schermen */
   }
 }
 </style>
