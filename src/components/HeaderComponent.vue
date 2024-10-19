@@ -44,7 +44,7 @@ export default {
 @media (max-width: 430px) { 
   .logo-img {
     max-height: 11vh;
-    padding: 0 30px; 
+    
   }
 }
 
