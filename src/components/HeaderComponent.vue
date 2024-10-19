@@ -28,7 +28,7 @@ export default {
 /* Responsiveness */
 @media (max-width: 640px) {
   .logo-img {
-    max-height: 100px;
+    max-height: 90px;
     margin: 250px
   }
 
