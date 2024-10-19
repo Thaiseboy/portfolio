@@ -43,8 +43,8 @@ export default {
 
 @media (max-width: 430px) {
   .logo-img {
-    max-height: 12vh;
-    padding: 0 30px; 
+    max-height: 14vh;
+    padding: 0 20px; 
   }
 }
 
