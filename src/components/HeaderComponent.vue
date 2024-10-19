@@ -29,17 +29,4 @@ export default {
   }
 }
 
-@media (max-width: 430px) {
-  .logo-img {
-    max-height: 100px;
-    margin: 100px auto;
-  }
-}
-
-@media (max-width: 320px) {
-  .logo-img {
-    max-height: 60px;
-    margin: 50px auto;
-  }
-}
 </style>
