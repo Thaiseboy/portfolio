@@ -21,11 +21,22 @@ export default {
   margin: 300px;
 }
 
-/* Responsiveness */
+/* Responsiveness voor verschillende schermen */
 @media (max-width: 640px) {
   .logo-img {
-    max-height: 90px;
-    margin: 150px auto; 
+    max-height: 15vh; 
+  }
+}
+
+@media (max-width: 430px) {
+  .logo-img {
+    max-height: 12vh; 
+  }
+}
+
+@media (max-width: 320px) {
+  .logo-img {
+    max-height: 10vh;
   }
 }
 
