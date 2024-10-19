@@ -36,15 +36,15 @@ export default {
 /* Responsiveness voor verschillende schermen */
 @media (max-width: 640px) {
   .logo-img {
-    max-height: 15vh; 
+    max-height: 14vh; 
     padding: 0 20px; 
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 430px) { 
   .logo-img {
-    max-height: 14vh;
-    padding: 0 20px; 
+    max-height: 11vh;
+    padding: 0 30px; 
   }
 }
 
