@@ -1,14 +1,16 @@
 <template>
   <div class="projects-container">
-    <h1 class="mb-5 text-gold text-center header-font font-weight-bold">Projects &#x1F5C2;</h1>
+    <h1 class="mb-5 text-gold text-center header-font font-weight-bold">
+      Projects &#x1F5C2;
+    </h1>
     <div v-for="project in projects" :key="project._id" class="project-item">
-      <img v-if="project.image" :src="project.image" alt="Project afbeelding" class="project-image"/>
+      <img v-if="project.image" :src="project.image" alt="Project afbeelding" class="project-image" />
       <div class="project-details">
         <h2 class="project-title font-weight-bold">{{ project.title }}</h2>
         <p class="project-description">{{ project.description }}</p>
         <div class="project-links">
-          <a v-if="project.url" :href="project.url" target="_blank" class="text-gold">Explore project</a>
-          <a v-if="project.github" :href="project.github" target="_blank" class="text-gold">GitHub</a>
+          <a v-if="project.url" :href="project.url" target="_blank" class="btn btn-danger">Explore Project</a>
+          <a v-if="project.github" :href="project.github" target="_blank" class="btn btn-secondary">GitHub</a>
         </div>
       </div>
     </div>
@@ -73,33 +75,33 @@ export default {
 </script>
 
 <style scoped>
-.projects-container {
-  padding: 20px;
-}
-
 .project-item {
   margin-bottom: 30px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   background-color: #333;
   border-radius: 10px;
   overflow: hidden;
   color: white;
-  opacity: 1; 
-  transform: translateX(0); 
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
+.project-item:hover {
+  transform: scale(1.03);
+}
+
 .project-image {
-  width: 200px;
-  height: 200px;
+  width: 50%;
+  height: auto;
   object-fit: cover;
-  margin-right: 20px;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .project-details {
-  flex: 1;
+  padding: 20px;
+  text-align: center;
 }
 
 .project-title {
@@ -109,81 +111,63 @@ export default {
 }
 
 .project-description {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   color: #ddd;
 }
 
+.project-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
 .project-links a {
-  margin-right: 15px;
+  padding: 10px 15px;
   color: #FFD700;
   text-decoration: none;
-  transition: color 0.3s;
+  border: 1px solid #FFD700;
+  border-radius: 5px;
+  transition: all 0.3s;
 }
 
 .project-links a:hover {
-  color: red;
-  border-bottom: 2px solid white;
+  color: #222;
+  background-color: #FFD700;
+  border-color: #FFD700;
 }
 
-/* Media queries voor mobiel */
-@media (max-width: 640px) {
-  .header-font {
-    font-size: 2.5rem; 
-  }
-
-  .project-item {
-    flex-direction: column;
-    text-align: center;
-    transform: none; 
-  }
-
-  .project-title {
-    font-size: 1.5rem; 
-    order: -1;
-    margin-bottom: 10px;
-  }
-
-  .project-description {
-    font-size: 1rem; 
-  }
-
-  .project-image {
-    margin: 0 auto 20px auto;
-    width: 100%;
-    height: auto;
-    max-width: 300px; 
-  }
-
+/* Media Queries voor tablets */
+@media (max-width: 768px) {
   .project-details {
-    margin-top: 10px;
-  }
-
-  .project-links a {
-    display: block; 
-    margin: 10px 0;
-    font-size: 1rem; 
-  }
-}
-
-@media (max-width: 320px) {
-  .header-font {
-    font-size: 2rem; 
+    padding: 15px;
   }
 
   .project-title {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
+  }
+
+  .project-description {
+    font-size: 1rem;
+  }
+
+  .project-links a {
+    font-size: 0.9rem;
+  }
+}
+
+/* Media Queries voor mobiele telefoons */
+@media (max-width: 480px) {
+  .project-title {
+    font-size: 1.5rem;
   }
 
   .project-description {
     font-size: 0.9rem;
   }
 
-  .project-image {
-    max-width: 250px;
-  }
-
   .project-links a {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    padding: 8px;
   }
 }
 </style>

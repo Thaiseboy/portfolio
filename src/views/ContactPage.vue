@@ -101,6 +101,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #2b2b2b;
+  color: #ffffff;
 }
 
 .contact-content {
@@ -111,20 +113,23 @@ export default {
   padding: 20px;
   border: 1px solid #FFD700;
   border-radius: 10px;
-  background-color: #333;
+  background-color: #333; /* Donkere tint binnen de content */
   width: 100%;
   max-width: 1200px;
 }
 
-.social-media-box, .contact-form-box {
+.social-media-box,
+.contact-form-box {
   flex: 1;
   padding: 20px;
   border-radius: 10px;
-  background-color: #444;
+  background-color: #3a3a3a; 
 }
 
-.social-media-box h2, .contact-form-box h2 {
+.social-media-box h2,
+.contact-form-box h2 {
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .social-icons {
@@ -140,22 +145,16 @@ export default {
   font-size: 1.2rem;
   display: flex;
   align-items: center;
-}
-
-.social-link i {
-  margin-right: 10px;
+  gap: 10px;
 }
 
 .social-link:hover {
-  color: red;
-}
-
-.personal-message {
-  text-align: center;
-  margin-top: 20px;
+  color: #ff4500;
 }
 
 .personal-photo {
+  display: block;
+  margin: 20px auto;
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -175,10 +174,11 @@ export default {
 
 .form-control {
   width: 500px;
+  max-width: 100%; 
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #222;
+  border: 1px solid #444;
+  background-color: #222; 
   color: #FFD700;
 }
 
@@ -189,14 +189,14 @@ export default {
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin: 0 auto; 
   display: block;
-  margin-top: 20px;
   width: 50%;
   text-align: center;
 }
 
 .btn-warning:hover {
-  background-color: #ff0707;
+  background-color: #ff4500;
   color: white;
 }
 
@@ -206,54 +206,45 @@ export default {
 
 .cv-download button {
   font-size: 1.2rem;
-  text-decoration: none;
-  color: rgb(0, 0, 0);
+  color: #000;
   width: 50%;
+  margin: 0 auto; 
+  display: block;
 }
 
 /* Media Queries voor Mobiel */
-@media (max-width: 640px) {
-  .header-font {
-    font-size: 3rem;
-  }
-
+@media (max-width: 768px) {
   .contact-content {
-    flex-direction: column;
+    flex-direction: column; 
     align-items: center;
     gap: 20px;
     width: 100%;
   }
 
-  .form-control {
-    width: 100%; /* Pas aan naar volledige breedte voor mobiel */
-  }
-
-  .social-media-box, .contact-form-box {
-    width: 100%;
+  .social-media-box,
+  .contact-form-box {
+    width: 100%; 
     text-align: center;
   }
 
-  .social-icons {
-    align-items: center;
+  .form-control {
+    width: 100%;
+  }
+
+  .btn-warning,
+  .cv-download button {
+    width: 90%; 
   }
 
   .personal-photo {
-    width: 120px; /* Verklein de foto op mobiel */
+    width: 120px;
     height: 120px;
-  }
-
-  .btn-warning {
-    width: 100%; /* Knoppen passen zich aan de volledige breedte aan */
-  }
-
-  .cv-download button {
-    width: 100%; /* Zorg ervoor dat de knop volledig breed wordt op mobiel */
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 480px) {
   .header-font {
-    font-size: 2.5rem; /* Verklein de header op zeer kleine schermen */
+    font-size: 2.5rem; 
   }
 
   .personal-photo {
@@ -262,11 +253,12 @@ export default {
   }
 
   .form-control {
-    width: 90%; /* Maak invoervelden compacter */
+    width: 100%; 
   }
 
-  .btn-warning {
-    width: 100%; /* Breder op zeer kleine schermen */
+  .btn-warning,
+  .cv-download button {
+    width: 100%; 
   }
 }
 </style>

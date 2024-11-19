@@ -74,7 +74,6 @@
   </p>
 </div>
   </div>
-  <hr>
 </template>
 
 <script>
@@ -120,9 +119,7 @@ export default {
   }
 }
 
-.container {
-  background: linear-gradient(to bottom, rgb(29, 29, 29), rgb(80, 80, 80));
-}
+
 
 .font-big {
   font-size: 80px;

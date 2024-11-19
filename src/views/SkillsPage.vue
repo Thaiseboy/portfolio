@@ -67,7 +67,6 @@ async fetchSkills() {
   overflow-x: auto;
   white-space: nowrap;
   padding: 20px;
-  background: linear-gradient(to bottom, rgb(29,29,29), rgb(80,80,80));
   scrollbar-width: none; /* Voor Firefox */
   -ms-overflow-style: none;  /* Voor Internet Explorer en Edge */
 }
