@@ -1,8 +1,8 @@
 <template>
+  <h1 class="mb-5 text-gold text-center header-font font-weight-bold">
+    Projects &#x1F5C2;
+  </h1>
   <div class="projects-container">
-    <h1 class="mb-5 text-gold text-center header-font font-weight-bold">
-      Projects &#x1F5C2;
-    </h1>
     <div v-for="project in projects" :key="project._id" class="project-item">
       <img v-if="project.image" :src="project.image" alt="Project afbeelding" class="project-image" />
       <div class="project-details">
@@ -75,8 +75,15 @@ export default {
 </script>
 
 <style scoped>
+.projects-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* Standaard één kolom */
+  gap: 20px; /* Afstand tussen de blokken */
+  padding: 20px;
+}
+
+/* Project-item stijl */
 .project-item {
-  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,14 +98,16 @@ export default {
   transform: scale(1.03);
 }
 
+/* Project afbeelding stijl */
 .project-image {
-  width: 50%;
+  width: 100%;
   height: auto;
   object-fit: cover;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 
+/* Project details stijl */
 .project-details {
   padding: 20px;
   text-align: center;
@@ -136,27 +145,25 @@ export default {
   border-color: #FFD700;
 }
 
-/* Media Queries voor tablets */
-@media (max-width: 768px) {
-  .project-details {
-    padding: 15px;
+/* Media Queries voor tablets en grote schermen */
+@media (min-width: 768px) {
+  .projects-container {
+    grid-template-columns: repeat(2, 1fr); /* Twee kolommen */
   }
+}
 
-  .project-title {
-    font-size: 1.8rem;
-  }
-
-  .project-description {
-    font-size: 1rem;
-  }
-
-  .project-links a {
-    font-size: 0.9rem;
+@media (min-width: 1200px) {
+  .projects-container {
+    grid-template-columns: repeat(3, 1fr); /* Drie kolommen op extra grote schermen */
   }
 }
 
 /* Media Queries voor mobiele telefoons */
 @media (max-width: 480px) {
+  .projects-container {
+    grid-template-columns: repeat(1, 1fr); /* Eén kolom voor telefoons */
+  }
+
   .project-title {
     font-size: 1.5rem;
   }
