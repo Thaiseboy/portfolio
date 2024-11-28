@@ -1,5 +1,6 @@
-import skill from './skill'
-import project from './project' // Voeg je project schema hier toe
-import contact from './contact'
+import skill from './skill';
+import project from './project';
+import contact from './contact';
+import aboutMePhotos from './about';
 
-export const schemaTypes = [skill, project, contact] // Voeg project hier toe
+export const schemaTypes = [skill, project, contact, aboutMePhotos];

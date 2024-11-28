@@ -5,6 +5,9 @@
     <section id="home">
       <HomePage />
     </section>
+    <section id="about">
+      <AboutMe />
+    </section>
     <section id="skills">
       <SkillsPage />
     </section>
@@ -22,6 +25,7 @@
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 import HomePage from "@/views/HomePage.vue";
+import AboutMe from "./views/AboutMe.vue";
 import SkillsPage from "@/views/SkillsPage.vue";
 import ProjectPage from "@/views/ProjectPage.vue";
 import ContactPage from "@/views/ContactPage.vue";
@@ -33,6 +37,7 @@ export default {
     HeaderComponent,
     FooterComponent,
     HomePage,
+    AboutMe,
     SkillsPage,
     ProjectPage,
     ContactPage,

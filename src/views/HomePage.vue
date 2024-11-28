@@ -41,38 +41,6 @@
         </div>
       </div>
     </div>
-
-<div class="tt text-center mt-4 text-white">
-  <p>
-    I am <span class="text-red">28</span> years old. I am an eager to learn and self-developed
-    professional with a strong creative mind and an excellent team player.
-    My work experience has made me skilled in problem solving and coming up
-    with innovative solutions.
-  </p>
-  <p>
-    After a search for new challenges, I discovered the world of front-end
-    development, which immediately aroused my interest. I now have over a
-    year of experience with both front-end and back-end technologies,
-    including 
-    <span class="text-red">&#x21A3;</span><span class="text-gold">HTML5</span> 
-    <span class="text-red">&#x21A3;</span><span class="text-gold">CSS3</span> 
-    <span class="text-red">&#x21A3;</span><span class="text-gold">JavaScript</span> 
-    <span class="text-red">&#x21A3;</span><span class="text-gold">jQuery</span> 
-    <span class="text-red">&#x21A3;</span><span class="text-gold">PHP</span> 
-    <span class="text-red">&#x21A3;</span><span class="text-gold">MySQL</span> 
-    <span class="text-red">&#x21A3;</span><span class="text-gold">Java</span> 
-    <span class="text-red">&#x21A3;</span><span class="text-gold">Vue.js</span>.
-  </p>
-  <p>
-    These skills allow me to develop entire web applications, from the user
-    interface to the server and database management.
-  </p>
-  <p>
-    I am currently working independently on various projects for clients, constantly expanding my skills and mastering new technologies. 
-    My ability to think creatively and solve problems, combined with my resilience and teamwork, allows me to deliver high-quality solutions tailored to my clients' specific needs. 
-    I am also committed to continuous self-development, always aiming to acquire new skills.
-  </p>
-</div>
   </div>
 </template>
 

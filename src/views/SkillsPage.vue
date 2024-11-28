@@ -1,5 +1,7 @@
 <template>
-  <h1 class="mb-5 text-gold text-center header-font font-weight-bold">Skills &#x26A1;</h1>
+  <h1 class="mb-5 text-gold text-center header-font font-weight-bold">
+    <span class="text-red">Get</span> Skilled with Me &#x26A1;
+  </h1>
   <div class="skills-container">
     <div class="skills-wrapper">
       <div

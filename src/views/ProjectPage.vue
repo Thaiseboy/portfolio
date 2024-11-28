@@ -1,6 +1,6 @@
 <template>
   <h1 class="mb-5 text-gold text-center header-font font-weight-bold">
-    Projects &#x1F5C2;
+    <span class="text-red">Get</span> Inspired by my Projects &#x1F5C2;
   </h1>
   <div class="projects-container">
     <div v-for="project in projects" :key="project._id" class="project-item">
