@@ -75,6 +75,15 @@ export default {
     scrollbar-width: thin;
 }
 
+.photo-gallery::-webkit-scrollbar {
+    height: 1px;
+}
+
+.photo-gallery::-webkit-scrollbar-thumb {
+    background: red;
+    border-radius: 10px;
+}
+
 .photo-box {
     flex: 0 0 auto;
     width: 300px;
