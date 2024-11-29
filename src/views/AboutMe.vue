@@ -70,15 +70,25 @@ export default {
 .photo-gallery {
     display: flex;
     overflow-x: auto;
-    gap: 16px; 
+    gap: 16px;
     padding: 10px;
+    scrollbar-width: thin;
+}
+
+.photo-gallery::-webkit-scrollbar {
+    height: 8px;
+}
+
+.photo-gallery::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
 }
 
 .photo-box {
-    flex: 0 0 auto; 
+    flex: 0 0 auto;
     width: 300px;
     height: 300px;
-    border: 2px solid #f0f0f0;
+    border: 2px solid black;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -86,18 +96,33 @@ export default {
 }
 
 .photo-box:hover {
-    transform: scale(1.05); 
+    transform: scale(1.05);
 }
 
 .photo-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
 }
+
+/* Mobiele aanpassingen */
 @media (max-width: 768px) {
+  .photo-gallery {
+    gap: 8px;
+    padding: 5px;
+  }
+
   .photo-box {
-    width: 200px; 
+    width: 200px;
     height: 200px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
   }
 }
 </style>
