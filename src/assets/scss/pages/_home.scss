@@ -31,9 +31,7 @@
     @include fade-in(0.9s);
     width: min(300px, 60vw);
     height: auto;
-    border-radius: 50%;
     margin: $spacing-xl auto;
-    box-shadow: $shadow-lg;
     transition: $transition-slow;
     
     &:hover {
