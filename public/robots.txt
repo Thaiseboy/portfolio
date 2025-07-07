@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://getdeveloper.nl/sitemap.xml
+
+# Block access to admin/private areas
+Disallow: /admin/
+Disallow: /*.json$

@@ -13,11 +13,11 @@
           <span class="text-red font-weight-bold">Get &#x1F680;</span>
         </h2>
         <!-- Afbeelding -->
-        <img
+        <LazyImage
           src="@/assets/foto/get.jpeg"
           alt="Master Supakon"
-          class="img-small mt-3"
-        >
+          img-class="img-small mt-3"
+        />
         <div class="text-white">
           <p>
             Based in the <span class="text-gold">Netherlands</span>, I'm a 
@@ -47,6 +47,8 @@
 </template>
 
 <script setup>
+import LazyImage from '@/components/ui/LazyImage.vue';
+
 defineOptions({
   name: "HomePage"
 });
