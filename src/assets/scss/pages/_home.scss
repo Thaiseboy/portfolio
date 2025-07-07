@@ -28,16 +28,9 @@
   }
   
   &__image {
-    @include fade-in(0.9s);
     width: min(300px, 60vw);
     height: auto;
     margin: $spacing-xl auto;
-    transition: $transition-slow;
-    
-    &:hover {
-      transform: scale(1.05);
-      box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
-    }
   }
   
   &__description {
