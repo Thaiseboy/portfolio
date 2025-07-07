@@ -3,7 +3,7 @@
     <div class="home-hero">
       <div class="home-hero__content">
         <h1 class="home-hero__title header-font font-weight-bold">
-          <span class="text-red font-weight-bold">Nice </span>to meet you! &#x1F601;
+          <span class="text-red font-weight-bold">Nice</span> to meet you! &#x1F601;
         </h1>
         <h2 class="home-hero__subtitle text-gold text-font">
           Hi, My name is Master Supakon Karanyawad
