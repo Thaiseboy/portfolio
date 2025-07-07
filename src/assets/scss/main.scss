@@ -1,0 +1,118 @@
+// Main SCSS Entry Point
+
+// Utils (moet eerst geladen worden)
+@import 'utils/variables';
+@import 'utils/mixins';
+
+// Base styles
+@import 'base/reset';
+@import 'base/typography';
+
+// Components
+@import 'components/buttons';
+@import 'components/cards';
+@import 'components/forms';
+@import 'components/skeleton';
+
+// Layout components kunnen hier toegevoegd worden
+// @import 'layout/header';
+// @import 'layout/footer';
+// @import 'layout/navigation';
+
+// Pages
+@import 'pages/home';
+@import 'pages/about';
+@import 'pages/skills';
+@import 'pages/projects';
+@import 'pages/contact';
+
+// Global utility classes
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+  
+  @include respond-to(md) {
+    padding: 0 $spacing-md;
+  }
+}
+
+.section {
+  padding: $spacing-xxl 0;
+  
+  @include respond-to(md) {
+    padding: $spacing-xl 0;
+  }
+}
+
+// Margin utilities
+.mt-3 { margin-top: $spacing-lg; }
+.mb-3 { margin-bottom: $spacing-lg; }
+.mt-4 { margin-top: $spacing-xl; }
+.mb-4 { margin-bottom: $spacing-xl; }
+.mt-5 { margin-top: $spacing-xxl; }
+.mb-5 { margin-bottom: $spacing-xxl; }
+
+// Display utilities
+.d-flex { display: flex; }
+.d-block { display: block; }
+.d-none { display: none; }
+
+// Flex utilities
+.flex-column { @include flex-column; }
+.align-items-center { align-items: center; }
+.justify-content-center { justify-content: center; }
+.justify-content-between { justify-content: space-between; }
+
+// Bootstrap-like spacing utilities voor compatibiliteit
+.py-5 { padding: $spacing-xxl 0; }
+.px-3 { padding: 0 $spacing-lg; }
+.me-3 { margin-right: $spacing-lg; }
+
+// Background utilities
+.bg-primary { background-color: var(--color-primary); }
+.bg-secondary { background-color: var(--color-secondary); }
+.bg-dark { background-color: var(--color-background); }
+
+// Border utilities
+.border-radius { border-radius: $border-radius-md; }
+.border-radius-lg { border-radius: $border-radius-lg; }
+
+// Animation utilities
+.fade-in { @include fade-in; }
+.slide-up { @include slide-up; }
+
+// Responsive utilities
+.show-mobile {
+  display: none;
+  
+  @include respond-to(md) {
+    display: block;
+  }
+}
+
+.hide-mobile {
+  display: block;
+  
+  @include respond-to(md) {
+    display: none;
+  }
+}
+
+// Print styles
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  a, a:visited {
+    text-decoration: underline;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}

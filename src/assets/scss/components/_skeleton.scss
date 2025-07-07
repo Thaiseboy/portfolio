@@ -1,0 +1,250 @@
+// Skeleton Loading Components
+.skeleton-loader {
+  width: 100%;
+  
+  &.skeleton-pulse {
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+// Card Skeleton
+.skeleton-card {
+  @include card-style();
+  overflow: hidden;
+  
+  .skeleton-image {
+    width: 100%;
+    height: 200px;
+    @include skeleton-loading;
+    margin-bottom: $spacing-md;
+  }
+  
+  .skeleton-content {
+    @include flex-column;
+    gap: $spacing-sm;
+    
+    .skeleton-title {
+      height: 20px;
+      @include skeleton-loading;
+      border-radius: $border-radius-sm;
+      width: 70%;
+    }
+    
+    .skeleton-text {
+      height: 16px;
+      @include skeleton-loading;
+      border-radius: $border-radius-sm;
+      width: 100%;
+      
+      &.short {
+        width: 60%;
+      }
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+// List Skeleton
+.skeleton-list {
+  @include flex-column;
+  gap: $spacing-md;
+  
+  .skeleton-list-item {
+    @include flex-center;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    @include card-style();
+    
+    .skeleton-avatar {
+      width: 60px;
+      height: 60px;
+      @include skeleton-loading;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    
+    .skeleton-text-content {
+      flex: 1;
+      @include flex-column;
+      gap: $spacing-sm;
+      
+      .skeleton-title {
+        height: 18px;
+        @include skeleton-loading;
+        border-radius: $border-radius-sm;
+        width: 60%;
+      }
+      
+      .skeleton-text {
+        height: 14px;
+        @include skeleton-loading;
+        border-radius: $border-radius-sm;
+        width: 80%;
+      }
+    }
+  }
+}
+
+// Text Block Skeleton
+.skeleton-text-block {
+  @include flex-column;
+  gap: $spacing-sm;
+  
+  .skeleton-text {
+    height: 16px;
+    @include skeleton-loading;
+    border-radius: $border-radius-sm;
+    width: 100%;
+    
+    &.short {
+      width: 60%;
+    }
+  }
+}
+
+// Generic Box Skeleton
+.skeleton-box {
+  @include skeleton-loading;
+  border-radius: $border-radius-sm;
+}
+
+// Skills specific skeleton
+.skeleton-skills {
+  display: flex;
+  gap: $spacing-lg;
+  overflow-x: auto;
+  padding: $spacing-lg 0;
+  
+  .skeleton-skill-item {
+    @include card-style();
+    min-width: 180px;
+    text-align: center;
+    flex-shrink: 0;
+    
+    .skeleton-skill-logo {
+      width: 80px;
+      height: 80px;
+      @include skeleton-loading;
+      border-radius: $border-radius-md;
+      margin: 0 auto $spacing-md;
+    }
+    
+    .skeleton-skill-name {
+      height: 20px;
+      @include skeleton-loading;
+      border-radius: $border-radius-sm;
+      width: 70%;
+      margin: 0 auto $spacing-sm;
+    }
+    
+    .skeleton-skill-level {
+      height: 14px;
+      @include skeleton-loading;
+      border-radius: $border-radius-sm;
+      width: 50%;
+      margin: 0 auto $spacing-sm;
+    }
+    
+    .skeleton-skill-progress {
+      height: 8px;
+      @include skeleton-loading;
+      border-radius: $border-radius-sm;
+      width: 100%;
+    }
+  }
+}
+
+// Projects specific skeleton
+.skeleton-projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-lg;
+  
+  .skeleton-project-item {
+    @include card-style();
+    overflow: hidden;
+    
+    .skeleton-project-image {
+      width: 100%;
+      height: 200px;
+      @include skeleton-loading;
+    }
+    
+    .skeleton-project-content {
+      padding: $spacing-lg;
+      
+      .skeleton-project-title {
+        height: 24px;
+        @include skeleton-loading;
+        border-radius: $border-radius-sm;
+        width: 80%;
+        margin-bottom: $spacing-md;
+      }
+      
+      .skeleton-project-description {
+        height: 16px;
+        @include skeleton-loading;
+        border-radius: $border-radius-sm;
+        width: 100%;
+        margin-bottom: $spacing-sm;
+        
+        &:nth-child(3) { width: 90%; }
+        &:nth-child(4) { width: 70%; }
+      }
+      
+      .skeleton-project-buttons {
+        display: flex;
+        gap: $spacing-md;
+        margin-top: $spacing-lg;
+        
+        .skeleton-button {
+          height: 40px;
+          width: 120px;
+          @include skeleton-loading;
+          border-radius: $border-radius-md;
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@include respond-to(md) {
+  .skeleton-list-item {
+    padding: $spacing-sm;
+    
+    .skeleton-avatar {
+      width: 50px;
+      height: 50px;
+    }
+  }
+  
+  .skeleton-skills .skeleton-skill-item {
+    min-width: 150px;
+    
+    .skeleton-skill-logo {
+      width: 60px;
+      height: 60px;
+    }
+  }
+  
+  .skeleton-projects {
+    grid-template-columns: 1fr;
+    
+    .skeleton-project-item .skeleton-project-image {
+      height: 180px;
+    }
+  }
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { 
+    opacity: 1; 
+  }
+  50% { 
+    opacity: 0.7; 
+  }
+}

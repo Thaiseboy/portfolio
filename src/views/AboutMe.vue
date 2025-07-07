@@ -1,25 +1,36 @@
 <template>
-  <div>
-    <h1 class="mb-5 text-gold text-center header-font font-weight-bold">
+  <div class="about-page">
+    <h1 class="about-page__title header-font font-weight-bold text-gold">
       <span class="text-red">Get</span> to know me &#128526;
     </h1>
     
-    <!-- Horizontale scrollbare container voor foto's -->
-    <div class="photo-gallery mt-4">
-      <div
-        v-for="photo in photos"
-        :key="photo.id"
-        class="photo-box"
-      >
-        <img
-          :src="photo.url"
-          :alt="photo.title"
-          class="photo-image"
+    <div class="about-page__content">
+      <ErrorBoundary :on-retry="retryFetchPhotos">
+        <div class="photo-gallery">
+        <SkeletonLoader 
+          v-if="loading" 
+          type="list" 
+          :count="4"
+        />
+        <div
+          v-else-if="photos.length > 0"
+          v-for="photo in photos"
+          :key="photo.id"
+          class="photo-box"
         >
+          <img
+            :src="photo.url"
+            :alt="photo.title"
+            class="photo-image"
+          >
+        </div>
+        <div v-else-if="!loading && photos.length === 0" class="no-photos">
+          <p>No photos available</p>
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
         
-    <div class="tt text-center mt-4 text-white">
+    <div class="about-page__text text-white">
       <p>
         Hi, I’m <span class="text-red">28</span> years old, a passionate front-end developer with a creative mindset and a strong drive for self-improvement. 
         I excel at teamwork and thrive in solving complex problems by crafting innovative and tailored solutions.
@@ -45,83 +56,47 @@
         Above all, I am dedicated to continuous learning, always seeking to enhance my abilities and push the boundaries of what I can achieve.
       </p>
     </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useSanity } from '@/composables/useSanity';
+import ErrorBoundary from '@/components/ui/ErrorBoundary.vue';
+import SkeletonLoader from '@/components/ui/SkeletonLoader.vue';
 
 defineOptions({
     name: 'AboutMe'
 });
 
 const photos = ref([]);
-const { fetchPhotos } = useSanity();
+const { loading, fetchPhotos, clearError } = useSanity();
 
-onMounted(async () => {
+const loadPhotos = async () => {
     try {
         const data = await fetchPhotos();
-        photos.value = data;
+        if (data && data.length > 0) {
+            photos.value = data.map((photo, index) => ({
+                id: photo._id || index,
+                url: photo.imageUrl,
+                title: `Photo ${index + 1}`
+            })).filter(photo => photo.url); // Filter out photos without URLs
+        }
     } catch (err) {
         console.error('Error fetching photos:', err);
     }
-});
+};
+
+const retryFetchPhotos = () => {
+    clearError();
+    loadPhotos();
+};
+
+onMounted(loadPhotos);
 </script>
 
-<style scoped>
-.photo-gallery {
-    display: flex;
-    overflow-x: auto;
-    gap: 16px;
-    padding: 10px;
-    scrollbar-width: thin;
-}
-
-.photo-gallery::-webkit-scrollbar {
-    height: 1px;
-}
-
-.photo-gallery::-webkit-scrollbar-thumb {
-    background: red;
-    border-radius: 10px;
-}
-
-.photo-box {
-    flex: 0 0 auto;
-    width: 300px;
-    height: 300px;
-    border: 2px solid black;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-}
-
-.photo-box:hover {
-    transform: scale(1.05);
-}
-
-.photo-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Mobiele aanpassingen */
-@media (max-width: 768px) {
-  .photo-gallery {
-    gap: 8px;
-    padding: 5px;
-  }
-
-  .photo-box {
-    width: 200px;
-    height: 200px;
-  }
-
-  p {
-    font-size: 0.9rem;
-  }
-}
+<style scoped lang="scss">
+// All styles are now handled by SCSS partials in /assets/scss/pages/_about.scss
+// Custom component-specific styles can be added here if needed
 </style>

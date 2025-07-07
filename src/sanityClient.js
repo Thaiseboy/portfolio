@@ -1,11 +1,11 @@
 import { createClient } from "@sanity/client";
 
 const sanityClient = createClient({
-  projectId: import.meta.env.VITE_SANITY_PROJECT_ID,
-  dataset: import.meta.env.VITE_SANITY_DATASET,
-  useCdn: import.meta.env.VITE_SANITY_USE_CDN === 'true',
-  apiVersion: import.meta.env.VITE_SANITY_API_VERSION,
-  token: import.meta.env.SANITY_ACCESS_TOKEN,
+  projectId: process.env.VUE_APP_SANITY_PROJECT_ID,
+  dataset: process.env.VUE_APP_SANITY_DATASET,
+  useCdn: process.env.VUE_APP_SANITY_USE_CDN === 'true',
+  apiVersion: process.env.VUE_APP_SANITY_API_VERSION,
+  token: process.env.VUE_APP_SANITY_ACCESS_TOKEN || undefined,
 });
 
 export default sanityClient;

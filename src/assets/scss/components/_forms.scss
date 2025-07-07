@@ -1,0 +1,120 @@
+// Form Components
+.form-group {
+  margin-bottom: $spacing-lg;
+  
+  label {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-weight: 500;
+    color: var(--color-primary);
+  }
+}
+
+.form-control {
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  border: 2px solid var(--color-border);
+  border-radius: $border-radius-md;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-size: $font-size-md;
+  transition: $transition-normal;
+  
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+  }
+  
+  &:invalid {
+    border-color: var(--color-danger);
+  }
+  
+  &::placeholder {
+    color: var(--color-text);
+    opacity: 0.6;
+  }
+}
+
+// Textarea specific styling
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+// Form validation states
+.form-group {
+  &.is-valid {
+    .form-control {
+      border-color: var(--color-success);
+    }
+  }
+  
+  &.is-invalid {
+    .form-control {
+      border-color: var(--color-danger);
+    }
+  }
+}
+
+.valid-feedback {
+  display: block;
+  margin-top: $spacing-xs;
+  font-size: $font-size-sm;
+  color: var(--color-success);
+}
+
+.invalid-feedback {
+  display: block;
+  margin-top: $spacing-xs;
+  font-size: $font-size-sm;
+  color: var(--color-danger);
+}
+
+// Contact form specific
+.contact-form {
+  @include flex-column;
+  gap: $spacing-lg;
+  max-width: 600px;
+  margin: 0 auto;
+  
+  .form-control {
+    background-color: var(--color-card);
+    border-color: var(--color-border);
+    
+    &:focus {
+      background-color: var(--color-background);
+    }
+  }
+  
+  .btn {
+    align-self: center;
+    min-width: 150px;
+  }
+  
+  @include respond-to(md) {
+    max-width: 100%;
+    
+    .form-control {
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+// Form layout helpers
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-md;
+  
+  @include respond-to(md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-actions {
+  @include flex-center;
+  gap: $spacing-md;
+  margin-top: $spacing-xl;
+}

@@ -1,0 +1,134 @@
+// About Page Styles
+.about-page {
+  padding: $spacing-xxl $spacing-lg;
+  
+  &__title {
+    text-align: center;
+    margin-bottom: $spacing-xxl;
+  }
+  
+  &__content {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  &__text {
+    font-size: $font-size-lg;
+    line-height: 1.7;
+    margin-bottom: $spacing-xl;
+    text-align: center;
+    
+    p {
+      margin-bottom: $spacing-lg;
+    }
+    
+    .text-red, .text-gold {
+      font-weight: 500;
+    }
+  }
+}
+
+// Photo Gallery
+.photo-gallery {
+  display: flex;
+  overflow-x: auto;
+  gap: $spacing-md;
+  padding: $spacing-lg 0;
+  margin-bottom: $spacing-xxl;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-secondary) transparent;
+  
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+    border-radius: $border-radius-md;
+  }
+  
+  .photo-box {
+    flex: 0 0 auto;
+    width: 300px;
+    height: 300px;
+    border: 3px solid var(--color-background);
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    box-shadow: $shadow-md;
+    transition: $transition-normal;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+      opacity: 0;
+      transition: $transition-normal;
+    }
+    
+    &:hover {
+      transform: scale(1.05) rotate(2deg);
+      border-color: var(--color-primary);
+      
+      &::before {
+        opacity: 1;
+      }
+    }
+    
+    .photo-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: $transition-normal;
+    }
+    
+    &:hover .photo-image {
+      transform: scale(1.1);
+    }
+  }
+  
+  @include respond-to(md) {
+    gap: $spacing-sm;
+    padding: $spacing-md 0;
+    
+    .photo-box {
+      width: 250px;
+      height: 250px;
+    }
+  }
+  
+  @include respond-to(sm) {
+    .photo-box {
+      width: 200px;
+      height: 200px;
+    }
+  }
+}
+
+// No photos state
+.no-photos {
+  @include flex-center;
+  @include flex-column;
+  padding: $spacing-xxl;
+  text-align: center;
+  
+  &::before {
+    content: '📷';
+    font-size: 4rem;
+    margin-bottom: $spacing-lg;
+    opacity: 0.5;
+  }
+  
+  p {
+    opacity: 0.7;
+    font-size: $font-size-lg;
+  }
+}

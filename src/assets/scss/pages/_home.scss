@@ -1,0 +1,121 @@
+// Home Page Styles
+.home-hero {
+  @include flex-center;
+  @include flex-column;
+  min-height: 80vh;
+  text-align: center;
+  padding: $spacing-xxl $spacing-lg;
+  
+  &__content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  &__title {
+    @include fade-in();
+    margin-bottom: $spacing-lg;
+    
+    .text-red {
+      display: inline-block;
+      animation: bounce 2s infinite;
+    }
+  }
+  
+  &__subtitle {
+    @include fade-in(0.6s);
+    margin-bottom: $spacing-xl;
+    opacity: 0.9;
+  }
+  
+  &__image {
+    @include fade-in(0.9s);
+    width: min(300px, 60vw);
+    height: auto;
+    border-radius: 50%;
+    margin: $spacing-xl auto;
+    box-shadow: $shadow-lg;
+    transition: $transition-slow;
+    
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
+    }
+  }
+  
+  &__description {
+    @include fade-in(1.2s);
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-xl;
+    line-height: 1.6;
+  }
+  
+  &__social {
+    @include fade-in(1.5s);
+    @include flex-center;
+    gap: $spacing-lg;
+    
+    .social-icon {
+      font-size: 3rem;
+      color: var(--color-primary);
+      transition: $transition-normal;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 3px;
+        background-color: var(--color-secondary);
+        transition: $transition-normal;
+      }
+      
+      &:hover {
+        color: var(--color-text);
+        transform: scale(1.2);
+        
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+  
+  @include respond-to(md) {
+    min-height: 70vh;
+    padding: $spacing-lg $spacing-md;
+    
+    &__image {
+      width: min(250px, 70vw);
+      margin: $spacing-lg auto;
+    }
+    
+    &__social .social-icon {
+      font-size: 2.5rem;
+    }
+  }
+  
+  @include respond-to(sm) {
+    &__image {
+      width: min(200px, 80vw);
+    }
+    
+    &__social .social-icon {
+      font-size: 2rem;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}

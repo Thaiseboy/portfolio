@@ -1,206 +1,98 @@
 <template>
-  <h1 class="mb-5 text-gold text-center header-font font-weight-bold">
-    <span class="text-red">Get</span> Skilled with Me &#x26A1;
-  </h1>
-  <div class="skills-container">
-    <div class="skills-wrapper">
-      <div
-        v-for="skill in skills"
-        :id="`skill-${skill._id}`"
-        :key="skill._id"
-        class="skill-item"
-      >
-        <!-- Controleer of logo bestaat voordat je het weergeeft -->
-        <img
-          v-if="skill.logoUrl" 
-          :src="skill.logoUrl" 
-          alt="`${skill.name} logo`" 
-          class="skill-logo"
-        >
+  <div class="skills-page">
+    <h1 class="skills-page__title header-font font-weight-bold text-gold">
+      <span class="text-red">Get</span> Skilled with Me &#x26A1;
+    </h1>
+    <ErrorBoundary :on-retry="retryFetchSkills">
+      <div class="skills-container">
+      <div class="skills-wrapper">
+        <SkeletonLoader 
+          v-if="loading" 
+          type="list" 
+          :count="6"
+        />
         <div
-          v-else
-          class="no-logo"
+          v-else-if="skills.length > 0"
+          v-for="skill in skills"
+          :id="`skill-${skill._id}`"
+          :key="skill._id"
+          class="skill-item"
         >
-          <!-- Alternatieve weergave als er geen logo is -->
-          <span>Geen logo beschikbaar</span>
-        </div>
-        <div class="skill-details">
-          <h3>{{ skill.name }}</h3>
-          <p>{{ skill.level }}</p>
-          <div class="progress">
-            <div
-              class="progress-bar bg-warning"
-              role="progressbar"
-              :style="{width: skill.rating + '%'}"
-              :aria-valuenow="skill.rating"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              {{ skill.rating }}%
+          <img
+            v-if="skill.logoUrl" 
+            :src="skill.logoUrl" 
+            :alt="`${skill.name} logo`" 
+            class="skill-logo"
+          >
+          <div
+            v-else
+            class="no-logo"
+          >
+            <span>No logo available</span>
+          </div>
+          <div class="skill-details">
+            <h3>{{ skill.name || skill.title }}</h3>
+            <p>{{ skill.level }}</p>
+            <div class="progress">
+              <div
+                class="progress-bar bg-warning"
+                role="progressbar"
+                :style="{width: skill.rating + '%'}"
+                :aria-valuenow="skill.rating"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                {{ skill.rating }}%
+              </div>
             </div>
           </div>
         </div>
+        <div v-else-if="!loading && skills.length === 0" class="no-skills">
+          <p>No skills available</p>
+        </div>
       </div>
     </div>
+  </ErrorBoundary>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import sanityClient from "@/sanityClient";
+import { useSanity } from '@/composables/useSanity';
+import ErrorBoundary from '@/components/ui/ErrorBoundary.vue';
+import SkeletonLoader from '@/components/ui/SkeletonLoader.vue';
 
 defineOptions({
   name: 'SkillsPage'
 });
 
 const skills = ref([]);
+const { loading, fetchSkills: fetchSkillsData, clearError } = useSanity();
 
-const fetchSkills = async () => {
+const loadSkills = async () => {
   try {
-    skills.value = await sanityClient.fetch(`*[_type == "skill"]{
-      _id,
-      name,
-      level,
-      "logoUrl": logo.asset->url,
-      rating
-    }`);
-    console.log(skills.value);
+    const data = await fetchSkillsData();
+    skills.value = data.map(skill => ({
+      ...skill,
+      logoUrl: skill.imageUrl,
+      rating: skill.skillLevel || 75, // Default rating if not set
+      title: skill.name, // Map name to title for compatibility
+      level: skill.skillLevel ? `${skill.skillLevel}%` : 'Intermediate'
+    }));
   } catch (error) {
     console.error("Error fetching skills:", error);
   }
 };
 
-onMounted(() => {
-  fetchSkills();
-});
+const retryFetchSkills = () => {
+  clearError();
+  loadSkills();
+};
+
+onMounted(loadSkills);
 </script>
 
-<style scoped>
-.skills-container {
-  overflow-x: auto;
-  white-space: nowrap;
-  padding: 20px;
-  scrollbar-width: none; /* Voor Firefox */
-  -ms-overflow-style: none;  /* Voor Internet Explorer en Edge */
-}
-
-.skills-container::-webkit-scrollbar {
-  display: none; /* Voor Chrome, Safari en Opera */
-}
-
-.skills-wrapper {
-  display: inline-flex;
-}
-
-.skill-item {
-  width: 200px;
-  margin-right: 15px;
-  padding: 15px;
-  background-color: #333;
-  border-radius: 20%;
-  text-align: center;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  color: white;
-}
-
-.skill-item:hover {
-  transform: scale(1.1);
-  opacity: 1;
-}
-
-.skill-logo {
-  width: auto;
-  height: 100px;
-  object-fit: contain;
-  margin-bottom: 5px;
-}
-
-.no-logo {
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #555;
-  color: #FFF;
-  margin-bottom: 10px;
-  border-radius: 50%;
-}
-
-.skill-details h3 {
-  font-size: 1.2rem;
-  margin: 10px 0 5px;
-}
-
-.skill-details p {
-  margin: 0;
-  color: #FFD700;
-}
-
-.progress-bar {
-  font-weight: bold;
-  line-height: 20px;
-  margin-top: 5px;
-  font-size: 1rem; 
-}
-
-/* Media queries voor mobiel */
-@media (max-width: 640px) {
-  .skills-container {
-    padding: 10px;
-  }
-  
-  .header-font {
-    font-size: 3rem;
-  }
-
-  .skill-item {
-    width: 150px;
-    margin-right: 10px;
-    padding: 10px;
-  }
-
-  .skill-logo {
-    height: 70px;
-  }
-
-  .skill-details h3 {
-    font-size: 1rem;
-  }
-
-  .skill-details p {
-    font-size: 0.9rem;
-  }
-
-  .progress-bar {
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 320px) {
-  .header-font {
-    font-size: 2.5rem;
-  }
-
-  .skill-item {
-    width: 120px;
-    padding: 8px;
-  }
-
-  .skill-logo {
-    height: 60px;
-  }
-
-  .skill-details h3 {
-    font-size: 0.9rem;
-  }
-
-  .skill-details p {
-    font-size: 0.8rem;
-  }
-
-  .progress-bar {
-    font-size: 0.7rem;
-  }
-}
+<style scoped lang="scss">
+// All styles are now handled by SCSS partials in /assets/scss/pages/_skills.scss
+// Custom component-specific styles can be added here if needed
 </style>
