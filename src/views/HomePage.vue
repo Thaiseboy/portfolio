@@ -13,10 +13,10 @@
           <span class="text-red font-weight-bold">Get &#x1F680;</span>
         </h2>
         
-        <LazyImage
+        <img
           src="@/assets/foto/get.jpeg"
           alt="Master Supakon"
-          img-class="home-hero__image"
+          class="home-hero__image"
         />
         
         <div class="home-hero__description">
@@ -50,8 +50,6 @@
 </template>
 
 <script setup>
-import LazyImage from '@/components/ui/LazyImage.vue';
-
 defineOptions({
   name: "HomePage"
 });

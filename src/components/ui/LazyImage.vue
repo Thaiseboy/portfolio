@@ -1,5 +1,5 @@
 <template>
-  <div class="lazy-image-container">
+  <div ref="containerRef" class="lazy-image-container">
     <img
       v-if="isLoaded"
       :src="src"
@@ -51,7 +51,7 @@ const props = defineProps({
 
 const isIntersecting = ref(false);
 const isLoaded = ref(false);
-const imageRef = ref(null);
+const containerRef = ref(null);
 let observer = null;
 
 const startObserving = () => {
@@ -69,8 +69,8 @@ const startObserving = () => {
     }
   );
   
-  if (imageRef.value) {
-    observer.observe(imageRef.value);
+  if (containerRef.value) {
+    observer.observe(containerRef.value);
   }
 };
 
@@ -83,7 +83,6 @@ const onError = () => {
 };
 
 onMounted(() => {
-  imageRef.value = document.querySelector('.lazy-image-container');
   startObserving();
 });
 
