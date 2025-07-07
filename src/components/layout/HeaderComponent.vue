@@ -2,20 +2,24 @@
   <header class="text-gold header-container">
     <div class="container d-flex flex-column align-items-center">
       <div class="text-center">
-        <img src="@/assets/foto/logo2.png" alt="Logo" class="logo-img" />
+        <img
+          src="@/assets/foto/logo2.png"
+          alt="Logo"
+          class="logo-img"
+        >
       </div>
     </div>
   </header>
 </template>
 
-<script>
-export default {
-  name: "HeaderComponent",
-};
+<script setup>
+defineOptions({
+  name: "HeaderComponent"
+});
 </script>
 
 <style scoped>
-/* Header container vult volledige hoogte van het scherm */
+/* Header container fills full screen height */
 .header-container {
   display: flex;
   justify-content: center;
@@ -27,13 +31,13 @@ export default {
   box-sizing: border-box;
 }
 
-/* Logo Styling voor grote schermen */
+/* Logo styling for large screens */
 .logo-img {
   max-height: 200px;
   margin: 0 auto; 
 }
 
-/* Responsiveness voor verschillende schermen */
+/* Responsive design for different screen sizes */
 @media (max-width: 640px) {
   .logo-img {
     max-height: 12vh; 

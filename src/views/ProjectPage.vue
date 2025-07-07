@@ -3,75 +3,97 @@
     <span class="text-red">Get</span> Inspired by my Projects &#x1F5C2;
   </h1>
   <div class="projects-container">
-    <div v-for="project in projects" :key="project._id" class="project-item">
-      <img v-if="project.image" :src="project.image" alt="Project afbeelding" class="project-image" />
+    <div
+      v-for="project in projects"
+      :key="project._id"
+      class="project-item"
+    >
+      <img
+        v-if="project.image"
+        :src="project.image"
+        alt="Project afbeelding"
+        class="project-image"
+      >
       <div class="project-details">
-        <h2 class="project-title font-weight-bold">{{ project.title }}</h2>
-        <p class="project-description">{{ project.description }}</p>
+        <h2 class="project-title font-weight-bold">
+          {{ project.title }}
+        </h2>
+        <p class="project-description">
+          {{ project.description }}
+        </p>
         <div class="project-links">
-          <a v-if="project.url" :href="project.url" target="_blank" class="btn btn-danger">Explore Project</a>
-          <a v-if="project.github" :href="project.github" target="_blank" class="btn btn-secondary">GitHub</a>
+          <a
+            v-if="project.url"
+            :href="project.url"
+            target="_blank"
+            class="btn btn-danger"
+          >Explore Project</a>
+          <a
+            v-if="project.github"
+            :href="project.github"
+            target="_blank"
+            class="btn btn-secondary"
+          >GitHub</a>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, nextTick } from 'vue';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import sanityClient from "@/sanityClient"; 
 
+defineOptions({
+  name: 'ProjectPage'
+});
+
 gsap.registerPlugin(ScrollTrigger);
 
-export default {
-  name: 'ProjectPage',
-  data() {
-    return {
-      projects: [],
-    };
-  },
-  methods: {
-    async fetchProjects() {
-      this.projects = await sanityClient.fetch(`*[_type == "project"]{
-        _id,
-        title,
-        description,
-        "image": image.asset->url,
-        url,
-        github
-      }`);
-      this.setupScrollAnimations();
-    },
-    setupScrollAnimations() {
-      // Gebruik een eenvoudige animatie voor desktop, maar voor mobiel zorg dat projecten direct zichtbaar zijn
-      if (window.innerWidth > 768) {
-        this.$nextTick(() => {
-          this.projects.forEach((project, index) => {
-            const element = document.querySelectorAll('.project-item')[index];
-            gsap.fromTo(
-              element,
-              { x: -200, opacity: 0 },
-              {
-                x: 0,
-                opacity: 1,
-                duration: 1,
-                scrollTrigger: {
-                  trigger: element,
-                  start: "top 80%",
-                  toggleActions: "play none none none",
-                },
-              }
-            );
-          });
-        });
-      }
-    },
-  },
-  mounted() {
-    this.fetchProjects();
+const projects = ref([]);
+
+const fetchProjects = async () => {
+  projects.value = await sanityClient.fetch(`*[_type == "project"]{
+    _id,
+    title,
+    description,
+    "image": image.asset->url,
+    url,
+    github
+  }`);
+  setupScrollAnimations();
+};
+
+const setupScrollAnimations = () => {
+  // Gebruik een eenvoudige animatie voor desktop, maar voor mobiel zorg dat projecten direct zichtbaar zijn
+  if (window.innerWidth > 768) {
+    nextTick(() => {
+      projects.value.forEach((project, index) => {
+        const element = document.querySelectorAll('.project-item')[index];
+        gsap.fromTo(
+          element,
+          { x: -200, opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 1,
+            scrollTrigger: {
+              trigger: element,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+    });
   }
 };
+
+onMounted(() => {
+  fetchProjects();
+});
 </script>
 
 <style scoped>

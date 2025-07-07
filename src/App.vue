@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <HeaderComponent />
-    <IconComponent />
+    <NavigationComponent />
     <section id="home">
       <HomePage />
     </section>
@@ -21,36 +21,26 @@
   </div>
 </template>
 
-<script>
-import HeaderComponent from "@/components/HeaderComponent.vue";
-import FooterComponent from "@/components/FooterComponent.vue";
+<script setup>
+import HeaderComponent from "@/components/layout/HeaderComponent.vue";
+import FooterComponent from "@/components/layout/FooterComponent.vue";
+import NavigationComponent from "@/components/layout/NavigationComponent.vue";
 import HomePage from "@/views/HomePage.vue";
 import AboutMe from "./views/AboutMe.vue";
 import SkillsPage from "@/views/SkillsPage.vue";
 import ProjectPage from "@/views/ProjectPage.vue";
 import ContactPage from "@/views/ContactPage.vue";
-import IconComponent from "@/components/IconComponent.vue";
 
-export default {
-  name: "App",
-  components: {
-    HeaderComponent,
-    FooterComponent,
-    HomePage,
-    AboutMe,
-    SkillsPage,
-    ProjectPage,
-    ContactPage,
-    IconComponent,
-  },
-};
+defineOptions({
+  name: "App"
+});
 </script>
 
 
 <style>
 #app {
-  background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(80, 80, 80));
-  background-color: rgb(0, 0, 0); /* Fallback voor oudere browsers */
+  background: var(--color-background-gradient);
+  background-color: var(--color-background);
   background-attachment: fixed;
   min-height: 100vh; 
 }
@@ -73,7 +63,7 @@ html {
 
 @media (max-width: 768px) {
   #app {
-    background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(50, 50, 50));
+    background: var(--color-background-mobile);
     background-attachment: scroll;
   }
 }

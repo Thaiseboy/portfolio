@@ -6,16 +6,21 @@
     <div class="skills-wrapper">
       <div
         v-for="skill in skills"
-        :key="skill._id"
         :id="`skill-${skill._id}`"
+        :key="skill._id"
         class="skill-item"
       >
         <!-- Controleer of logo bestaat voordat je het weergeeft -->
-<img v-if="skill.logoUrl" 
-     :src="skill.logoUrl" 
-     alt="`${skill.name} logo`" 
-     class="skill-logo"/>
-        <div v-else class="no-logo">
+        <img
+          v-if="skill.logoUrl" 
+          :src="skill.logoUrl" 
+          alt="`${skill.name} logo`" 
+          class="skill-logo"
+        >
+        <div
+          v-else
+          class="no-logo"
+        >
           <!-- Alternatieve weergave als er geen logo is -->
           <span>Geen logo beschikbaar</span>
         </div>
@@ -23,7 +28,16 @@
           <h3>{{ skill.name }}</h3>
           <p>{{ skill.level }}</p>
           <div class="progress">
-            <div class="progress-bar bg-warning" role="progressbar" :style="{width: skill.rating + '%'}" :aria-valuenow="skill.rating" aria-valuemin="0" aria-valuemax="100">{{ skill.rating }}%</div>
+            <div
+              class="progress-bar bg-warning"
+              role="progressbar"
+              :style="{width: skill.rating + '%'}"
+              :aria-valuenow="skill.rating"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              {{ skill.rating }}%
+            </div>
           </div>
         </div>
       </div>
@@ -31,37 +45,34 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
 import sanityClient from "@/sanityClient";
 
-export default {
-  name: 'SkillsPage',
-  data() {
-    return {
-      skills: []
-    };
-  },
-  methods: {
-async fetchSkills() {
+defineOptions({
+  name: 'SkillsPage'
+});
+
+const skills = ref([]);
+
+const fetchSkills = async () => {
   try {
-    this.skills = await sanityClient.fetch(`*[_type == "skill"]{
+    skills.value = await sanityClient.fetch(`*[_type == "skill"]{
       _id,
       name,
       level,
       "logoUrl": logo.asset->url,
       rating
     }`);
-    console.log(this.skills);
+    console.log(skills.value);
   } catch (error) {
     console.error("Error fetching skills:", error);
   }
-}
-
-  },
-  mounted() {
-    this.fetchSkills();
-  }
 };
+
+onMounted(() => {
+  fetchSkills();
+});
 </script>
 
 <style scoped>

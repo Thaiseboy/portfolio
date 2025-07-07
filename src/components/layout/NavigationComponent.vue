@@ -7,7 +7,7 @@
           to="/#home"
           aria-label="Home"
         >
-          <i class="bi bi-house-door icon-large"></i>
+          <i class="bi bi-house-door icon-large" />
         </router-link>
       </li>
       <li class="nav-item mx-3">
@@ -16,7 +16,7 @@
           to="/#skills"
           aria-label="Skills"
         >
-          <i class="bi bi-tools icon-large"></i>
+          <i class="bi bi-tools icon-large" />
         </router-link>
       </li>
       <li class="nav-item mx-3">
@@ -25,7 +25,7 @@
           to="/#project"
           aria-label="Project"
         >
-          <i class="bi bi-folder2-open icon-large"></i>
+          <i class="bi bi-folder2-open icon-large" />
         </router-link>
       </li>
       <li class="nav-item mx-3">
@@ -34,17 +34,17 @@
           to="/#contact"
           aria-label="Contact"
         >
-          <i class="bi bi-envelope icon-large"></i>
+          <i class="bi bi-envelope icon-large" />
         </router-link>
       </li>
     </ul>
   </nav>
 </template>
 
-<script>
-export default {
-  name: "IconComponent",
-};
+<script setup>
+defineOptions({
+  name: "NavigationComponent"
+});
 </script>
 
 <style scoped>

@@ -5,7 +5,9 @@
         <h1 class="mb-2 text-white header-font font-weight-bold font-big">
           <span class="text-red font-weight-bold">Nice </span>to meet you! &#x1F601;
         </h1>
-        <h2 class="text-gold mb-2 text-font">Hi, My name is Master Supakon Karanyawad</h2>
+        <h2 class="text-gold mb-2 text-font">
+          Hi, My name is Master Supakon Karanyawad
+        </h2>
         <h2 class="text-gold text-font">
           but you can call me
           <span class="text-red font-weight-bold">Get &#x1F680;</span>
@@ -15,13 +17,13 @@
           src="@/assets/foto/get.jpeg"
           alt="Master Supakon"
           class="img-small mt-3"
-        />
-      <div class="text-white">
-        <p>
-          Based in the <span class="text-gold">Netherlands</span>, I'm a 
-          <span class="text-red">front-end developer</span> &#x1F4BB;
-        </p>
-      </div>
+        >
+        <div class="text-white">
+          <p>
+            Based in the <span class="text-gold">Netherlands</span>, I'm a 
+            <span class="text-red">front-end developer</span> &#x1F4BB;
+          </p>
+        </div>
         <!-- Social Media Icons -->
         <div class="social-icons mt-3 d-flex justify-content-center">
           <a
@@ -29,14 +31,14 @@
             target="_blank"
             class="text-gold me-3 icon-hover"
           >
-            <i class="bi bi-linkedin" style="font-size: 50px"></i>
+            <i class="bi bi-linkedin social-icon" />
           </a>
           <a
             href="https://github.com/Thaiseboy/Hi-"
             target="_blank"
             class="text-gold me-3 icon-hover"
           >
-            <i class="bi bi-github" style="font-size: 50px"></i>
+            <i class="bi bi-github social-icon" />
           </a>
         </div>
       </div>
@@ -44,10 +46,10 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "HomePage",
-};
+<script setup>
+defineOptions({
+  name: "HomePage"
+});
 </script>
 
 <style scoped>
@@ -136,6 +138,10 @@ p {
   text-align: center;
   width: 90%;
   margin: 0 auto;
+}
+
+.social-icon {
+  font-size: 50px;
 }
 </style>
 

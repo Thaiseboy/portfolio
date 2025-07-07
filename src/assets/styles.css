@@ -1,12 +1,27 @@
-/* Algemene tekststijlen */
+/* CSS Custom Properties (CSS Variables) */
+:root {
+  --color-primary: #FFD700;
+  --color-secondary: #FF0000;
+  --color-text: #FFFFFF;
+  --color-background: #000000;
+  --color-background-gradient: linear-gradient(to bottom, rgb(0, 0, 0), rgb(80, 80, 80));
+  --color-background-mobile: linear-gradient(to bottom, rgb(0, 0, 0), rgb(50, 50, 50));
+  --font-primary: "Raleway", sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-bold: 800;
+  --border-radius: 10px;
+  --transition-speed: 0.3s;
+}
+
+/* Utility classes using CSS variables */
 .text-gold {
-  color: #FFD700 ;
+  color: var(--color-primary);
 }
 .text-white {
-  color: white;
+  color: var(--color-text);
 }
 .text-red {
-  color: red;
+  color: var(--color-secondary);
 }
 .font-weight-bold {
   font-weight: bold; 
@@ -15,20 +30,22 @@
   cursor: pointer;
 }
 
-/* Lettertyp header */
+/* Google Fonts import */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Typography */
 .header-font {
-  font-family: "Raleway", sans-serif;
+  font-family: var(--font-primary);
   font-optical-sizing: auto;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   font-style: normal;
 }
 
-/* Lettertyp voor hele pagina */
+/* Global font settings */
 * {
-  font-family: "Raleway", sans-serif;
+  font-family: var(--font-primary);
   font-optical-sizing: auto;
-  font-weight: 400;
+  font-weight: var(--font-weight-normal);
   font-style: normal;
 }
 
