@@ -1,52 +1,72 @@
-# Portfolio van (Get) Master Supakon Karanyawad
+# Portfolio - Master Supakon Karanyawad (Get)
 
-Welkom bij mijn portfolio-website. Dit project toont mijn werk, vaardigheden, en geeft bezoekers de mogelijkheid om contact met mij op te nemen. Het project is gebouwd met moderne webtechnologieën en wordt gehost op een live domein.
+> Modern portfolio website showcasing front-end development skills and projects
 
-## Overzicht
-Deze portfolio-website dient als een persoonlijk visitekaartje waar bezoekers meer te weten kunnen komen over mijn vaardigheden, projecten, en hoe ze met mij in contact kunnen komen. De website bevat de volgende secties:
+![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Sanity](https://img.shields.io/badge/Sanity-F03E2F?style=for-the-badge&logo=sanity&logoColor=white)
 
-- **Home:** Een introductie en persoonlijke begroeting.
-- **Skills:** Een overzicht van mijn vaardigheden met geanimeerde weergave.
-- **Projecten:** Een overzicht van mijn recente projecten met gedetailleerde beschrijvingen en screenshots.
-- **Contact:** Een contactformulier en social media links, inclusief een mogelijkheid om mijn CV te downloaden.
+**[Live Demo →](https://getdeveloper.nl)**
 
-## Screenshots
-![Homepage](screenshots/homepage.png)
-![Skills Page](screenshots/skills.png)
-![Project Page](screenshots/projects.png)
+## Features
 
-## Live Demo
+- **Vue 3 Composition API** with TypeScript support
+- **Responsive Design** - Mobile-first approach
+- **Docker Ready** - Production and development containers
+- **Headless CMS** - Dynamic content with Sanity.io
+- **Performance Optimized** - Fast loading and SEO ready
 
-Bekijk de live versie van de website [hier](https://thaiseboy.netlify.app/).
+## Tech Stack
 
+- **Frontend**: Vue.js 3, TypeScript, Bootstrap 5, GSAP
+- **CMS**: Sanity.io
+- **DevOps**: Docker, Nginx
+- **Deployment**: Netlify
 
-## Technologieën
-Deze website is gebouwd met de volgende technologieën:
-- **Vue.js:** Het front-end framework gebruikt om de componenten en interactieve elementen van de website te bouwen.
-- **GSAP:** Gebruikt voor geavanceerde animaties en scroll-effecten.
-- **Sanity.io:** Headless CMS voor het beheren van de inhoud van de website, zoals projecten en vaardigheden.
-- **Node.js:** Gebruikt voor de back-end services.
-- **CSS3:** Voor styling en lay-out.
-- **HTML5:** Voor de basisopbouw van de website.
+## Quick Start
 
-## Licentie
-Dit project is gelicenseerd onder de MIT-licentie - zie het [LICENSE](LICENSE) bestand voor details.
+```bash
+# Development
+npm install
+npm run dev
 
-## Bekende Problemen
-- Animaties kunnen op bepaalde mobiele apparaten niet optimaal werken.
-- In bepaalde browsers kunnen er lichte rendering issues optreden.
+# Docker (Production)
+./docker-scripts.sh prod
 
-## Toekomstige Verbeteringen
-- Toevoegen van meer projecten en updates aan de bestaande projecten.
-- Uitbreiden van de vaardigheden sectie met certificeringen.
-- Integratie met een backend API voor dynamische data.
-- Verbeterde toegankelijkheid en performance optimalisaties.
+# Docker (Development)
+./docker-scripts.sh dev
+```
 
+## Development
+
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run lint     # Run ESLint
+```
+
+## Docker Commands
+
+```bash
+# Production (localhost:3000)
+docker-compose up -d portfolio
+
+# Development with hot reload (localhost:8080)
+docker-compose --profile dev up portfolio-dev
+
+# Stop containers
+docker-compose down
+```
 
 ## Contact
-Heb je vragen of wil je contact met me opnemen? Je kunt me bereiken via:
-- **Email:** get_sarun@hotmail.com
-- **LinkedIn:** [Get MS Karanyawad](https://www.linkedin.com/in/get-ms-karanyawad)
-- **GitHub:** [Thaiseboy](https://github.com/Thaiseboy)
-- **Instagram:** [Thaiseboy](https://www.instagram.com/thaiseboy/)
 
+**Master Supakon Karanyawad (Get)**
+
+- **Email**: get_sarun@hotmail.com
+- **LinkedIn**: [Get MS Karanyawad](https://www.linkedin.com/in/get-ms-karanyawad)
+- **GitHub**: [Thaiseboy](https://github.com/Thaiseboy)
+
+---
+
+Built with Vue.js • TypeScript • Docker • Sanity CMS
