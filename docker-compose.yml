@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  portfolio:
+    build: .
+    ports:
+      - "3000:80"
+    container_name: portfolio-vue
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - portfolio-network
+
+  # Optional: Development container
+  portfolio-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    container_name: portfolio-vue-dev
+    environment:
+      - NODE_ENV=development
+    networks:
+      - portfolio-network
+    profiles:
+      - dev
+
+networks:
+  portfolio-network:
+    driver: bridge
