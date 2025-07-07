@@ -13,6 +13,12 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Set build-time environment variables
+ARG VITE_SANITY_PROJECT_ID
+ARG VITE_SANITY_DATASET  
+ARG VITE_SANITY_API_VERSION
+ARG VITE_SANITY_USE_CDN
+
 # Create production build
 RUN npm run build
 

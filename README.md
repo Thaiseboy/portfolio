@@ -29,9 +29,11 @@
 ```bash
 # Development
 npm install
+cp .env.example .env  # Configure your environment variables
 npm run dev
 
 # Docker (Production)
+cp .env.example .env  # Configure your environment variables
 ./docker-scripts.sh prod
 
 # Docker (Development)

@@ -9,6 +9,10 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
+      - VITE_SANITY_PROJECT_ID=${VITE_SANITY_PROJECT_ID}
+      - VITE_SANITY_DATASET=${VITE_SANITY_DATASET}
+      - VITE_SANITY_API_VERSION=${VITE_SANITY_API_VERSION}
+      - VITE_SANITY_USE_CDN=${VITE_SANITY_USE_CDN}
     networks:
       - portfolio-network
 
@@ -25,6 +29,10 @@ services:
     container_name: portfolio-vue-dev
     environment:
       - NODE_ENV=development
+      - VITE_SANITY_PROJECT_ID=${VITE_SANITY_PROJECT_ID}
+      - VITE_SANITY_DATASET=${VITE_SANITY_DATASET}
+      - VITE_SANITY_API_VERSION=${VITE_SANITY_API_VERSION}
+      - VITE_SANITY_USE_CDN=${VITE_SANITY_USE_CDN}
     networks:
       - portfolio-network
     profiles:
