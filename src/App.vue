@@ -2,21 +2,23 @@
   <div id="app">
     <HeaderComponent />
     <NavigationComponent />
-    <section id="home">
-      <HomePage />
-    </section>
-    <section id="about">
-      <AboutMe />
-    </section>
-    <section id="skills">
-      <SkillsPage />
-    </section>
-    <section id="project">
-      <ProjectPage />
-    </section>
-    <section id="contact">
-      <ContactPage />
-    </section>
+    <main>
+      <section id="home">
+        <HomePage />
+      </section>
+      <section id="about">
+        <AboutMe />
+      </section>
+      <section id="skills">
+        <SkillsPage />
+      </section>
+      <section id="project">
+        <ProjectPage />
+      </section>
+      <section id="contact">
+        <ContactPage />
+      </section>
+    </main>
     <FooterComponent />
   </div>
 </template>

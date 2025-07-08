@@ -13,6 +13,15 @@
       <li class="nav-item mx-3">
         <router-link
           class="nav-link text-gold font-weight-bold header-font"
+          to="/#about"
+          aria-label="About"
+        >
+          <i class="bi bi-person icon-large" />
+        </router-link>
+      </li>
+      <li class="nav-item mx-3">
+        <router-link
+          class="nav-link text-gold font-weight-bold header-font"
           to="/#skills"
           aria-label="Skills"
         >
