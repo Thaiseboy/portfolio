@@ -6,7 +6,6 @@
     
     <div class="contact-container">
       <div class="contact-content">
-      <!-- Link naar Social Media -->
       <div class="social-media-box">
         <h2 class="text-white text-center">
           Follow me &#x1F447;
@@ -45,7 +44,6 @@
         </div>
       </div>
 
-      <!-- Contact Formulier -->
       <div class="contact-form-box">
         <h2 class="text-white text-center">
           If you have more questions, feel free to ask &#x1F4E9;
@@ -92,7 +90,6 @@
           </button>
         </form>
 
-        <!-- CV Download Section -->
         <ErrorBoundary :on-retry="retryFetchCV">
           <div class="cv-download mt-4">
             <SkeletonLoader 
@@ -160,7 +157,7 @@ const sendEmail = async () => {
     body: `Name: ${form.name}\nEmail: ${form.email}\nMessage: ${form.message}`,
   };
 
-  // Simpel e-mail versturen via een API of mailto-link
+  // Simple email sending via an API or mailto-link
   window.location.href = `mailto:${emailData.to}?subject=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailData.body)}`;
 };
 
@@ -178,6 +175,4 @@ onMounted(() => {
 });
 </script>
 <style scoped lang="scss">
-// All styles are now handled by SCSS partials in /assets/scss/pages/_contact.scss
-// Custom component-specific styles can be added here if needed
 </style>

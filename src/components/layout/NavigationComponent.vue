@@ -57,12 +57,10 @@ defineOptions({
 </script>
 
 <style scoped>
-/* Grotere Bootstrap Iconen */
 .icon-large {
   font-size: 3rem;
 }
 
-/* Router Link Styling */
 .nav-link {
   text-decoration: none;
   position: relative;
@@ -91,7 +89,6 @@ defineOptions({
   color: red;
 }
 
-/* Sticky Style */
 .sticky-icons {
   position: sticky;
   top: 0;
@@ -108,14 +105,12 @@ defineOptions({
   margin: 20px auto;
 }
 
-/* Icon breder uit elkaar voor grotere schermen */
 @media (min-width: 640px) {
   .nav-item {
     margin-right: 30px;
   }
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 640px) {
   .icon-large {
     font-size: 2rem;

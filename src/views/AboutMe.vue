@@ -97,6 +97,4 @@ onMounted(loadPhotos);
 </script>
 
 <style scoped lang="scss">
-// All styles are now handled by SCSS partials in /assets/scss/pages/_about.scss
-// Custom component-specific styles can be added here if needed
 </style>

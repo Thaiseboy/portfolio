@@ -19,7 +19,6 @@ defineOptions({
 </script>
 
 <style scoped>
-/* Header container fills full screen height */
 .header-container {
   display: flex;
   justify-content: center;
@@ -31,13 +30,11 @@ defineOptions({
   box-sizing: border-box;
 }
 
-/* Logo styling for large screens */
 .logo-img {
   max-height: 200px;
   margin: 0 auto; 
 }
 
-/* Responsive design for different screen sizes */
 @media (max-width: 640px) {
   .logo-img {
     max-height: 12vh; 
