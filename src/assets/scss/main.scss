@@ -1,32 +1,20 @@
-// Main SCSS Entry Point
+@use 'utils/variables';
+@use 'utils/mixins';
 
-// Utils (moet eerst geladen worden)
-@import 'utils/variables';
-@import 'utils/mixins';
+@use 'base/reset';
+@use 'base/typography';
 
-// Base styles
-@import 'base/reset';
-@import 'base/typography';
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/forms';
+@use 'components/skeleton';
 
-// Components
-@import 'components/buttons';
-@import 'components/cards';
-@import 'components/forms';
-@import 'components/skeleton';
+@use 'pages/home';
+@use 'pages/about';
+@use 'pages/skills';
+@use 'pages/projects';
+@use 'pages/contact';
 
-// Layout components kunnen hier toegevoegd worden
-// @import 'layout/header';
-// @import 'layout/footer';
-// @import 'layout/navigation';
-
-// Pages
-@import 'pages/home';
-@import 'pages/about';
-@import 'pages/skills';
-@import 'pages/projects';
-@import 'pages/contact';
-
-// Global utility classes
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -45,7 +33,6 @@
   }
 }
 
-// Margin utilities
 .mt-3 { margin-top: $spacing-lg; }
 .mb-3 { margin-bottom: $spacing-lg; }
 .mt-4 { margin-top: $spacing-xl; }
@@ -53,7 +40,6 @@
 .mt-5 { margin-top: $spacing-xxl; }
 .mb-5 { margin-bottom: $spacing-xxl; }
 
-// Display utilities
 .d-flex { display: flex; }
 .d-block { display: block; }
 .d-none { display: none; }
