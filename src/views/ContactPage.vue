@@ -35,7 +35,7 @@
         </div>
         <div class="personal-message mt-4">
           <img
-            src="@/assets/foto/get2.jpeg"
+            src="@/assets/foto/optimized/get2.jpeg"
             alt="Photo of Get Karanyawad"
             class="personal-photo"
           >

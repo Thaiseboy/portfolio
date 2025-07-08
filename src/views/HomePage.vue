@@ -14,7 +14,7 @@
         </h2>
         
         <img
-          src="@/assets/foto/get.jpeg"
+          src="@/assets/foto/optimized/get.jpeg"
           alt="Master Supakon"
           class="home-hero__image"
         />

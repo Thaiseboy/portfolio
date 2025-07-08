@@ -10,7 +10,7 @@ const routes = [
       description: "Master Supakon Karanyawad - Front-end developer based in Netherlands. Specialized in Vue.js, TypeScript, and modern web technologies."
     }
   },
-  // Redirect all other paths to home
+
   {
     path: "/:pathMatch(.*)*",
     redirect: "/"
