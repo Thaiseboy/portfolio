@@ -7,16 +7,24 @@
         <HomePage />
       </section>
       <section id="about">
-        <AboutMe />
+        <LazySection>
+          <AboutMe />
+        </LazySection>
       </section>
       <section id="skills">
-        <SkillsPage />
+        <LazySection>
+          <SkillsPage />
+        </LazySection>
       </section>
       <section id="project">
-        <ProjectPage />
+        <LazySection>
+          <ProjectPage />
+        </LazySection>
       </section>
       <section id="contact">
-        <ContactPage />
+        <LazySection>
+          <ContactPage />
+        </LazySection>
       </section>
     </main>
     <FooterComponent />
@@ -24,14 +32,20 @@
 </template>
 
 <script setup>
+import { defineAsyncComponent } from 'vue'
 import HeaderComponent from "@/components/layout/HeaderComponent.vue";
 import FooterComponent from "@/components/layout/FooterComponent.vue";
 import NavigationComponent from "@/components/layout/NavigationComponent.vue";
 import HomePage from "@/views/HomePage.vue";
-import AboutMe from "./views/AboutMe.vue";
-import SkillsPage from "@/views/SkillsPage.vue";
-import ProjectPage from "@/views/ProjectPage.vue";
-import ContactPage from "@/views/ContactPage.vue";
+
+// Lazy load heavy components
+const AboutMe = defineAsyncComponent(() => import("@/views/AboutMe.vue"));
+const SkillsPage = defineAsyncComponent(() => import("@/views/SkillsPage.vue"));
+const ProjectPage = defineAsyncComponent(() => import("@/views/ProjectPage.vue"));
+const ContactPage = defineAsyncComponent(() => import("@/views/ContactPage.vue"));
+
+// LazySection component to handle intersection observer
+const LazySection = defineAsyncComponent(() => import("@/components/ui/LazySection.vue"));
 
 defineOptions({
   name: "App"
