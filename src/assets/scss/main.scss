@@ -1,19 +1,19 @@
-@use 'utils/variables' as *;
-@use 'utils/mixins' as *;
+@import 'utils/variables';
+@import 'utils/mixins';
 
-@use 'base/reset';
-@use 'base/typography';
+@import 'base/reset';
+@import 'base/typography';
 
-@use 'components/buttons';
-@use 'components/cards';
-@use 'components/forms';
-@use 'components/skeleton';
+@import 'components/buttons';
+@import 'components/cards';
+@import 'components/forms';
+@import 'components/skeleton';
 
-@use 'pages/home';
-@use 'pages/about';
-@use 'pages/skills';
-@use 'pages/projects';
-@use 'pages/contact';
+@import 'pages/home';
+@import 'pages/about';
+@import 'pages/skills';
+@import 'pages/projects';
+@import 'pages/contact';
 
 .container {
   max-width: 1200px;
