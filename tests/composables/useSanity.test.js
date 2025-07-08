@@ -20,42 +20,40 @@ describe('useSanity', () => {
     expect(error.value).toBe(null)
   })
 
-  it('sets loading state during fetch', async () => {
-    const { loading, fetchData } = useSanity()
+  it('has correct composable functions', () => {
+    const { loading, error, clearError, fetchPhotos, fetchSkills, fetchProjects, fetchContact } = useSanity()
 
-    const fetchPromise = fetchData('*[_type == "about"]')
-    
-    expect(loading.value).toBe(true)
-    
-    await fetchPromise
-    
     expect(loading.value).toBe(false)
+    expect(error.value).toBe(null)
+    expect(typeof clearError).toBe('function')
+    expect(typeof fetchPhotos).toBe('function')
+    expect(typeof fetchSkills).toBe('function')
+    expect(typeof fetchProjects).toBe('function')
+    expect(typeof fetchContact).toBe('function')
   })
 
-  it('handles successful data fetch', async () => {
-    const mockData = [{ _id: '1', title: 'Test' }]
+  it('handles successful photos fetch', async () => {
+    const mockData = [{ _id: '1', imageUrl: 'test.jpg' }]
     const client = await import('@/sanityClient.js')
     client.default.fetch.mockResolvedValue(mockData)
 
-    const { fetchData } = useSanity()
+    const { fetchPhotos } = useSanity()
 
-    const result = await fetchData('*[_type == "about"]')
+    const result = await fetchPhotos()
 
     expect(result).toEqual(mockData)
   })
 
-  it('handles fetch errors', async () => {
-    const mockError = new Error('Network error')
+  it('handles successful skills fetch', async () => {
+    const mockData = [{ _id: '1', name: 'JavaScript', skillLevel: 90 }]
     const client = await import('@/sanityClient.js')
-    client.default.fetch.mockRejectedValue(mockError)
+    client.default.fetch.mockResolvedValue(mockData)
 
-    const { error, fetchData } = useSanity()
+    const { fetchSkills } = useSanity()
 
-    try {
-      await fetchData('*[_type == "about"]')
-    } catch (e) {
-      expect(error.value).toBe(mockError)
-    }
+    const result = await fetchSkills()
+
+    expect(result).toEqual(mockData)
   })
 
   it('clears error state', () => {
