@@ -146,8 +146,9 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue';
-import { useSanity } from '@/composables/useSanity';
+import { onMounted } from 'vue';
+import { useContactForm } from '@/composables/useContactForm';
+import { useCV } from '@/composables/useCV';
 import ErrorBoundary from '@/components/ui/ErrorBoundary.vue';
 import SkeletonLoader from '@/components/ui/SkeletonLoader.vue';
 
@@ -155,158 +156,28 @@ defineOptions({
   name: 'ContactPage'
 });
 
-const form = reactive({
-  name: '',
-  email: '',
-  message: '',
-});
+// Contact form composable
+const {
+  form,
+  isSubmitting,
+  errors: formErrors,
+  isValid: isFormValid,
+  validateField,
+  submitForm,
+} = useContactForm();
 
-const formErrors = reactive({
-  name: '',
-  email: '',
-  message: '',
-});
+// CV download composable
+const {
+  cvLink,
+  cvLoading,
+  fetchCV,
+  downloadCV,
+  retryFetchCV,
+} = useCV();
 
-const isSubmitting = ref(false);
-const cvLink = ref(null);
-const cvLoading = ref(false);
-const { fetchContact, clearError } = useSanity();
-
-// Input validation rules
-const validateName = (name) => {
-  if (!name || name.trim().length === 0) {
-    return 'Name is required';
-  }
-  if (name.trim().length < 2) {
-    return 'Name must be at least 2 characters long';
-  }
-  if (name.trim().length > 50) {
-    return 'Name must be less than 50 characters';
-  }
-  if (!/^[a-zA-Z\s\-']+$/.test(name.trim())) {
-    return 'Name can only contain letters, spaces, hyphens, and apostrophes';
-  }
-  return '';
-};
-
-const validateEmail = (email) => {
-  if (!email || email.trim().length === 0) {
-    return 'Email is required';
-  }
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email.trim())) {
-    return 'Please enter a valid email address';
-  }
-  if (email.trim().length > 254) {
-    return 'Email address is too long';
-  }
-  return '';
-};
-
-const validateMessage = (message) => {
-  if (!message || message.trim().length === 0) {
-    return 'Message is required';
-  }
-  if (message.trim().length < 10) {
-    return 'Message must be at least 10 characters long';
-  }
-  if (message.trim().length > 1000) {
-    return 'Message must be less than 1000 characters';
-  }
-  return '';
-};
-
-// Input sanitization
-const sanitizeInput = (input) => {
-  return input
-    .replace(/[<>]/g, '') // Remove potential HTML tags
-    .replace(/javascript:/gi, '') // Remove javascript: protocols
-    .replace(/on\w+=/gi, '') // Remove event handlers
-    .trim();
-};
-
-// Real-time validation
-const validateField = (field) => {
-  switch (field) {
-    case 'name':
-      formErrors.name = validateName(form.name);
-      break;
-    case 'email':
-      formErrors.email = validateEmail(form.email);
-      break;
-    case 'message':
-      formErrors.message = validateMessage(form.message);
-      break;
-  }
-};
-
-const isFormValid = computed(() => {
-  return !formErrors.name && !formErrors.email && !formErrors.message &&
-         form.name.trim() && form.email.trim() && form.message.trim();
-});
-
-const fetchCV = async () => {
-  cvLoading.value = true;
-  try {
-    const result = await fetchContact();
-    if (result && result.length > 0) {
-      cvLink.value = result[0].pdfUrl;
-    }
-  } catch (error) {
-    console.error("Error fetching CV:", error);
-  } finally {
-    cvLoading.value = false;
-  }
-};
-
+// Form submission handler
 const sendEmail = async () => {
-  // Validate all fields
-  validateField('name');
-  validateField('email');
-  validateField('message');
-
-  if (!isFormValid.value) {
-    return;
-  }
-
-  isSubmitting.value = true;
-
-  try {
-    // Sanitize inputs
-    const sanitizedName = sanitizeInput(form.name);
-    const sanitizedEmail = sanitizeInput(form.email);
-    const sanitizedMessage = sanitizeInput(form.message);
-
-    const emailData = {
-      to: 'get_sarun@hotmail.com',
-      subject: `Portfolio Contact: ${sanitizedName}`,
-      body: `Name: ${sanitizedName}\nEmail: ${sanitizedEmail}\nMessage: ${sanitizedMessage}`,
-    };
-
-    // Simple email sending via mailto-link
-    window.location.href = `mailto:${emailData.to}?subject=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailData.body)}`;
-    
-    // Reset form after successful submission
-    form.name = '';
-    form.email = '';
-    form.message = '';
-    formErrors.name = '';
-    formErrors.email = '';
-    formErrors.message = '';
-  } catch (error) {
-    console.error('Error sending email:', error);
-  } finally {
-    isSubmitting.value = false;
-  }
-};
-
-const downloadCV = () => {
-  window.open(cvLink.value, '_blank');
-};
-
-const retryFetchCV = () => {
-  clearError();
-  fetchCV();
+  await submitForm('get_sarun@hotmail.com');
 };
 
 onMounted(() => {

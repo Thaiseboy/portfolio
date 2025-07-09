@@ -10,43 +10,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { useIntersectionObserver } from '@/composables/useIntersectionObserver'
 import SkeletonLoader from './SkeletonLoader.vue'
 
 defineOptions({
   name: "LazySection"
 })
 
-const sectionRef = ref(null)
-const isVisible = ref(false)
-let observer = null
-
-const handleIntersection = (entries) => {
-  const [entry] = entries
-  if (entry.isIntersecting && !isVisible.value) {
-    isVisible.value = true
-    // Once visible, stop observing
-    if (observer) {
-      observer.disconnect()
-    }
-  }
-}
-
-onMounted(() => {
-  if (sectionRef.value) {
-    observer = new IntersectionObserver(handleIntersection, {
-      root: null,
-      rootMargin: '50px', // Load 50px before entering viewport
-      threshold: 0.1
-    })
-    observer.observe(sectionRef.value)
-  }
-})
-
-onUnmounted(() => {
-  if (observer) {
-    observer.disconnect()
-  }
+// Use intersection observer for lazy loading sections
+const { isIntersecting: isVisible, targetRef: sectionRef } = useIntersectionObserver({
+  rootMargin: '50px',
+  threshold: 0.1,
+  once: true // Stop observing after first intersection
 })
 </script>
 

@@ -6,7 +6,7 @@
       :alt="alt"
       :class="imgClass"
       @load="onLoad"
-      @error="onError"
+      @error="handleError"
     >
     <div
       v-else-if="isIntersecting"
@@ -24,7 +24,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { useIntersectionObserver } from '@/composables/useIntersectionObserver';
+import { useImageLoader } from '@/composables/useImageLoader';
 
 defineOptions({
   name: 'LazyImage'
@@ -49,48 +50,18 @@ const props = defineProps({
   }
 });
 
-const isIntersecting = ref(false);
-const isLoaded = ref(false);
-const containerRef = ref(null);
-let observer = null;
-
-const startObserving = () => {
-  observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          isIntersecting.value = true;
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      rootMargin: '50px'
-    }
-  );
-  
-  if (containerRef.value) {
-    observer.observe(containerRef.value);
-  }
-};
-
-const onLoad = () => {
-  isLoaded.value = true;
-};
-
-const onError = () => {
-  console.error('Failed to load image:', props.src);
-};
-
-onMounted(() => {
-  startObserving();
+// Use intersection observer for lazy loading
+const { isIntersecting, targetRef: containerRef } = useIntersectionObserver({
+  rootMargin: '50px'
 });
 
-onUnmounted(() => {
-  if (observer) {
-    observer.disconnect();
-  }
-});
+// Use image loader for loading states
+const { isLoaded, onLoad, onError } = useImageLoader();
+
+// Handle image error with props
+const handleError = () => {
+  onError(props.src);
+};
 </script>
 
 <style scoped>
