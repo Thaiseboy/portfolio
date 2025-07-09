@@ -60,7 +60,15 @@
               type="text"
               required
               class="form-control"
+              :class="{ 'is-invalid': formErrors.name }"
+              @blur="validateField('name')"
+              @input="validateField('name')"
+              autocomplete="name"
+              maxlength="50"
             >
+            <div v-if="formErrors.name" class="invalid-feedback">
+              {{ formErrors.name }}
+            </div>
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
@@ -70,7 +78,15 @@
               type="email"
               required
               class="form-control"
+              :class="{ 'is-invalid': formErrors.email }"
+              @blur="validateField('email')"
+              @input="validateField('email')"
+              autocomplete="email"
+              maxlength="254"
             >
+            <div v-if="formErrors.email" class="invalid-feedback">
+              {{ formErrors.email }}
+            </div>
           </div>
           <div class="form-group">
             <label for="message">Message:</label>
@@ -79,14 +95,27 @@
               v-model="form.message"
               required
               class="form-control"
+              :class="{ 'is-invalid': formErrors.message }"
+              @blur="validateField('message')"
+              @input="validateField('message')"
+              rows="4"
+              maxlength="1000"
             />
+            <div v-if="formErrors.message" class="invalid-feedback">
+              {{ formErrors.message }}
+            </div>
+            <small class="form-text text-muted">
+              {{ form.message.length }}/1000 characters
+            </small>
           </div>
           <button
             type="submit"
             class="btn btn-warning"
+            :disabled="!isFormValid || isSubmitting"
             aria-label="Submit contact form"
           >
-            Submit
+            <span v-if="isSubmitting">Sending...</span>
+            <span v-else>Submit</span>
           </button>
         </form>
 
@@ -117,7 +146,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import { useSanity } from '@/composables/useSanity';
 import ErrorBoundary from '@/components/ui/ErrorBoundary.vue';
 import SkeletonLoader from '@/components/ui/SkeletonLoader.vue';
@@ -132,9 +161,89 @@ const form = reactive({
   message: '',
 });
 
+const formErrors = reactive({
+  name: '',
+  email: '',
+  message: '',
+});
+
+const isSubmitting = ref(false);
 const cvLink = ref(null);
 const cvLoading = ref(false);
 const { fetchContact, clearError } = useSanity();
+
+// Input validation rules
+const validateName = (name) => {
+  if (!name || name.trim().length === 0) {
+    return 'Name is required';
+  }
+  if (name.trim().length < 2) {
+    return 'Name must be at least 2 characters long';
+  }
+  if (name.trim().length > 50) {
+    return 'Name must be less than 50 characters';
+  }
+  if (!/^[a-zA-Z\s\-']+$/.test(name.trim())) {
+    return 'Name can only contain letters, spaces, hyphens, and apostrophes';
+  }
+  return '';
+};
+
+const validateEmail = (email) => {
+  if (!email || email.trim().length === 0) {
+    return 'Email is required';
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email.trim())) {
+    return 'Please enter a valid email address';
+  }
+  if (email.trim().length > 254) {
+    return 'Email address is too long';
+  }
+  return '';
+};
+
+const validateMessage = (message) => {
+  if (!message || message.trim().length === 0) {
+    return 'Message is required';
+  }
+  if (message.trim().length < 10) {
+    return 'Message must be at least 10 characters long';
+  }
+  if (message.trim().length > 1000) {
+    return 'Message must be less than 1000 characters';
+  }
+  return '';
+};
+
+// Input sanitization
+const sanitizeInput = (input) => {
+  return input
+    .replace(/[<>]/g, '') // Remove potential HTML tags
+    .replace(/javascript:/gi, '') // Remove javascript: protocols
+    .replace(/on\w+=/gi, '') // Remove event handlers
+    .trim();
+};
+
+// Real-time validation
+const validateField = (field) => {
+  switch (field) {
+    case 'name':
+      formErrors.name = validateName(form.name);
+      break;
+    case 'email':
+      formErrors.email = validateEmail(form.email);
+      break;
+    case 'message':
+      formErrors.message = validateMessage(form.message);
+      break;
+  }
+};
+
+const isFormValid = computed(() => {
+  return !formErrors.name && !formErrors.email && !formErrors.message &&
+         form.name.trim() && form.email.trim() && form.message.trim();
+});
 
 const fetchCV = async () => {
   cvLoading.value = true;
@@ -151,14 +260,44 @@ const fetchCV = async () => {
 };
 
 const sendEmail = async () => {
-  const emailData = {
-    to: 'get_sarun@hotmail.com',
-    subject: `Contact form from ${form.name}`,
-    body: `Name: ${form.name}\nEmail: ${form.email}\nMessage: ${form.message}`,
-  };
+  // Validate all fields
+  validateField('name');
+  validateField('email');
+  validateField('message');
 
-  // Simple email sending via an API or mailto-link
-  window.location.href = `mailto:${emailData.to}?subject=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailData.body)}`;
+  if (!isFormValid.value) {
+    return;
+  }
+
+  isSubmitting.value = true;
+
+  try {
+    // Sanitize inputs
+    const sanitizedName = sanitizeInput(form.name);
+    const sanitizedEmail = sanitizeInput(form.email);
+    const sanitizedMessage = sanitizeInput(form.message);
+
+    const emailData = {
+      to: 'get_sarun@hotmail.com',
+      subject: `Portfolio Contact: ${sanitizedName}`,
+      body: `Name: ${sanitizedName}\nEmail: ${sanitizedEmail}\nMessage: ${sanitizedMessage}`,
+    };
+
+    // Simple email sending via mailto-link
+    window.location.href = `mailto:${emailData.to}?subject=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailData.body)}`;
+    
+    // Reset form after successful submission
+    form.name = '';
+    form.email = '';
+    form.message = '';
+    formErrors.name = '';
+    formErrors.email = '';
+    formErrors.message = '';
+  } catch (error) {
+    console.error('Error sending email:', error);
+  } finally {
+    isSubmitting.value = false;
+  }
 };
 
 const downloadCV = () => {
@@ -175,4 +314,27 @@ onMounted(() => {
 });
 </script>
 <style scoped lang="scss">
+.form-control.is-invalid {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.invalid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: #dc3545;
+}
+
+.form-text {
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: #6c757d;
+}
+
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
 </style>
