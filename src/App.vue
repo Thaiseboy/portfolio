@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <HeaderComponent />
-    <NavigationComponent />
+    <AppHeader />
+    <AppNavigation />
     <main>
       <section id="home">
         <HomePage />
       </section>
       <section id="about">
         <LazySection>
-          <AboutMe />
+          <AboutPage />
         </LazySection>
       </section>
       <section id="skills">
@@ -27,19 +27,19 @@
         </LazySection>
       </section>
     </main>
-    <FooterComponent />
+    <AppFooter />
   </div>
 </template>
 
 <script setup>
 import { defineAsyncComponent } from 'vue'
-import HeaderComponent from "@/components/layout/HeaderComponent.vue";
-import FooterComponent from "@/components/layout/FooterComponent.vue";
-import NavigationComponent from "@/components/layout/NavigationComponent.vue";
+import AppHeader from "@/components/layout/AppHeader.vue";
+import AppFooter from "@/components/layout/AppFooter.vue";
+import AppNavigation from "@/components/layout/AppNavigation.vue";
 import HomePage from "@/views/HomePage.vue";
 
 // Lazy load heavy components
-const AboutMe = defineAsyncComponent(() => import("@/views/AboutMe.vue"));
+const AboutPage = defineAsyncComponent(() => import("@/views/AboutPage.vue"));
 const SkillsPage = defineAsyncComponent(() => import("@/views/SkillsPage.vue"));
 const ProjectPage = defineAsyncComponent(() => import("@/views/ProjectPage.vue"));
 const ContactPage = defineAsyncComponent(() => import("@/views/ContactPage.vue"));

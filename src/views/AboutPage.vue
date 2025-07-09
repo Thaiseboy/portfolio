@@ -67,7 +67,7 @@ import ErrorBoundary from '@/components/ui/ErrorBoundary.vue';
 import SkeletonLoader from '@/components/ui/SkeletonLoader.vue';
 
 defineOptions({
-    name: 'AboutMe'
+    name: 'AboutPage'
 });
 
 const photos = ref([]);

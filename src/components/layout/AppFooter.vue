@@ -13,7 +13,7 @@
 
 <script setup>
 defineOptions({
-  name: 'FooterComponent'
+  name: 'AppFooter'
 });
 </script>
 

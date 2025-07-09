@@ -52,7 +52,7 @@
 
 <script setup>
 defineOptions({
-  name: "NavigationComponent"
+  name: "AppNavigation"
 });
 </script>
 
