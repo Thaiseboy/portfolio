@@ -1,7 +1,7 @@
 <template>
   <nav class="sticky-icons">
-    <ul class="nav justify-content-center">
-      <li class="nav-item mx-3">
+    <ul class="nav-list">
+      <li class="nav-item">
         <router-link
           class="nav-link text-gold font-weight-bold header-font"
           to="/#home"
@@ -10,7 +10,7 @@
           <i class="bi bi-house-door icon-large" />
         </router-link>
       </li>
-      <li class="nav-item mx-3">
+      <li class="nav-item">
         <router-link
           class="nav-link text-gold font-weight-bold header-font"
           to="/#about"
@@ -19,7 +19,7 @@
           <i class="bi bi-person icon-large" />
         </router-link>
       </li>
-      <li class="nav-item mx-3">
+      <li class="nav-item">
         <router-link
           class="nav-link text-gold font-weight-bold header-font"
           to="/#skills"
@@ -28,7 +28,7 @@
           <i class="bi bi-tools icon-large" />
         </router-link>
       </li>
-      <li class="nav-item mx-3">
+      <li class="nav-item">
         <router-link
           class="nav-link text-gold font-weight-bold header-font"
           to="/#project"
@@ -37,7 +37,7 @@
           <i class="bi bi-folder2-open icon-large" />
         </router-link>
       </li>
-      <li class="nav-item mx-3">
+      <li class="nav-item">
         <router-link
           class="nav-link text-gold font-weight-bold header-font"
           to="/#contact"
@@ -57,13 +57,42 @@ defineOptions({
 </script>
 
 <style scoped>
-.icon-large {
-  font-size: 3rem;
+.sticky-icons {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
 }
 
 .nav-link {
   text-decoration: none;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
 }
 
 .nav-link::after {
@@ -83,51 +112,53 @@ defineOptions({
 
 .nav-link:hover {
   color: white;
+  transform: translateY(-2px);
 }
 
 .nav-link.active {
   color: red;
 }
 
-.sticky-icons {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  padding: 10px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 20px auto;
+.icon-large {
+  font-size: 3rem;
+  transition: all 0.3s ease;
 }
 
-@media (min-width: 640px) {
-  .nav-item {
-    margin-right: 30px;
+.nav-link:hover .icon-large {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .nav-list {
+    gap: 1.5rem;
+  }
+  
+  .icon-large {
+    font-size: 2.5rem;
   }
 }
 
 @media (max-width: 640px) {
+  .nav-list {
+    gap: 1rem;
+  }
+  
   .icon-large {
     font-size: 2rem;
   }
-
-  .nav-item {
-    margin-right: 15px;
-  }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 480px) {
+  .nav-list {
+    gap: 0.5rem;
+  }
+  
   .icon-large {
     font-size: 1.5rem;
   }
-
-  .nav-item {
-    margin-right: 10px;
+  
+  .sticky-icons {
+    padding: 8px 16px;
   }
 }
 </style>
