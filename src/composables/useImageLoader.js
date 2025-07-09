@@ -1,9 +1,5 @@
 import { ref } from 'vue';
 
-/**
- * Image loader composable
- * Handles image loading states and events
- */
 export function useImageLoader() {
   const isLoaded = ref(false);
   const hasError = ref(false);

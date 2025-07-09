@@ -1,9 +1,5 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 
-/**
- * Intersection Observer composable
- * Provides intersection observer functionality for lazy loading
- */
 export function useIntersectionObserver(options = {}) {
   const isIntersecting = ref(false);
   const targetRef = ref(null);

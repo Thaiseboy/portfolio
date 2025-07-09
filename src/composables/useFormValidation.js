@@ -1,11 +1,6 @@
 import { reactive, computed } from 'vue';
 
-/**
- * Form validation composable
- * Provides validation rules and utilities for form inputs
- */
 export function useFormValidation() {
-  // Validation rules
   const validateName = (name) => {
     if (!name || name.trim().length === 0) {
       return 'Name is required';
@@ -49,7 +44,6 @@ export function useFormValidation() {
     return '';
   };
 
-  // Input sanitization
   const sanitizeInput = (input) => {
     return input
       .replace(/[<>]/g, '') // Remove potential HTML tags
@@ -58,7 +52,6 @@ export function useFormValidation() {
       .trim();
   };
 
-  // Create form validation state
   const createFormValidation = (formData) => {
     const errors = reactive({
       name: '',

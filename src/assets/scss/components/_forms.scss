@@ -1,4 +1,3 @@
-// Form Components
 .form-group {
   margin-bottom: $spacing-lg;
   
@@ -36,14 +35,12 @@
   }
 }
 
-// Textarea specific styling
 textarea.form-control {
   min-height: 120px;
   resize: vertical;
   font-family: inherit;
 }
 
-// Form validation states
 .form-group {
   &.is-valid {
     .form-control {
@@ -72,7 +69,6 @@ textarea.form-control {
   color: var(--color-danger);
 }
 
-// Contact form specific
 .contact-form {
   @include flex-column;
   gap: $spacing-lg;

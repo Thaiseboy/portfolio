@@ -1,4 +1,3 @@
-// Button Components
 .btn {
   background-color: var(--color-primary);
   color: #000;
@@ -69,7 +68,6 @@
   }
 }
 
-// Button sizes
 .btn-sm {
   padding: $spacing-xs $spacing-sm;
   font-size: $font-size-sm;
@@ -80,7 +78,6 @@
   font-size: $font-size-lg;
 }
 
-// Button groups
 .btn-group {
   display: flex;
   gap: $spacing-sm;
@@ -90,7 +87,6 @@
   }
 }
 
-// Icon buttons
 .btn-icon {
   @include flex-center;
   width: 48px;
@@ -112,7 +108,6 @@
   }
 }
 
-// Social buttons
 .social-btn {
   background: transparent;
   color: var(--color-primary);

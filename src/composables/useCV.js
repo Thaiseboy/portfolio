@@ -1,10 +1,6 @@
 import { ref } from 'vue';
 import { useSanity } from './useSanity';
 
-/**
- * CV download composable
- * Handles fetching and downloading CV from Sanity CMS
- */
 export function useCV() {
   const cvLink = ref(null);
   const cvLoading = ref(false);
