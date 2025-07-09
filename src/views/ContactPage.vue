@@ -117,6 +117,13 @@
             <span v-if="isSubmitting">Sending...</span>
             <span v-else>Submit</span>
           </button>
+          
+          <div v-if="submitMessage" class="alert alert-success mt-3">
+            {{ submitMessage }}
+          </div>
+          <div v-if="submitError" class="alert alert-danger mt-3">
+            {{ submitError }}
+          </div>
         </form>
 
         <ErrorBoundary :on-retry="retryFetchCV">
@@ -160,6 +167,8 @@ defineOptions({
 const {
   form,
   isSubmitting,
+  submitMessage,
+  submitError,
   errors: formErrors,
   isValid: isFormValid,
   validateField,
