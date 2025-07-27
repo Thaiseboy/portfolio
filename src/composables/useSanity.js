@@ -65,8 +65,8 @@ export function useSanity() {
       title,
       description,
       "imageUrl": image.asset->url,
-      githubUrl,
-      liveUrl
+      github,
+      url
     }`;
     return fetchData(query);
   };

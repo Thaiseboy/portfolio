@@ -32,7 +32,7 @@
             <p class="project-description">
               {{ project.description }}
             </p>
-            <div class="project-links">
+            <div class="project-links" v-if="project.url || project.github">
               <a
                 v-if="project.url"
                 :href="project.url"
@@ -77,12 +77,14 @@ const { loading, fetchProjects: fetchProjectsData, clearError } = useSanity();
 const loadProjects = async () => {
   try {
     const data = await fetchProjectsData();
+    
     projects.value = data.map(project => ({
       ...project,
       image: project.imageUrl,
-      url: project.liveUrl,
-      github: project.githubUrl
+      url: project.url === null || project.url === 'null' ? '' : project.url,
+      github: project.github === null || project.github === 'null' ? '' : project.github
     }));
+    
     setupScrollAnimations();
   } catch (error) {
     console.error("Error fetching projects:", error);
@@ -92,7 +94,7 @@ const loadProjects = async () => {
 const setupScrollAnimations = () => {
   if (window.innerWidth > 768) {
     nextTick(() => {
-      projects.value.forEach((project, index) => {
+      projects.value.forEach((_, index) => {
         const element = document.querySelectorAll('.project-item')[index];
         if (element) {
           gsap.fromTo(
