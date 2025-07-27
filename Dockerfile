@@ -1,5 +1,8 @@
 # Multi-stage build for production optimization
-FROM node:18-alpine AS build-stage
+FROM node:20-alpine AS build-stage
+
+# Install build dependencies for native modules
+RUN apk add --no-cache python3 make g++ autoconf automake libtool
 
 # Set working directory
 WORKDIR /app
@@ -8,7 +11,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies (including dev for build)
-RUN npm ci
+RUN npm ci --ignore-scripts
 
 # Copy source code
 COPY . .
