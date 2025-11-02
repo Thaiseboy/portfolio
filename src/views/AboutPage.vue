@@ -32,7 +32,7 @@
         
     <div class="about-page__text text-white">
       <p>
-        Hi, I'm Master Supakon Karanyawad, <span class="text-red">29</span> years old — a passionate Front-end Developer with a creative mindset and a strong drive for continuous growth.
+        Hi, I'm Master Supakon Karanyawad, <span class="text-red">29</span> years old — a passionate Frontend Developer with a creative mindset and a strong drive for continuous growth.
         I focus on building modern, maintainable, and user-friendly web applications that combine functionality with clean and efficient design.
       </p>
       <p>
@@ -46,7 +46,6 @@
         <span class="text-red">&#x21A3;</span><span class="text-gold">PHP</span>
         <span class="text-red">&#x21A3;</span><span class="text-gold">Laravel</span>
         <span class="text-red">&#x21A3;</span><span class="text-gold">Vue.js</span>
-        <span class="text-red">&#x21A3;</span><span class="text-gold">MySQL</span>.
       </p>
       <p>
         I'm currently working at Paramedia B.V., where I focus on refactoring and modernizing legacy PHP (Zend Framework 1) applications.
