@@ -32,28 +32,25 @@
         
     <div class="about-page__text text-white">
       <p>
-        Hi, I’m <span class="text-red">28</span> years old, a passionate front-end developer with a creative mindset and a strong drive for self-improvement. 
-        I excel at teamwork and thrive in solving complex problems by crafting innovative and tailored solutions.
+        Hi, I'm Master Supakon Karanyawad, <span class="text-red">29</span> years old — a passionate Front-end Developer with a creative mindset and a strong drive for continuous growth.
+        I focus on building modern, maintainable, and user-friendly web applications that combine functionality with clean and efficient design.
       </p>
       <p>
-        My journey into front-end development began when I sought new challenges, and I quickly fell in love with the creative and technical aspects of web development. 
-        Over the past year, I have built expertise in both front-end and back-end technologies, including:
-        <span class="text-red">&#x21A3;</span><span class="text-gold">HTML5</span> 
-        <span class="text-red">&#x21A3;</span><span class="text-gold">CSS3</span> 
-        <span class="text-red">&#x21A3;</span><span class="text-gold">JavaScript</span> 
-        <span class="text-red">&#x21A3;</span><span class="text-gold">jQuery</span> 
-        <span class="text-red">&#x21A3;</span><span class="text-gold">PHP</span> 
-        <span class="text-red">&#x21A3;</span><span class="text-gold">MySQL</span> 
-        <span class="text-red">&#x21A3;</span><span class="text-gold">Laravel</span> 
-        <span class="text-red">&#x21A3;</span><span class="text-gold">Vue.js</span>.
+        My journey into web development began from a fascination with the balance between creativity and technology. Over the years, I've gained solid experience in both front-end and back-end development, working with technologies such as:
+        <span class="text-red">&#x21A3;</span><span class="text-gold">HTML5</span>
+        <span class="text-red">&#x21A3;</span><span class="text-gold">CSS3</span>
+        <span class="text-red">&#x21A3;</span><span class="text-gold">Bootstrap 5</span>
+        <span class="text-red">&#x21A3;</span><span class="text-gold">Tailwind</span>
+        <span class="text-red">&#x21A3;</span><span class="text-gold">JavaScript</span>
+        <span class="text-red">&#x21A3;</span><span class="text-gold">TypeScript</span>
+        <span class="text-red">&#x21A3;</span><span class="text-gold">PHP</span>
+        <span class="text-red">&#x21A3;</span><span class="text-gold">Laravel</span>
+        <span class="text-red">&#x21A3;</span><span class="text-gold">Vue.js</span>
+        <span class="text-red">&#x21A3;</span><span class="text-gold">MySQL</span>.
       </p>
       <p>
-        With these skills, I create end-to-end web applications that are both visually appealing and technically robust, managing everything from user interfaces to server-side logic and database design.
-      </p>
-      <p>
-        I am currently working as a freelancer on various client projects, continually broadening my skill set and staying up-to-date with the latest technologies. 
-        My approach combines creativity, problem-solving, and a commitment to delivering solutions that align with my clients’ goals. 
-        Above all, I am dedicated to continuous learning, always seeking to enhance my abilities and push the boundaries of what I can achieve.
+        I'm currently working at Paramedia B.V., where I focus on refactoring and modernizing legacy PHP (Zend Framework 1) applications.
+        My work involves improving the structure, maintainability, and performance of existing systems, as well as developing new features and enhancing the user experience using modern tools like Docker to optimize the development workflow.
       </p>
     </div>
     </div>
