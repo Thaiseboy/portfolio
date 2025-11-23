@@ -14,7 +14,6 @@
   "dependencies": {
     "@sanity/cli": "^3.54.0",
     "@sanity/client": "^6.21.3",
-    "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "core-js": "^3.8.3",
     "gsap": "^3.12.5",
@@ -34,10 +33,6 @@
     "@vue/test-utils": "^2.4.6",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "imagemin": "^9.0.1",
-    "imagemin-mozjpeg": "^10.0.0",
-    "imagemin-pngquant": "^10.0.0",
-    "imagemin-webp": "^8.0.0",
     "jsdom": "^26.1.0",
     "sass": "^1.89.2",
     "sass-loader": "^16.0.5",
