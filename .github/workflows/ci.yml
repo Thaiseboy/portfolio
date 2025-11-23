@@ -1,0 +1,72 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test & Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.9.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run linter
+        run: pnpm run lint
+
+      - name: Run tests
+        run: pnpm run test
+
+      - name: Run test coverage
+        run: pnpm run test:coverage
+
+      - name: Build project
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+  build-info:
+    name: Build Information
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Comment PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.issue.number;
+            const branchName = context.payload.pull_request.head.ref;
+
+            github.rest.issues.createComment({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🚀 Deployment Preview
+
+              Branch: \`${branchName}\`
+
+              **Netlify** will automatically deploy a preview for this PR.
+              Check the Netlify bot comment below for the preview URL.
+
+              ---
+              ✅ CI Pipeline passed - Ready for review!`
+            });

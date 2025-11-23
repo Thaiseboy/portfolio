@@ -1,7 +1,35 @@
 [build]
-  command = "npm run build"
+  # Build command using pnpm
+  command = "pnpm run build"
   publish = "dist"
 
+  # Environment variables for build
+  [build.environment]
+    NODE_VERSION = "20"
+    NPM_FLAGS = "--version"
+
+# Production context: main branch deploys
+[context.production]
+  command = "pnpm run build"
+
+  [context.production.environment]
+    NODE_ENV = "production"
+
+# Deploy Preview context: all pull requests
+[context.deploy-preview]
+  command = "pnpm run build"
+
+  [context.deploy-preview.environment]
+    NODE_ENV = "production"
+
+# Branch Deploy context: all branches except main
+[context.branch-deploy]
+  command = "pnpm run build"
+
+  [context.branch-deploy.environment]
+    NODE_ENV = "production"
+
+# Redirect rules
 [[redirects]]
   from = "/studio/*"
   to = "/studio/index.html"
@@ -11,3 +39,28 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
