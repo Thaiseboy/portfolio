@@ -4,21 +4,25 @@ import { defineComponent } from 'vue'
 import { useIntersectionObserver } from '@/composables/useIntersectionObserver'
 
 // Mock IntersectionObserver
-const mockIntersectionObserver = vi.fn()
 const mockObserve = vi.fn()
 const mockUnobserve = vi.fn()
 const mockDisconnect = vi.fn()
 
-mockIntersectionObserver.mockReturnValue({
-  observe: mockObserve,
-  unobserve: mockUnobserve,
-  disconnect: mockDisconnect
-})
+class MockIntersectionObserver {
+  constructor(callback, options) {
+    this.callback = callback
+    this.options = options
+  }
+
+  observe = mockObserve
+  unobserve = mockUnobserve
+  disconnect = mockDisconnect
+}
 
 Object.defineProperty(window, 'IntersectionObserver', {
   writable: true,
   configurable: true,
-  value: mockIntersectionObserver
+  value: MockIntersectionObserver
 })
 
 describe('useIntersectionObserver', () => {
@@ -64,6 +68,8 @@ describe('useIntersectionObserver', () => {
       threshold: 0.5
     }
 
+    const spy = vi.spyOn(window, 'IntersectionObserver')
+
     const TestComponent = defineComponent({
       setup() {
         const { isIntersecting, targetRef } = useIntersectionObserver(options)
@@ -74,7 +80,7 @@ describe('useIntersectionObserver', () => {
 
     mount(TestComponent)
 
-    expect(mockIntersectionObserver).toHaveBeenCalledWith(
+    expect(spy).toHaveBeenCalledWith(
       expect.any(Function),
       expect.objectContaining(options)
     )
