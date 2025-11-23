@@ -28,7 +28,7 @@
     "@types/node": "^22.7.4",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.9",
     "@vue/cli-service": "~5.0.0",
     "@vue/test-utils": "^2.4.6",
     "eslint": "^7.32.0",
