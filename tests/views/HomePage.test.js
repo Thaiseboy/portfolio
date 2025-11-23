@@ -34,7 +34,7 @@ describe('HomePage', () => {
     const wrapper = mount(HomePage)
 
     expect(wrapper.text()).toContain('Netherlands')
-    expect(wrapper.text()).toContain('front-end developer')
+    expect(wrapper.text()).toContain('front end developer')
   })
 
   it('has profile image', () => {

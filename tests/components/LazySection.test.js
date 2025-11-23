@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import LazySection from '@/components/ui/LazySection.vue'
 import SkeletonLoader from '@/components/ui/SkeletonLoader.vue'
