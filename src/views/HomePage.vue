@@ -22,7 +22,7 @@
         <div class="home-hero__description">
           <p class="text-white">
             Based in the <span class="text-gold">Netherlands</span>, I'm a 
-            <span class="text-red">front-end developer</span> &#x1F4BB;
+            <span class="text-red">front end developer</span> &#x1F4BB;
           </p>
         </div>
         
