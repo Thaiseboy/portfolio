@@ -2,11 +2,22 @@
 
 This guide will help you complete the setup of your CI/CD pipeline with GitHub Actions and Netlify.
 
+## ⚠️ BELANGRIJK: Deployment Veiligheid
+
+**ZONDER branch protection zal Netlify elke push naar `main` automatisch deployen, ZELFS ALS TESTS FALEN!**
+
+Dit betekent:
+- ❌ Directe push naar `main` → Deploy naar productie (zonder checks!)
+- ✅ Pull Request → CI checks draaien → Alleen merge als tests slagen → Deploy naar productie
+
+**Volg stap 1.2 "Configure Branch Protection" VERPLICHT om dit te voorkomen!**
+
 ## Prerequisites
 
 - [x] GitHub repository created
 - [x] Netlify account
 - [ ] Netlify site connected to repository
+- [ ] Branch protection ingeschakeld (VERPLICHT!)
 
 ## Setup Steps
 
@@ -22,17 +33,41 @@ This guide will help you complete the setup of your CI/CD pipeline with GitHub A
    - ✅ "Allow GitHub Actions to create and approve pull requests"
 4. Click **Save**
 
-#### Configure Branch Protection (Optional but Recommended)
+#### Configure Branch Protection (VERPLICHT!)
+
+**Dit voorkomt dat code met falende tests naar productie gaat!**
 
 1. Go to **Settings** > **Branches**
-2. Click **Add rule** for `main` branch
-3. Configure:
-   - ✅ Require a pull request before merging
-   - ✅ Require status checks to pass before merging
-     - Add: `Test & Lint` (from CI workflow)
-   - ✅ Require conversation resolution before merging
-   - ⚠️ Do not require approvals if you're working solo
-4. Click **Create** or **Save changes**
+2. Click **Add branch protection rule**
+3. Branch name pattern: `main`
+4. Configure de volgende opties:
+
+   **Required settings:**
+   - ✅ **Require a pull request before merging**
+     - Dit forceert je om via PRs te werken (geen directe pushes naar main)
+
+   - ✅ **Require status checks to pass before merging**
+     - Click "Search for status checks" en zoek: `Test & Lint`
+     - ✅ Require branches to be up to date before merging
+     - **BELANGRIJK:** Hierdoor kan je alleen mergen als CI slaagt!
+
+   - ✅ **Require conversation resolution before merging**
+     - Lost alle PR comments op voor merge
+
+   **Optional (voor solo development):**
+   - ⚠️ **Do NOT enable** "Require approvals" (tenzij je met team werkt)
+   - ⚠️ **Do NOT enable** "Require review from Code Owners"
+
+   **Extra beveiliging (aanbevolen):**
+   - ✅ **Do not allow bypassing the above settings**
+     - Zelfs admins moeten deze regels volgen
+
+   - ✅ **Require linear history**
+     - Houdt git history clean
+
+5. Click **Create** of **Save changes**
+
+**Na deze stap:** Je kan niet meer direct naar `main` pushen! Alleen via Pull Requests die eerst door CI checks moeten.
 
 #### Create PR Labels
 
