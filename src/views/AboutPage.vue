@@ -1,15 +1,15 @@
 <template>
-  <div class="about-page">
-    <h1 class="about-page__title header-font font-weight-bold text-gold">
+  <div class="px-lg py-xxl">
+    <h1 class="text-center mb-xxl font-bold text-gold">
       <span class="text-red">Get</span> to know me &#128526;
     </h1>
-    
-    <div class="about-page__content">
+
+    <div class="max-w-screen-lg mx-auto">
       <ErrorBoundary :on-retry="retryFetchPhotos">
-        <div class="photo-gallery">
-        <SkeletonLoader 
-          v-if="loading" 
-          type="list" 
+        <div class="grid grid-cols-2 gap-lg mb-xl md:grid-cols-1 md:gap-md">
+        <SkeletonLoader
+          v-if="loading"
+          type="list"
           :count="4"
         />
         <div
@@ -21,16 +21,16 @@
           <img
             :src="photo.url"
             :alt="photo.title"
-            class="photo-image"
+            class="w-full h-auto rounded-lg shadow-md transition-all duration-normal hover:scale-105 hover:shadow-lg"
           >
         </div>
-        <div v-else-if="!loading && photos.length === 0" class="no-photos">
+        <div v-else-if="!loading && photos.length === 0" class="col-span-2 flex flex-col items-center justify-center p-xxl text-center md:col-span-1">
           <p>No photos available</p>
         </div>
       </div>
     </ErrorBoundary>
-        
-    <div class="about-page__text text-white">
+
+    <div class="text-white leading-relaxed space-y-4">
       <p>
         Hi, I'm Master Supakon Karanyawad, <span class="text-red">29</span> years old — a passionate Frontend Developer with a creative mindset and a strong drive for continuous growth.
         I focus on building modern, maintainable, and user-friendly web applications that combine functionality with clean and efficient design.
@@ -92,5 +92,9 @@ const retryFetchPhotos = () => {
 onMounted(loadPhotos);
 </script>
 
-<style scoped lang="scss">
+<style scoped>
+.photo-box {
+  position: relative;
+  overflow: hidden;
+}
 </style>

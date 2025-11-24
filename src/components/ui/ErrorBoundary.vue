@@ -58,92 +58,60 @@ const reloadPage = () => {
 };
 </script>
 
-<style scoped lang="scss">
-@import '@/assets/scss/utils/variables';
-@import '@/assets/scss/utils/mixins';
-
+<style scoped>
 .error-boundary {
-  @include flex-center;
-  min-height: 300px;
-  padding: $spacing-xl;
+  @apply flex items-center justify-center min-h-[300px] p-xl rounded-lg border-2;
   background-color: rgba(248, 249, 250, 0.1);
-  border-radius: $border-radius-lg;
-  border: 2px solid var(--color-border);
+  border-color: var(--color-border);
   backdrop-filter: blur(10px);
 }
 
 .error-content {
-  text-align: center;
-  max-width: 400px;
-  
-  .error-icon {
-    font-size: 3rem;
-    margin-bottom: $spacing-lg;
-    filter: grayscale(0.3);
-  }
-  
-  .error-title {
-    color: var(--color-text);
-    margin-bottom: $spacing-md;
-    font-size: $font-size-xxl;
-    font-weight: 600;
-  }
-  
-  .error-message {
-    color: var(--color-text);
-    margin-bottom: $spacing-xl;
-    opacity: 0.8;
-    line-height: 1.5;
-  }
+  @apply text-center max-w-md;
+}
+
+.error-icon {
+  @apply text-5xl mb-lg;
+  filter: grayscale(0.3);
+}
+
+.error-title {
+  @apply text-white mb-md text-2xl font-semibold;
+}
+
+.error-message {
+  @apply text-white mb-xl opacity-80 leading-relaxed;
 }
 
 .error-actions {
-  @include flex-center;
-  gap: $spacing-md;
-  flex-wrap: wrap;
-  
-  .retry-btn {
-    background-color: var(--color-primary);
-    color: #000;
-    border: none;
-    padding: $spacing-sm $spacing-md;
-    border-radius: $border-radius-md;
-    cursor: pointer;
-    transition: $transition-normal;
-    font-weight: 600;
-    
-    &:hover {
-      background-color: var(--color-secondary);
-      color: var(--color-text);
-      transform: translateY(-2px);
-    }
-    
-    &:active {
-      transform: translateY(0);
-    }
-  }
-  
-  .btn-outline-secondary {
-    background: transparent;
-    color: var(--color-text);
-    border: 2px solid var(--color-border);
-    padding: $spacing-sm $spacing-md;
-    border-radius: $border-radius-md;
-    
-    &:hover {
-      background-color: var(--color-card);
-      border-color: var(--color-primary);
-    }
-  }
+  @apply flex items-center justify-center gap-md flex-wrap md:flex-col;
 }
 
-@include respond-to(md) {
-  .error-actions {
-    flex-direction: column;
-  }
-  
+.retry-btn {
+  @apply bg-primary text-black border-none px-md py-sm rounded-md cursor-pointer transition-all duration-normal font-semibold;
+}
+
+.retry-btn:hover {
+  @apply bg-secondary text-white -translate-y-0.5;
+}
+
+.retry-btn:active {
+  @apply translate-y-0;
+}
+
+.btn-outline-secondary {
+  @apply bg-transparent text-white border-2 px-md py-sm rounded-md;
+  border-color: var(--color-border);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--color-card);
+  border-color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
   .error-content {
-    padding: $spacing-md;
+    @apply p-md;
   }
 }
 </style>

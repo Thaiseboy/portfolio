@@ -16,6 +16,3 @@ defineOptions({
   name: 'AppFooter'
 });
 </script>
-
-<style scoped>
-</style>

@@ -165,14 +165,6 @@
   .alert-danger {
     @apply bg-danger text-white;
   }
-
-  .text-gold {
-    @apply text-gold;
-  }
-
-  .text-red {
-    @apply text-red;
-  }
 }
 
 @layer utilities {
