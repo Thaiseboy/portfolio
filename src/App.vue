@@ -55,10 +55,9 @@ defineOptions({
 
 <style>
 #app {
-  background: var(--color-background-gradient);
   background-color: var(--color-background);
   background-attachment: fixed;
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
 html, body {
@@ -66,7 +65,6 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  
 }
 
 section {
@@ -79,7 +77,6 @@ html {
 
 @media (max-width: 768px) {
   #app {
-    background: var(--color-background-mobile);
     background-attachment: scroll;
   }
 }
