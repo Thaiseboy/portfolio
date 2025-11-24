@@ -12,7 +12,7 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
-    "@sanity/cli": "^3.54.0",
+    "@sanity/cli": "^4.18.0",
     "@sanity/client": "^6.21.3",
     "bootstrap-icons": "^1.11.3",
     "core-js": "^3.8.3",
