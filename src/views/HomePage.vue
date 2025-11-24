@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container overflow-x-hidden">
     <div class="flex flex-col items-center justify-center min-h-[80vh] text-center px-lg py-xxl md:min-h-[70vh] md:px-md md:py-lg">
       <div class="max-w-[800px] mx-auto">
         <h1 class="animate-fade-in text-center mb-12 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-8">
