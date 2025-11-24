@@ -4,9 +4,9 @@
       <span class="text-red">Get</span> to know me &#128526;
     </h1>
 
-    <div class="max-w-screen-lg mx-auto">
+    <div class="max-w-screen-xl mx-auto">
       <ErrorBoundary :on-retry="retryFetchPhotos">
-        <div class="grid grid-cols-2 gap-lg mb-xl md:grid-cols-1 md:gap-md">
+        <div class="photo-gallery mb-xl">
         <SkeletonLoader
           v-if="loading"
           type="list"
@@ -21,10 +21,10 @@
           <img
             :src="photo.url"
             :alt="photo.title"
-            class="w-full h-auto rounded-lg shadow-md transition-all duration-normal hover:scale-105 hover:shadow-lg"
+            class="photo-image"
           >
         </div>
-        <div v-else-if="!loading && photos.length === 0" class="col-span-2 flex flex-col items-center justify-center p-xxl text-center md:col-span-1">
+        <div v-else-if="!loading && photos.length === 0" class="flex flex-col items-center justify-center p-xxl text-center">
           <p>No photos available</p>
         </div>
       </div>
@@ -93,8 +93,69 @@ onMounted(loadPhotos);
 </script>
 
 <style scoped>
+.photo-gallery {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1rem;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #FFD700 rgba(255, 255, 255, 0.1);
+}
+
+.photo-gallery::-webkit-scrollbar {
+  height: 8px;
+}
+
+.photo-gallery::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.photo-gallery::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #FFD700, #FF0000);
+  border-radius: 4px;
+}
+
+.photo-gallery::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #e6c200, #cc0000);
+}
+
 .photo-box {
+  flex: 0 0 350px;
+  max-width: 350px;
   position: relative;
   overflow: hidden;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.photo-box:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.photo-image {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.photo-box:hover .photo-image {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .photo-box {
+    flex: 0 0 250px;
+    max-width: 250px;
+  }
+
+  .photo-image {
+    height: 250px;
+  }
 }
 </style>
