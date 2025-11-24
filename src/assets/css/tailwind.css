@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #FFD700;
+    --color-secondary: #FF0000;
+    --color-text: #FFFFFF;
+    --color-background: #2B2B2B;
+    --color-card: #333333;
+    --color-border: #444444;
+    --color-success: #28a745;
+    --color-warning: #ffc107;
+    --color-danger: #dc3545;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark text-white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary rounded;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-secondary;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-screen-xl mx-auto px-lg;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      @apply px-md;
+    }
+  }
+
+  .section {
+    @apply py-xxl;
+  }
+
+  @media (max-width: 768px) {
+    .section {
+      @apply py-xl;
+    }
+  }
+
+  .btn {
+    @apply bg-primary text-black font-medium border-none rounded-md px-lg py-sm transition-all duration-normal cursor-pointer inline-block text-center;
+  }
+
+  .btn:hover {
+    @apply opacity-90 brightness-90 -translate-y-0.5;
+  }
+
+  .btn:active {
+    @apply translate-y-0;
+  }
+
+  .btn:disabled {
+    @apply opacity-60 cursor-not-allowed;
+  }
+
+  .btn:disabled:hover {
+    @apply translate-y-0;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-black;
+  }
+
+  .btn-secondary {
+    @apply bg-dark-card text-white border border-dark-border;
+  }
+
+  .btn-danger {
+    @apply bg-secondary text-white;
+  }
+
+  .btn-warning {
+    @apply bg-warning text-black;
+  }
+
+  .btn-outline-secondary {
+    @apply bg-transparent text-white border-2 border-dark-border;
+  }
+
+  .btn-outline-secondary:hover {
+    @apply bg-dark-card border-primary;
+  }
+
+  .btn-sm {
+    @apply px-sm py-xs text-sm;
+  }
+
+  .btn-lg {
+    @apply px-xl py-md text-lg;
+  }
+
+  .btn-icon {
+    @apply flex items-center justify-center w-12 h-12 rounded-full p-0 bg-primary text-black border-none cursor-pointer;
+  }
+
+  .btn-icon:hover {
+    @apply opacity-90 -translate-y-0.5;
+  }
+
+  .social-btn {
+    @apply bg-transparent text-primary border-2 border-primary rounded-full w-[60px] h-[60px] flex items-center justify-center text-2xl cursor-pointer transition-all duration-normal;
+  }
+
+  .social-btn:hover {
+    @apply bg-primary text-black -translate-y-0.5;
+  }
+
+  @media (max-width: 768px) {
+    .social-btn {
+      @apply w-[50px] h-[50px] text-xl;
+    }
+  }
+
+  .card {
+    @apply bg-dark-card rounded-lg p-lg shadow-md transition-all duration-normal overflow-hidden;
+  }
+
+  .card:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+
+  .card-title {
+    @apply text-xl font-semibold text-primary mb-sm;
+  }
+
+  .card-text {
+    @apply text-white opacity-90 leading-relaxed;
+  }
+
+  .alert {
+    @apply p-lg rounded-lg mb-lg;
+  }
+
+  .alert-success {
+    @apply bg-success text-white;
+  }
+
+  .alert-danger {
+    @apply bg-danger text-white;
+  }
+
+  .text-gold {
+    @apply text-gold;
+  }
+
+  .text-red {
+    @apply text-red;
+  }
+}
+
+@layer utilities {
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+  }
+}
