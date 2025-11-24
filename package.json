@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@sanity/cli": "^3.54.0",
-    "@sanity/client": "^6.21.3",
+    "@sanity/client": "^7.13.0",
     "bootstrap-icons": "^1.11.3",
     "core-js": "^3.8.3",
     "gsap": "^3.12.5",
