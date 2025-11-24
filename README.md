@@ -26,44 +26,6 @@
 - **DevOps**: Docker, Nginx
 - **Deployment**: Netlify
 
-## Quick Start
-
-```bash
-# Development
-pnpm install
-cp .env.example .env  # Configure your Sanity CMS variables
-pnpm run dev
-
-# Docker (Production)
-cp .env.example .env  # Configure your Sanity CMS variables
-./docker-scripts.sh prod
-
-# Docker (Development)
-./docker-scripts.sh dev
-```
-
-## Development
-
-```bash
-pnpm run dev      # Start development server
-pnpm run build    # Build for production
-pnpm run lint     # Run ESLint
-pnpm run test     # Run tests
-```
-
-## Docker Commands
-
-```bash
-# Production (localhost:3000)
-docker-compose up -d portfolio
-
-# Development with hot reload (localhost:8080)
-docker-compose --profile dev up portfolio-dev
-
-# Stop containers
-docker-compose down
-```
-
 ## CI/CD Pipeline & Workflow
 
 This project uses GitHub Actions and Netlify for automated testing, building, and deployment.
@@ -114,34 +76,6 @@ Dependabot automatically:
 - Creates PRs for npm package updates
 - Updates GitHub Actions versions
 - Limits to 5 open PRs max
-
-### Working with Feature Branches
-
-```bash
-# Create a new feature branch
-git checkout -b feature/your-feature-name
-
-# Make changes and commit
-git add .
-git commit -m "feat: your feature description"
-
-# Push to GitHub
-git push -u origin feature/your-feature-name
-
-# Create Pull Request on GitHub
-# - CI will run automatically
-# - Netlify will create preview deployment
-# - Review the preview URL before merging
-
-# After PR approval, merge to main
-# - Production will deploy automatically
-```
-
-### Environment Variables
-
-For Netlify deployment, configure these in Netlify dashboard:
-- `NODE_VERSION` - Set to "20" (configured in netlify.toml)
-- Any Sanity.io API keys needed for builds
 
 ## Contact
 
