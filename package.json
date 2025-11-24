@@ -15,7 +15,7 @@
     "@sanity/cli": "^3.54.0",
     "@sanity/client": "^6.21.3",
     "bootstrap-icons": "^1.11.3",
-    "core-js": "^3.8.3",
+    "core-js": "^3.47.0",
     "gsap": "^3.12.5",
     "vue": "^3.2.13",
     "vue-router": "^4.4.3"
