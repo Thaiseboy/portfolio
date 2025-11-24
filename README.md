@@ -6,9 +6,8 @@
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Sanity](https://img.shields.io/badge/Sanity-F03E2F?style=for-the-badge&logo=sanity&logoColor=white)
-
-![CI Pipeline](https://github.com/Thaiseboy/portfolio-thaiseboy/workflows/CI%20Pipeline/badge.svg)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/YOUR-NETLIFY-SITE-ID/deploy-status)](https://app.netlify.com/sites/YOUR-NETLIFY-SITE-NAME/deploys)
+![CI Pipeline](https://img.shields.io/github/actions/workflow/status/Thaiseboy/portfolio-thaiseboy/ci.yml?label=CI%20Pipeline&style=for-the-badge)
+[![Netlify](https://img.shields.io/netlify/8dbb517f-9dce-4444-b7f0-d584c169b03d?style=for-the-badge)](https://app.netlify.com/sites/portfolio-thaiseboy/deploys)
 
 **[Live Demo →](https://getdeveloper.nl)**
 
