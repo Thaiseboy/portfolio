@@ -1,6 +1,6 @@
 <template>
   <div class="px-lg py-xxl">
-    <h1 class="text-center mb-xxl font-bold text-gold">
+    <h1 class="text-center mb-12 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-8">
       <span class="text-red">Get</span> Skilled with Me &#x26A1;
     </h1>
     <ErrorBoundary :on-retry="retryFetchSkills">
