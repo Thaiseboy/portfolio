@@ -48,9 +48,81 @@
       </li>
     </ul>
   </nav>
+
+  <div class="fixed bottom-6 right-6 z-[1000] flex flex-col gap-3 max-[640px]:right-4 max-[640px]:bottom-4">
+    <button
+      type="button"
+      @click="goPrev"
+      class="w-11 h-11 rounded-full bg-black/70 text-gold shadow-[0_4px_8px_rgba(0,0,0,0.5)] backdrop-blur-md border border-white/10 flex items-center justify-center transition-all duration-200 hover:scale-105 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-red"
+      aria-label="Vorige sectie"
+    >
+      <i class="bi bi-chevron-up text-2xl" />
+    </button>
+    <button
+      type="button"
+      @click="goNext"
+      class="w-11 h-11 rounded-full bg-black/70 text-gold shadow-[0_4px_8px_rgba(0,0,0,0.5)] backdrop-blur-md border border-white/10 flex items-center justify-center transition-all duration-200 hover:scale-105 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-red"
+      aria-label="Volgende sectie"
+    >
+      <i class="bi bi-chevron-down text-2xl" />
+    </button>
+  </div>
 </template>
 
 <script setup>
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+
+const sectionIds = ['home', 'about', 'skills', 'project', 'contact'];
+const currentIndex = ref(0);
+let observer;
+
+const scrollToSection = (id) => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
+const goPrev = () => {
+  const nextIndex = (currentIndex.value - 1 + sectionIds.length) % sectionIds.length;
+  scrollToSection(sectionIds[nextIndex]);
+};
+
+const goNext = () => {
+  const nextIndex = (currentIndex.value + 1) % sectionIds.length;
+  scrollToSection(sectionIds[nextIndex]);
+};
+
+onMounted(() => {
+  if (typeof window === 'undefined') return;
+
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          const foundIndex = sectionIds.indexOf(id);
+          if (foundIndex !== -1) {
+            currentIndex.value = foundIndex;
+          }
+        }
+      });
+    },
+    { threshold: 0.55 }
+  );
+
+  sectionIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      observer.observe(el);
+    }
+  });
+});
+
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect();
+});
+
 defineOptions({
   name: "AppNavigation"
 });
