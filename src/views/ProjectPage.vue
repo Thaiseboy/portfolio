@@ -1,6 +1,6 @@
 <template>
   <div class="px-4 py-8 max-w-full overflow-x-hidden md:px-2 w-full box-border">
-    <h1 class="text-center mb-12 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-8">
+    <h1 class="text-center mb-4 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-4">
       <span class="text-red">Get</span> Inspired by my Projects &#x1F5C2;
     </h1>
     <ErrorBoundary :on-retry="retryFetchProjects">
