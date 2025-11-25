@@ -3,47 +3,47 @@
     <ul class="flex justify-center items-center list-none m-0 p-0 gap-8 md:gap-6 sm:gap-4 max-[480px]:gap-2">
       <li class="flex items-center">
         <router-link
-          class="nav-link text-gold font-bold no-underline relative flex items-center justify-center p-2 transition-all duration-normal hover:text-white hover:-translate-y-0.5 active:text-red"
+          class="nav-link nav-link-item"
           to="/#home"
           aria-label="Home"
         >
-          <i class="bi bi-house-door text-5xl transition-all duration-normal md:text-[2.5rem] sm:text-3xl max-[480px]:text-2xl hover:scale-110" />
+          <i class="bi bi-house-door nav-icon max-[480px]:text-2xl hover:scale-110" />
         </router-link>
       </li>
       <li class="flex items-center">
         <router-link
-          class="nav-link text-gold font-bold no-underline relative flex items-center justify-center p-2 transition-all duration-normal hover:text-white hover:-translate-y-0.5 active:text-red"
+          class="nav-link nav-link-item"
           to="/#about"
           aria-label="About"
         >
-          <i class="bi bi-person text-5xl transition-all duration-normal md:text-[2.5rem] sm:text-3xl max-[480px]:text-2xl hover:scale-110" />
+          <i class="bi bi-person nav-icon max-[480px]:text-2xl hover:scale-110" />
         </router-link>
       </li>
       <li class="flex items-center">
         <router-link
-          class="nav-link text-gold font-bold no-underline relative flex items-center justify-center p-2 transition-all duration-normal hover:text-white hover:-translate-y-0.5 active:text-red"
+          class="nav-link nav-link-item"
           to="/#skills"
           aria-label="Skills"
         >
-          <i class="bi bi-tools text-5xl transition-all duration-normal md:text-[2.5rem] sm:text-3xl max-[480px]:text-2xl hover:scale-110" />
+          <i class="bi bi-tools nav-icon max-[480px]:text-2xl hover:scale-110" />
         </router-link>
       </li>
       <li class="flex items-center">
         <router-link
-          class="nav-link text-gold font-bold no-underline relative flex items-center justify-center p-2 transition-all duration-normal hover:text-white hover:-translate-y-0.5 active:text-red"
+          class="nav-link nav-link-item"
           to="/#project"
           aria-label="Project"
         >
-          <i class="bi bi-folder2-open text-5xl transition-all duration-normal md:text-[2.5rem] sm:text-3xl max-[480px]:text-2xl hover:scale-110" />
+          <i class="bi bi-folder2-open nav-icon max-[480px]:text-2xl hover:scale-110" />
         </router-link>
       </li>
       <li class="flex items-center">
         <router-link
-          class="nav-link text-gold font-bold no-underline relative flex items-center justify-center p-2 transition-all duration-normal hover:text-white hover:-translate-y-0.5 active:text-red"
+          class="nav-link nav-link-item"
           to="/#contact"
           aria-label="Contact"
         >
-          <i class="bi bi-envelope text-5xl transition-all duration-normal md:text-[2.5rem] sm:text-3xl max-[480px]:text-2xl hover:scale-110" />
+          <i class="bi bi-envelope nav-icon max-[480px]:text-2xl hover:scale-110" />
         </router-link>
       </li>
     </ul>
@@ -53,7 +53,7 @@
     <button
       type="button"
       @click="goPrev"
-      class="w-11 h-11 rounded-full bg-black/70 text-gold shadow-[0_4px_8px_rgba(0,0,0,0.5)] backdrop-blur-md border border-white/10 flex items-center justify-center transition-all duration-200 hover:scale-105 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-red"
+      class="btn-scroll-glass"
       aria-label="Vorige sectie"
     >
       <i class="bi bi-chevron-up text-2xl" />
@@ -61,7 +61,7 @@
     <button
       type="button"
       @click="goNext"
-      class="w-11 h-11 rounded-full bg-black/70 text-gold shadow-[0_4px_8px_rgba(0,0,0,0.5)] backdrop-blur-md border border-white/10 flex items-center justify-center transition-all duration-200 hover:scale-105 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-red"
+      class="btn-scroll-glass"
       aria-label="Volgende sectie"
     >
       <i class="bi bi-chevron-down text-2xl" />

@@ -167,6 +167,39 @@
     @apply text-center mb-4 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-4;
   }
 
+  /* Navigation */
+  .nav-icon {
+    @apply text-5xl transition-all duration-normal md:text-[2.5rem] sm:text-3xl;
+  }
+
+  .nav-link-item {
+    @apply text-gold font-bold no-underline relative flex items-center justify-center p-2 transition-all duration-normal hover:text-white hover:-translate-y-0.5 active:text-red;
+  }
+
+  .btn-scroll-glass {
+    @apply w-11 h-11 rounded-full bg-black/70 text-gold shadow-[0_4px_8px_rgba(0,0,0,0.5)] backdrop-blur-md border border-white/10 flex items-center justify-center transition-all duration-200 hover:scale-105 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-red;
+  }
+
+  /* Cards & Containers */
+  .card-dark-translucent {
+    @apply bg-dark-card/80 rounded-lg p-xl shadow-md transition-all duration-normal;
+  }
+
+  /* Buttons */
+  .btn-project-small {
+    @apply text-sm px-4 py-2 rounded-md font-semibold transition-all duration-200 border-none md:text-xs md:px-3 md:py-2;
+  }
+
+  /* Social Media */
+  .social-icon-large {
+    @apply text-5xl text-primary transition-all duration-normal relative hover:text-white hover:scale-125 md:text-[2.5rem] sm:text-3xl;
+  }
+
+  /* Forms */
+  .form-input {
+    @apply w-full px-md py-sm rounded-md text-base transition-all duration-normal;
+  }
+
   .alert {
     @apply p-lg rounded-lg mb-lg;
   }

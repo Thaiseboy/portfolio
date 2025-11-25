@@ -30,7 +30,7 @@
           <a
             href="https://www.linkedin.com/in/get-ms-karanyawad"
             target="_blank"
-            class="social-icon text-5xl text-primary transition-all duration-normal relative hover:text-white hover:scale-125 md:text-[2.5rem] sm:text-3xl"
+            class="social-icon social-icon-large"
             aria-label="LinkedIn Profile"
           >
             <i class="bi bi-linkedin" />
@@ -38,7 +38,7 @@
           <a
             href="https://github.com/Thaiseboy/Hi-"
             target="_blank"
-            class="social-icon text-5xl text-primary transition-all duration-normal relative hover:text-white hover:scale-125 md:text-[2.5rem] sm:text-3xl"
+            class="social-icon social-icon-large"
             aria-label="GitHub Profile"
           >
             <i class="bi bi-github" />

@@ -41,7 +41,7 @@
               <button
                 v-if="project.description && project.description.length > 150"
                 @click="toggleDescription(project)"
-                class="btn-read-more text-sm px-4 py-2 rounded-md font-semibold transition-all duration-200 border-none cursor-pointer md:text-xs md:px-2.5 md:py-1.5"
+                class="btn-read-more btn-project-small cursor-pointer"
               >
                 {{ project.showFullDescription ? 'Show Less' : 'Read More' }}
               </button>
@@ -49,13 +49,13 @@
                 v-if="project.url"
                 :href="project.url"
                 target="_blank"
-                class="btn-explore text-sm px-4 py-2 rounded-md no-underline font-semibold transition-all duration-200 border-none md:text-xs md:px-3 md:py-2"
+                class="btn-explore btn-project-small no-underline"
               >Explore Project</a>
               <a
                 v-if="project.github"
                 :href="project.github"
                 target="_blank"
-                class="btn-github text-sm px-4 py-2 rounded-md no-underline font-semibold transition-all duration-200 border-none md:text-xs md:px-3 md:py-2"
+                class="btn-github btn-project-small no-underline"
               >GitHub</a>
             </div>
           </div>

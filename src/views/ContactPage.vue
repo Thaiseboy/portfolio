@@ -6,7 +6,7 @@
 
     <div class="max-w-screen-xl mx-auto">
       <div class="contact-content">
-      <div class="social-media-box">
+      <div class="social-media-box card-dark-translucent">
         <h2 class="text-white text-center mb-xl">
           Follow me &#x1F447;
         </h2>
@@ -38,7 +38,7 @@
         </div>
       </div>
 
-      <div class="contact-form-box">
+      <div class="contact-form-box card-dark-translucent">
         <h2 class="text-white text-center mb-xl">
           If you have more questions, feel free to ask &#x1F4E9;
         </h2>
@@ -223,7 +223,6 @@ onMounted(() => {
 }
 
 .social-media-box {
-  @apply bg-dark-card/80 rounded-lg p-xl shadow-md transition-all duration-normal;
   text-align: center;
 }
 
@@ -276,10 +275,6 @@ onMounted(() => {
     width: 120px;
     height: 120px;
   }
-}
-
-.contact-form-box {
-  @apply bg-dark-card/80 rounded-lg p-xl shadow-md transition-all duration-normal;
 }
 
 .contact-form-box:hover {
