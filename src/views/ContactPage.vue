@@ -109,7 +109,7 @@
             aria-label="Submit contact form"
           >
             <span v-if="isSubmitting">Sending...</span>
-            <span v-else>Submit</span>
+            <span v-else>Send</span>
           </button>
 
           <div v-if="submitMessage" class="alert alert-success mt-3">
