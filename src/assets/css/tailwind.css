@@ -159,6 +159,10 @@
     @apply text-white opacity-90 leading-relaxed;
   }
 
+  .page-title {
+    @apply text-center mb-4 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-4;
+  }
+
   .alert {
     @apply p-lg rounded-lg mb-lg;
   }

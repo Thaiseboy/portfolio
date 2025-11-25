@@ -1,6 +1,6 @@
 <template>
   <div class="px-lg py-xxl max-w-full overflow-x-hidden">
-    <h1 class="text-center mb-4 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-4">
+    <h1 class="page-title">
       <span class="text-red">Get</span> to Know My Skills &#x26A1;
     </h1>
     <ErrorBoundary :on-retry="retryFetchSkills">
