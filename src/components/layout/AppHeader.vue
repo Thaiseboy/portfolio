@@ -5,7 +5,7 @@
         <img
           src="@/assets/foto/logo2.png"
           alt="Logo"
-          class="max-h-[200px] mx-auto sm:max-h-[12vh] max-[430px]:max-h-[8vh] max-[320px]:max-h-[7vh]"
+          class="max-h-[250px] mx-auto"
         >
       </div>
     </div>
