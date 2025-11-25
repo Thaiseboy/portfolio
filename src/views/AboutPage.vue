@@ -30,24 +30,26 @@
       </div>
     </ErrorBoundary>
 
-    <div class="text-white leading-relaxed space-y-4">
+    <div class="text-white leading-relaxed space-y-4 text-center px-lg md:px-md">
       <p>
         Hi, I'm Master Supakon Karanyawad, <span class="text-red">29</span> years old — a passionate Frontend Developer with a creative mindset and a strong drive for continuous growth.
         I focus on building modern, maintainable, and user-friendly web applications that combine functionality with clean and efficient design.
       </p>
       <p>
         My journey into web development began from a fascination with the balance between creativity and technology. Over the years, I've gained solid experience in both front-end and back-end development, working with technologies such as:
-        <span class="text-red">&#x21A3;</span><span class="text-gold">HTML5</span>
-        <span class="text-red">&#x21A3;</span><span class="text-gold">CSS3</span>
-        <span class="text-red">&#x21A3;</span><span class="text-gold">Bootstrap 5</span>
-        <span class="text-red">&#x21A3;</span><span class="text-gold">Tailwind</span>
-        <span class="text-red">&#x21A3;</span><span class="text-gold">JavaScript</span>
-        <span class="text-red">&#x21A3;</span><span class="text-gold">TypeScript</span>
-        <span class="text-red">&#x21A3;</span><span class="text-gold">PHP</span>
-        <span class="text-red">&#x21A3;</span><span class="text-gold">Laravel</span>
-        <span class="text-red">&#x21A3;</span><span class="text-gold">Vue.js</span>
       </p>
-      <p>
+      <div class="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto my-6">
+        <span class="tech-badge">HTML5</span>
+        <span class="tech-badge">CSS3</span>
+        <span class="tech-badge">Bootstrap 5</span>
+        <span class="tech-badge">Tailwind</span>
+        <span class="tech-badge">JavaScript</span>
+        <span class="tech-badge">TypeScript</span>
+        <span class="tech-badge">PHP</span>
+        <span class="tech-badge">Laravel</span>
+        <span class="tech-badge">Vue.js</span>
+      </div>
+      <p class="mt-4">
         I'm currently working at Paramedia B.V., where I focus on refactoring and modernizing legacy PHP (Zend Framework 1) applications.
         My work involves improving the structure, maintainability, and performance of existing systems, as well as developing new features and enhancing the user experience using modern tools like Docker to optimize the development workflow.
       </p>
@@ -156,6 +158,34 @@ onMounted(loadPhotos);
 
   .photo-image {
     height: 250px;
+  }
+}
+
+.tech-badge {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 0, 0, 0.15));
+  border: 2px solid rgba(255, 215, 0, 0.5);
+  border-radius: 50px;
+  color: #FFD700;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  cursor: default;
+  backdrop-filter: blur(10px);
+}
+
+.tech-badge:hover {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 0, 0, 0.25));
+  border-color: #FFD700;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .tech-badge {
+    padding: 0.4rem 1rem;
+    font-size: 0.875rem;
   }
 }
 </style>
