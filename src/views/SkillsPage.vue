@@ -177,7 +177,7 @@ onMounted(loadSkills);
 
 @media (max-width: 576px) {
   .skill-item {
-    min-width: 140px;
+    min-width: 250px;
   }
 }
 
