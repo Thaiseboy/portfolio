@@ -2,13 +2,13 @@
   <div class="container overflow-x-hidden">
     <div class="flex flex-col items-center justify-center min-h-[80vh] text-center px-lg py-xxl md:min-h-[70vh] md:px-md md:py-lg">
       <div class="max-w-[800px] mx-auto">
-        <h1 class="animate-fade-in text-center mb-12 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-8">
+        <h1 class="animate-fade-in text-center mb-4 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-4">
           <span class="text-red font-bold inline-block animate-bounce-slow">Nice</span> to meet you! &#x1F601;
         </h1>
-        <h2 class="animate-fade-in-slow text-gold opacity-90 text-2xl">
+        <h2 class="animate-fade-in-slow text-gold opacity-90 text-xl">
           Hi, My name is Master Supakon Karanyawad
         </h2>
-        <h2 class="animate-fade-in-slow text-gold mb-xl opacity-90 text-2xl">
+        <h2 class="animate-fade-in-slow text-gold mb-xl opacity-90 text-xl">
           but you can call me
           <span class="text-red font-bold">Get &#x1F680;</span>
         </h2>
