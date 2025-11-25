@@ -5,10 +5,10 @@
         <h1 class="animate-fade-in text-center mb-12 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-8">
           <span class="text-red font-bold inline-block animate-bounce-slow">Nice</span> to meet you! &#x1F601;
         </h1>
-        <h2 class="animate-fade-in-slow text-gold mb-xl opacity-90">
+        <h2 class="animate-fade-in-slow text-gold opacity-90 text-2xl">
           Hi, My name is Master Supakon Karanyawad
         </h2>
-        <h2 class="animate-fade-in-slow text-gold mb-xl opacity-90">
+        <h2 class="animate-fade-in-slow text-gold mb-xl opacity-90 text-2xl">
           but you can call me
           <span class="text-red font-bold">Get &#x1F680;</span>
         </h2>
