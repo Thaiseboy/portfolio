@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 py-8 max-w-full overflow-x-hidden md:px-2 w-full box-border">
+  <div class="page-container">
     <h1 class="page-title">
       <span class="text-red">Get</span> Inspired by my Projects &#x1F5C2;
     </h1>

@@ -1,5 +1,5 @@
 <template>
-  <div class="px-lg py-xxl max-w-full overflow-x-hidden">
+  <div class="page-container">
     <h1 class="page-title">
       <span class="text-red">Get</span> to know me &#128526;
     </h1>
