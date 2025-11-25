@@ -79,6 +79,7 @@ section {
   padding: 50px 0;
   max-width: 100vw;
   overflow-x: hidden;
+  scroll-margin-top: 110px;
 }
 
 @media (max-width: 768px) {
@@ -89,6 +90,10 @@ section {
   body {
     max-width: 100vw;
     overflow-x: hidden;
+  }
+
+  section {
+    scroll-margin-top: 90px;
   }
 }
 </style>

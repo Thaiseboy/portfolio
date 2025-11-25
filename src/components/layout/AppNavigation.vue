@@ -1,5 +1,5 @@
 <template>
-  <nav class="sticky top-0 z-[1000] bg-black/50 rounded-[30px] shadow-[0_4px_8px_rgba(0,0,0,0.5)] px-5 py-2.5 w-full max-w-screen-xl mx-auto my-5 max-[480px]:px-4 max-[480px]:py-2">
+  <nav class="fixed top-4 left-0 right-0 z-[1000] bg-black/70 backdrop-blur-md rounded-[30px] shadow-[0_4px_8px_rgba(0,0,0,0.5)] px-5 py-2.5 w-[calc(100%-2rem)] max-w-screen-xl mx-auto max-[480px]:top-2 max-[480px]:px-4 max-[480px]:py-2">
     <ul class="flex justify-center items-center list-none m-0 p-0 gap-8 md:gap-6 sm:gap-4 max-[480px]:gap-2">
       <li class="flex items-center">
         <router-link
