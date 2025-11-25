@@ -11,8 +11,14 @@ export function useFormValidation() {
     if (name.trim().length > 50) {
       return 'Name must be less than 50 characters';
     }
-    if (!/^[a-zA-Z\s\-']+$/.test(name.trim())) {
+    // Allow international characters (Unicode letters) + spaces, hyphens, apostrophes
+    // but block numbers and most special characters
+    if (!/^[\p{L}\s\-']+$/u.test(name.trim())) {
       return 'Name can only contain letters, spaces, hyphens, and apostrophes';
+    }
+    // Extra security: block common XSS patterns even if they pass the regex
+    if (/<|>|&lt|&gt|script|javascript|onerror|onclick/i.test(name)) {
+      return 'Invalid characters detected';
     }
     return '';
   };
@@ -45,10 +51,28 @@ export function useFormValidation() {
   };
 
   const sanitizeInput = (input) => {
+    if (!input) return '';
+
     return input
-      .replace(/[<>]/g, '') // Remove potential HTML tags
-      .replace(/javascript:/gi, '') // Remove javascript: protocols
-      .replace(/on\w+=/gi, '') // Remove event handlers
+      // Remove HTML tags and entities
+      .replace(/[<>]/g, '')
+      .replace(/&lt;/gi, '')
+      .replace(/&gt;/gi, '')
+      .replace(/&#60;/gi, '')
+      .replace(/&#62;/gi, '')
+      // Remove dangerous protocols
+      .replace(/javascript:/gi, '')
+      .replace(/data:text\/html/gi, '')
+      .replace(/vbscript:/gi, '')
+      // Remove event handlers
+      .replace(/on\w+\s*=/gi, '')
+      // Remove script tags even if encoded
+      .replace(/<script[^>]*>.*?<\/script>/gi, '')
+      .replace(/&lt;script/gi, '')
+      // Remove potentially dangerous characters
+      .replace(/[{}]/g, '')
+      // eslint-disable-next-line no-control-regex
+      .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters (ASCII 0-31, 127-159)
       .trim();
   };
 
