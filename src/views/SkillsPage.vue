@@ -1,7 +1,7 @@
 <template>
   <div class="px-lg py-xxl max-w-full overflow-x-hidden">
     <h1 class="text-center mb-12 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-8">
-      <span class="text-red">Get</span> Skilled with Me &#x26A1;
+      <span class="text-red">Get</span> to Know My Skills &#x26A1;
     </h1>
     <ErrorBoundary :on-retry="retryFetchSkills">
       <div class="overflow-x-auto py-lg scrollbar-hide">
