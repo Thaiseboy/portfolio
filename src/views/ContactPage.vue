@@ -7,7 +7,7 @@
     <div class="max-w-screen-xl mx-auto">
       <div class="contact-content">
       <div class="social-media-box card-dark-translucent">
-        <h2 class="text-white text-center mb-xl">
+        <h2 class="text-white text-center mb-xl text-2xl">
           Follow me &#x1F447;
         </h2>
         <div class="flex flex-col gap-lg mb-xl">
@@ -39,7 +39,7 @@
       </div>
 
       <div class="contact-form-box card-dark-translucent">
-        <h2 class="text-white text-center mb-xl">
+        <h2 class="text-white text-center mb-xl text-2xl">
           If you have more questions, feel free to ask &#x1F4E9;
         </h2>
         <form

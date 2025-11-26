@@ -182,7 +182,7 @@
 
   /* Cards & Containers */
   .card-dark-translucent {
-    @apply bg-dark-card/80 rounded-lg p-xl shadow-md transition-all duration-normal;
+    @apply bg-dark-card/80 rounded-lg p-4 shadow-md transition-all duration-normal;
   }
 
   /* Buttons */
