@@ -1,49 +1,49 @@
 <template>
-  <nav class="fixed top-4 left-0 right-0 z-[1000] bg-black/70 backdrop-blur-md rounded-[30px] shadow-[0_4px_8px_rgba(0,0,0,0.5)] px-5 py-2.5 w-[calc(100%-2rem)] md:w-[80vw] lg:w-[60vw] xl:w-[50vw] max-w-screen-xl mx-auto max-[640px]:w-[calc(100%-1rem)] max-[480px]:top-2 max-[480px]:px-3 max-[480px]:py-2">
-    <ul class="flex justify-center items-center list-none m-0 p-0 gap-8 md:gap-6 sm:gap-4 max-[480px]:gap-2">
-      <li class="flex items-center">
+  <nav class="fixed top-4 left-0 right-0 z-[1000] mx-auto max-[640px]:top-3 max-[480px]:top-2" style="width: fit-content;">
+    <ul class="flex justify-center items-center list-none m-0 p-0 gap-4 md:gap-3 sm:gap-2.5">
+      <li class="nav-item">
         <router-link
-          class="nav-link nav-link-item"
+          class="nav-link nav-link-icon"
           to="/#home"
           aria-label="Home"
         >
-          <i class="bi bi-house-door nav-icon max-[480px]:text-2xl hover:scale-110" />
+          <i class="bi bi-house-door nav-icon" />
         </router-link>
       </li>
-      <li class="flex items-center">
+      <li class="nav-item">
         <router-link
-          class="nav-link nav-link-item"
+          class="nav-link nav-link-icon"
           to="/#about"
           aria-label="About"
         >
-          <i class="bi bi-person nav-icon max-[480px]:text-2xl hover:scale-110" />
+          <i class="bi bi-person nav-icon" />
         </router-link>
       </li>
-      <li class="flex items-center">
+      <li class="nav-item">
         <router-link
-          class="nav-link nav-link-item"
+          class="nav-link nav-link-icon"
           to="/#skills"
           aria-label="Skills"
         >
-          <i class="bi bi-tools nav-icon max-[480px]:text-2xl hover:scale-110" />
+          <i class="bi bi-tools nav-icon" />
         </router-link>
       </li>
-      <li class="flex items-center">
+      <li class="nav-item">
         <router-link
-          class="nav-link nav-link-item"
+          class="nav-link nav-link-icon"
           to="/#project"
           aria-label="Project"
         >
-          <i class="bi bi-folder2-open nav-icon max-[480px]:text-2xl hover:scale-110" />
+          <i class="bi bi-folder2-open nav-icon" />
         </router-link>
       </li>
-      <li class="flex items-center">
+      <li class="nav-item">
         <router-link
-          class="nav-link nav-link-item"
+          class="nav-link nav-link-icon"
           to="/#contact"
           aria-label="Contact"
         >
-          <i class="bi bi-envelope nav-icon max-[480px]:text-2xl hover:scale-110" />
+          <i class="bi bi-envelope nav-icon" />
         </router-link>
       </li>
     </ul>
