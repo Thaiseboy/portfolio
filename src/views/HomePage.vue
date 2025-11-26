@@ -16,7 +16,7 @@
         <img
           src="@/assets/foto/optimized/get.jpeg"
           alt="Master Supakon"
-          class="w-[min(300px,60vw)] h-auto mx-auto my-xl md:w-[min(250px,70vw)] md:my-lg sm:w-[min(200px,80vw)]"
+          class=" h-auto mx-auto "
         />
 
         <div class="animate-fade-in-slower text-lg mb-xl leading-relaxed">
