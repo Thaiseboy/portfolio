@@ -32,11 +32,12 @@
 
     <div class="text-white leading-relaxed space-y-4 text-center px-lg md:px-md">
       <p>
-        Hi, I'm Master Supakon Karanyawad, <span class="text-red">29</span> years old — a passionate Frontend Developer with a creative mindset and a strong drive for continuous growth.
-        I focus on building modern, maintainable, and user-friendly web applications that combine functionality with clean and efficient design.
+        Hi, I'm Master Supakon Karanyawad, a <span class="text-red">29</span> years old passionate Frontend Developer with a creative mindset and a strong drive for continuous growth.
+        I specialize in building modern, maintainable, and user-friendly web applications that seamlessly combine functionality with clean, efficient design.
       </p>
       <p>
-        My journey into web development began from a fascination with the balance between creativity and technology. Over the years, I've gained solid experience in both front-end and back-end development, working with technologies such as:
+        My journey into web development started with a fascination for the perfect balance between creativity and technology.
+        Over the years, I've gained solid experience in both frontend and backend development, working with a diverse range of technologies including:
       </p>
       <div class="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto my-6">
         <span class="tech-badge">HTML5</span>
@@ -50,8 +51,8 @@
         <span class="tech-badge">Vue.js</span>
       </div>
       <p class="mt-4">
-        I'm currently working at Paramedia B.V., where I focus on refactoring and modernizing legacy PHP (Zend Framework 1) applications.
-        My work involves improving the structure, maintainability, and performance of existing systems, as well as developing new features and enhancing the user experience using modern tools like Docker to optimize the development workflow.
+        Currently, I work at <span class="text-gold">Paramedia B.V.</span>, where I balance refactoring legacy PHP applications (Zend Framework 1) with building new, innovative features.
+        My role encompasses improving code structure and performance, developing modern solutions, and creating exceptional user experiences through clean, efficient code.
       </p>
     </div>
     </div>
