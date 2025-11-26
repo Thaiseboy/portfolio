@@ -55,7 +55,7 @@ describe('HomePage', () => {
   it('renders with correct CSS classes', () => {
     const wrapper = mount(HomePage)
 
-    expect(wrapper.find('h1').classes()).toContain('text-gold')
+    expect(wrapper.find('h1').classes()).toContain('page-title')
     expect(wrapper.find('h2').classes()).toContain('text-gold')
   })
 })
