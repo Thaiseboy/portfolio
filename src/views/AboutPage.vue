@@ -163,24 +163,48 @@ onMounted(loadPhotos);
 }
 
 .tech-badge {
+  position: relative;
   display: inline-block;
-  padding: 0.5rem 1.25rem;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 0, 0, 0.15));
-  border: 2px solid rgba(255, 215, 0, 0.5);
-  border-radius: 50px;
+  padding: 0.65rem 1.5rem;
+  background: linear-gradient(145deg, rgba(51, 51, 51, 0.9), rgba(28, 28, 28, 0.95));
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
   color: #FFD700;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: default;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 215, 0, 0.1);
+  overflow: hidden;
+}
+
+.tech-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.tech-badge:hover::before {
+  left: 100%;
 }
 
 .tech-badge:hover {
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 0, 0, 0.25));
+  background: linear-gradient(145deg, rgba(51, 51, 51, 1), rgba(28, 28, 28, 1));
   border-color: #FFD700;
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  transform: translateY(-3px) scale(1.08);
+  box-shadow:
+    0 8px 24px rgba(255, 215, 0, 0.25),
+    0 0 20px rgba(255, 215, 0, 0.15),
+    inset 0 1px 0 rgba(255, 215, 0, 0.2);
+  color: #fff;
 }
 
 @media (max-width: 768px) {
