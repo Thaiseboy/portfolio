@@ -1,49 +1,40 @@
 <template>
-  <nav class="fixed top-4 left-0 right-0 z-[1000] mx-auto max-[640px]:top-3 max-[480px]:top-2" style="width: fit-content;">
+  <button
+    @click="isMenuOpen = !isMenuOpen"
+    class="hamburger-btn fixed top-4 left-6 z-[1001]"
+    :class="{ 'is-open': isMenuOpen }"
+    aria-label="Toggle menu"
+  >
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+
+  <nav
+    class="fixed top-20 left-6 z-[1000] transition-all"
+    :class="{
+      'opacity-100 visible duration-700 ease-out': isMenuOpen,
+      'opacity-0 invisible -top-10 duration-500 ease-in': !isMenuOpen
+    }"
+  >
     <ul class="flex justify-center items-center list-none m-0 p-0 gap-4 md:gap-3 sm:gap-2.5">
-      <li class="nav-item">
+      <li
+        v-for="(item, index) in navItems"
+        :key="item.id"
+        class="nav-item"
+        :style="{
+          transitionDelay: isMenuOpen ? `${index * 0.08}s` : '0s',
+          animationDelay: isMenuOpen ? `${index * 0.08}s` : '0s'
+        }"
+        :class="{ 'nav-item-show': isMenuOpen }"
+        @click="isMenuOpen = false"
+      >
         <router-link
           class="nav-link nav-link-icon"
-          to="/#home"
-          aria-label="Home"
+          :to="`/#${item.id}`"
+          :aria-label="item.label"
         >
-          <i class="bi bi-house-door nav-icon" />
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link
-          class="nav-link nav-link-icon"
-          to="/#about"
-          aria-label="About"
-        >
-          <i class="bi bi-person nav-icon" />
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link
-          class="nav-link nav-link-icon"
-          to="/#skills"
-          aria-label="Skills"
-        >
-          <i class="bi bi-tools nav-icon" />
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link
-          class="nav-link nav-link-icon"
-          to="/#project"
-          aria-label="Project"
-        >
-          <i class="bi bi-folder2-open nav-icon" />
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link
-          class="nav-link nav-link-icon"
-          to="/#contact"
-          aria-label="Contact"
-        >
-          <i class="bi bi-envelope nav-icon" />
+          <i :class="`bi bi-${item.icon} nav-icon`" />
         </router-link>
       </li>
     </ul>
@@ -71,6 +62,16 @@
 
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+
+const isMenuOpen = ref(false);
+
+const navItems = [
+  { id: 'home', icon: 'house-door', label: 'Home' },
+  { id: 'about', icon: 'person', label: 'About' },
+  { id: 'skills', icon: 'tools', label: 'Skills' },
+  { id: 'project', icon: 'folder2-open', label: 'Project' },
+  { id: 'contact', icon: 'envelope', label: 'Contact' }
+];
 
 const sectionIds = ['home', 'about', 'skills', 'project', 'contact'];
 const currentIndex = ref(0);
