@@ -1,100 +1,135 @@
 <template>
-  <nav class="sticky-icons">
-    <ul class="nav-list">
-      <li class="nav-item">
+  <button
+    @click="isMenuOpen = !isMenuOpen"
+    class="hamburger-btn fixed top-4 left-6 z-[1001]"
+    :class="{ 'is-open': isMenuOpen }"
+    aria-label="Toggle menu"
+  >
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+
+  <nav
+    class="fixed top-20 left-6 z-[1000] transition-all"
+    :class="{
+      'opacity-100 visible duration-700 ease-out': isMenuOpen,
+      'opacity-0 invisible -top-10 duration-500 ease-in': !isMenuOpen
+    }"
+  >
+    <ul class="flex justify-center items-center list-none m-0 p-0 gap-4 md:gap-3 sm:gap-2.5">
+      <li
+        v-for="(item, index) in navItems"
+        :key="item.id"
+        class="nav-item"
+        :style="{
+          transitionDelay: isMenuOpen ? `${index * 0.08}s` : '0s',
+          animationDelay: isMenuOpen ? `${index * 0.08}s` : '0s'
+        }"
+        :class="{ 'nav-item-show': isMenuOpen }"
+        @click="isMenuOpen = false"
+      >
         <router-link
-          class="nav-link text-gold font-weight-bold header-font"
-          to="/#home"
-          aria-label="Home"
+          class="nav-link nav-link-icon"
+          :to="`/#${item.id}`"
+          :aria-label="item.label"
         >
-          <i class="bi bi-house-door icon-large" />
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link
-          class="nav-link text-gold font-weight-bold header-font"
-          to="/#about"
-          aria-label="About"
-        >
-          <i class="bi bi-person icon-large" />
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link
-          class="nav-link text-gold font-weight-bold header-font"
-          to="/#skills"
-          aria-label="Skills"
-        >
-          <i class="bi bi-tools icon-large" />
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link
-          class="nav-link text-gold font-weight-bold header-font"
-          to="/#project"
-          aria-label="Project"
-        >
-          <i class="bi bi-folder2-open icon-large" />
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link
-          class="nav-link text-gold font-weight-bold header-font"
-          to="/#contact"
-          aria-label="Contact"
-        >
-          <i class="bi bi-envelope icon-large" />
+          <i :class="`bi bi-${item.icon} nav-icon`" />
         </router-link>
       </li>
     </ul>
   </nav>
+
+  <div class="fixed bottom-6 right-6 z-[1000] flex flex-col gap-3 max-[640px]:right-4 max-[640px]:bottom-4">
+    <button
+      type="button"
+      @click="goPrev"
+      class="btn-scroll-glass"
+      aria-label="Vorige sectie"
+    >
+      <i class="bi bi-chevron-up text-2xl" />
+    </button>
+    <button
+      type="button"
+      @click="goNext"
+      class="btn-scroll-glass"
+      aria-label="Volgende sectie"
+    >
+      <i class="bi bi-chevron-down text-2xl" />
+    </button>
+  </div>
 </template>
 
 <script setup>
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+
+const isMenuOpen = ref(false);
+
+const navItems = [
+  { id: 'home', icon: 'house-door', label: 'Home' },
+  { id: 'about', icon: 'person', label: 'About' },
+  { id: 'skills', icon: 'tools', label: 'Skills' },
+  { id: 'project', icon: 'folder2-open', label: 'Project' },
+  { id: 'contact', icon: 'envelope', label: 'Contact' }
+];
+
+const sectionIds = ['home', 'about', 'skills', 'project', 'contact'];
+const currentIndex = ref(0);
+let observer;
+
+const scrollToSection = (id) => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
+const goPrev = () => {
+  const nextIndex = (currentIndex.value - 1 + sectionIds.length) % sectionIds.length;
+  scrollToSection(sectionIds[nextIndex]);
+};
+
+const goNext = () => {
+  const nextIndex = (currentIndex.value + 1) % sectionIds.length;
+  scrollToSection(sectionIds[nextIndex]);
+};
+
+onMounted(() => {
+  if (typeof window === 'undefined') return;
+
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          const foundIndex = sectionIds.indexOf(id);
+          if (foundIndex !== -1) {
+            currentIndex.value = foundIndex;
+          }
+        }
+      });
+    },
+    { threshold: 0.55 }
+  );
+
+  sectionIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      observer.observe(el);
+    }
+  });
+});
+
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect();
+});
+
 defineOptions({
   name: "AppNavigation"
 });
 </script>
 
 <style scoped>
-.sticky-icons {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  padding: 10px 20px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 20px auto;
-}
-
-.nav-list {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 2rem;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-}
-
-.nav-link {
-  text-decoration: none;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem;
-  transition: all 0.3s ease;
-}
-
 .nav-link::after {
   content: '';
   position: absolute;
@@ -108,57 +143,5 @@ defineOptions({
 
 .nav-link:hover::after {
   width: 100%;
-}
-
-.nav-link:hover {
-  color: white;
-  transform: translateY(-2px);
-}
-
-.nav-link.active {
-  color: red;
-}
-
-.icon-large {
-  font-size: 3rem;
-  transition: all 0.3s ease;
-}
-
-.nav-link:hover .icon-large {
-  transform: scale(1.1);
-}
-
-@media (max-width: 768px) {
-  .nav-list {
-    gap: 1.5rem;
-  }
-  
-  .icon-large {
-    font-size: 2.5rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .nav-list {
-    gap: 1rem;
-  }
-  
-  .icon-large {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .nav-list {
-    gap: 0.5rem;
-  }
-  
-  .icon-large {
-    font-size: 1.5rem;
-  }
-  
-  .sticky-icons {
-    padding: 8px 16px;
-  }
 }
 </style>

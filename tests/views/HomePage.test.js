@@ -7,19 +7,19 @@ describe('HomePage', () => {
     const wrapper = mount(HomePage)
 
     expect(wrapper.find('.container').exists()).toBe(true)
-    expect(wrapper.find('.home-hero').exists()).toBe(true)
+    expect(wrapper.find('h1').exists()).toBe(true)
   })
 
   it('displays correct title', () => {
     const wrapper = mount(HomePage)
 
-    expect(wrapper.find('.home-hero__title').text()).toContain('Nice to meet you!')
+    expect(wrapper.find('h1').text()).toContain('Nice to meet you!')
   })
 
   it('displays correct subtitle', () => {
     const wrapper = mount(HomePage)
 
-    const subtitle = wrapper.find('.home-hero__subtitle').text()
+    const subtitle = wrapper.find('h2').text()
     expect(subtitle).toContain('Hi, My name is Master Supakon Karanyawad')
   })
 
@@ -40,7 +40,7 @@ describe('HomePage', () => {
   it('has profile image', () => {
     const wrapper = mount(HomePage)
 
-    const image = wrapper.find('.home-hero__image')
+    const image = wrapper.find('img[alt="Master Supakon"]')
     expect(image.exists()).toBe(true)
     expect(image.attributes('alt')).toBe('Master Supakon')
   })
@@ -48,17 +48,14 @@ describe('HomePage', () => {
   it('has social links', () => {
     const wrapper = mount(HomePage)
 
-    const socialSection = wrapper.find('.home-hero__social')
-    expect(socialSection.exists()).toBe(true)
-    
-    const links = socialSection.findAll('a')
+    const links = wrapper.findAll('a.social-icon')
     expect(links.length).toBeGreaterThan(0)
   })
 
   it('renders with correct CSS classes', () => {
     const wrapper = mount(HomePage)
 
-    expect(wrapper.find('.home-hero__title').classes()).toContain('header-font')
-    expect(wrapper.find('.home-hero__subtitle').classes()).toContain('text-gold')
+    expect(wrapper.find('h1').classes()).toContain('page-title')
+    expect(wrapper.find('h2').classes()).toContain('text-gold')
   })
 })

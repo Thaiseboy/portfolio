@@ -1,0 +1,278 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #FFD700;
+    --color-secondary: #FF0000;
+    --color-text: #FFFFFF;
+    --color-background: #1c1c1c;
+    --color-card: #333333;
+    --color-border: #444444;
+    --color-success: #28a745;
+    --color-warning: #ffc107;
+    --color-danger: #dc3545;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  body {
+    @apply bg-dark text-white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary rounded;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-secondary;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-screen-xl mx-auto px-lg w-full box-border;
+    max-width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      @apply px-md;
+    }
+  }
+
+  .section {
+    @apply py-xxl;
+  }
+
+  @media (max-width: 768px) {
+    .section {
+      @apply py-xl;
+    }
+  }
+
+  .btn {
+    @apply bg-primary text-black font-medium border-none rounded-md px-lg py-sm transition-all duration-normal cursor-pointer inline-block text-center;
+  }
+
+  .btn:hover {
+    @apply opacity-90 brightness-90 -translate-y-0.5;
+  }
+
+  .btn:active {
+    @apply translate-y-0;
+  }
+
+  .btn:disabled {
+    @apply opacity-60 cursor-not-allowed;
+  }
+
+  .btn:disabled:hover {
+    @apply translate-y-0;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-black;
+  }
+
+  .btn-secondary {
+    @apply bg-dark-card text-white border border-dark-border;
+  }
+
+  .btn-danger {
+    @apply bg-secondary text-white;
+  }
+
+  .btn-warning {
+    @apply bg-warning text-black;
+  }
+
+  .btn-outline-secondary {
+    @apply bg-transparent text-white border-2 border-dark-border;
+  }
+
+  .btn-outline-secondary:hover {
+    @apply bg-dark-card border-primary;
+  }
+
+  .btn-sm {
+    @apply px-sm py-xs text-sm;
+  }
+
+  .btn-lg {
+    @apply px-xl py-md text-lg;
+  }
+
+  .btn-icon {
+    @apply flex items-center justify-center w-12 h-12 rounded-full p-0 bg-primary text-black border-none cursor-pointer;
+  }
+
+  .btn-icon:hover {
+    @apply opacity-90 -translate-y-0.5;
+  }
+
+  .social-btn {
+    @apply bg-transparent text-primary border-2 border-primary rounded-full w-[60px] h-[60px] flex items-center justify-center text-2xl cursor-pointer transition-all duration-normal;
+  }
+
+  .social-btn:hover {
+    @apply bg-primary text-black -translate-y-0.5;
+  }
+
+  @media (max-width: 768px) {
+    .social-btn {
+      @apply w-[50px] h-[50px] text-xl;
+    }
+  }
+
+  .card {
+    @apply bg-dark-card rounded-lg p-lg shadow-md transition-all duration-normal overflow-hidden;
+  }
+
+  .card:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+
+  .card-title {
+    @apply text-xl font-semibold text-primary mb-sm;
+  }
+
+  .card-text {
+    @apply text-white opacity-90 leading-relaxed;
+  }
+
+  .page-container {
+    @apply px-lg py-xxl max-w-full overflow-x-hidden;
+  }
+
+  .page-title {
+    @apply text-center mb-4 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-4;
+  }
+
+  .nav-icon {
+    @apply text-3xl transition-all duration-300 md:text-2xl sm:text-xl;
+  }
+
+  .nav-link-item {
+    @apply text-gold font-bold no-underline relative flex items-center justify-center p-2 transition-all duration-normal hover:text-white hover:-translate-y-0.5 active:text-red;
+  }
+
+  .nav-link-icon {
+    @apply flex items-center justify-center w-14 h-14 rounded-2xl bg-black/70 backdrop-blur-md border border-white/10 text-gold no-underline transition-all duration-300 md:w-12 md:h-12 sm:w-11 sm:h-11;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .nav-link-icon:hover {
+    @apply bg-black/90 border-gold text-white -translate-y-1 scale-110;
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2), 0 0 30px rgba(255, 215, 0, 0.1);
+  }
+
+  .nav-link-icon.router-link-active {
+    @apply bg-gradient-to-br from-gold to-yellow-600 text-black border-gold;
+    box-shadow: 0 6px 16px rgba(255, 215, 0, 0.4), 0 0 25px rgba(255, 215, 0, 0.2);
+  }
+
+  .hamburger-btn {
+    @apply w-12 h-12 rounded-xl bg-black/70 backdrop-blur-md border border-white/10 flex flex-col items-center justify-center gap-1.5 transition-all duration-300;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .hamburger-btn:hover {
+    @apply bg-black/90 border-gold;
+    box-shadow: 0 6px 16px rgba(255, 215, 0, 0.2);
+  }
+
+  .hamburger-line {
+    @apply w-6 h-0.5 bg-gold rounded-full transition-all duration-300;
+  }
+
+  .hamburger-btn.is-open .hamburger-line:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .hamburger-btn.is-open .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  .hamburger-btn.is-open .hamburger-line:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .nav-item {
+    @apply opacity-0 scale-75 transition-all duration-500;
+  }
+
+  .nav-item-show {
+    @apply opacity-100 scale-100;
+    animation: slideIn 0.5s ease-out forwards;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .btn-scroll-glass {
+    @apply w-11 h-11 rounded-full bg-black/70 text-gold shadow-[0_4px_8px_rgba(0,0,0,0.5)] backdrop-blur-md border border-white/10 flex items-center justify-center transition-all duration-200 hover:scale-105 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-red;
+  }
+
+  .card-dark-translucent {
+    @apply bg-dark-card/80 rounded-lg p-4 shadow-md transition-all duration-normal;
+  }
+
+  .btn-project-small {
+    @apply text-sm px-4 py-2 rounded-md font-semibold transition-all duration-200 border-none md:text-xs md:px-3 md:py-2;
+  }
+
+  .social-icon-large {
+    @apply text-5xl text-primary transition-all duration-normal relative hover:text-white hover:scale-125 md:text-[2.5rem] sm:text-3xl;
+  }
+
+  .form-input {
+    @apply w-full px-md py-sm rounded-md text-base transition-all duration-normal;
+  }
+
+  .alert {
+    @apply p-lg rounded-lg mb-lg;
+  }
+
+  .alert-success {
+    @apply bg-success text-white;
+  }
+
+  .alert-danger {
+    @apply bg-danger text-white;
+  }
+}
+
+@layer utilities {
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+  }
+}

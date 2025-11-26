@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import './assets/scss/main.scss'
+import './assets/css/tailwind.css'
 
 
 createApp(App)

@@ -57,7 +57,56 @@ defineProps({
 });
 </script>
 
-<style scoped lang="scss">
-// All styles are now handled by SCSS partials in /assets/scss/components/_skeleton.scss
-// Custom component-specific styles can be added here if needed
+<style scoped>
+.skeleton-loader {
+  @apply animate-pulse;
+}
+
+.skeleton-card {
+  @apply bg-dark-card rounded-lg overflow-hidden shadow-md;
+}
+
+.skeleton-image {
+  @apply w-full h-[200px] bg-gray-700;
+}
+
+.skeleton-content {
+  @apply p-lg;
+}
+
+.skeleton-title {
+  @apply h-6 bg-gray-700 rounded mb-md w-3/4;
+}
+
+.skeleton-text {
+  @apply h-4 bg-gray-700 rounded mb-sm;
+}
+
+.skeleton-text.short {
+  @apply w-1/2;
+}
+
+.skeleton-list {
+  @apply space-y-md;
+}
+
+.skeleton-list-item {
+  @apply flex items-center gap-md;
+}
+
+.skeleton-avatar {
+  @apply w-12 h-12 bg-gray-700 rounded-full flex-shrink-0;
+}
+
+.skeleton-text-content {
+  @apply flex-1;
+}
+
+.skeleton-text-block {
+  @apply space-y-sm;
+}
+
+.skeleton-box {
+  @apply bg-gray-700 rounded;
+}
 </style>

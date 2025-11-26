@@ -1,11 +1,11 @@
 <template>
-  <header class="text-gold header-container">
-    <div class="container d-flex flex-column align-items-center">
+  <header class="text-gold flex justify-center items-center min-h-screen bg-black p-0 m-0">
+    <div class="container flex flex-col items-center">
       <div class="text-center">
         <img
           src="@/assets/foto/logo2.png"
           alt="Logo"
-          class="logo-img"
+          class="max-h-[250px] mx-auto"
         >
       </div>
     </div>
@@ -17,41 +17,3 @@ defineOptions({
   name: "AppHeader"
 });
 </script>
-
-<style scoped>
-.header-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; 
-  background-color: #000; 
-  padding: 0; 
-  margin: 0; 
-  box-sizing: border-box;
-}
-
-.logo-img {
-  max-height: 200px;
-  margin: 0 auto; 
-}
-
-@media (max-width: 640px) {
-  .logo-img {
-    max-height: 12vh; 
-  }
-}
-
-@media (max-width: 430px) { 
-  .logo-img {
-    max-height: 8vh;
-    
-  }
-}
-
-@media (max-width: 320px) {
-  .logo-img {
-    max-height: 7vh; 
-  }
-}
-
-</style>
