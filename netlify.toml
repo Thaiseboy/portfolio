@@ -5,7 +5,7 @@
 
   # Environment variables for build
   [build.environment]
-    NODE_VERSION = "20"
+    NODE_VERSION = "22"
     NPM_FLAGS = "--version"
 
 # Production context: main branch deploys
