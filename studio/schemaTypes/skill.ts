@@ -1,9 +1,3 @@
-type RuleType = {
-  min: (arg: number) => RuleType
-  max: (arg: number) => RuleType
-  error: (msg: string) => RuleType
-}
-
 export default {
   name: 'skill',
   title: 'Skill',
@@ -37,14 +31,6 @@ export default {
         hotspot: true, 
       },
       description: 'Upload het logo van de vaardigheid.',
-    },
-    {
-      name: 'rating',
-      title: 'Rating',
-      type: 'number',
-      description: 'Een percentage (0-100) dat aangeeft hoe goed je bent in deze vaardigheid.',
-      validation: (Rule: RuleType) =>
-        Rule.min(0).max(100).error('Rating moet een waarde tussen 0 en 100 zijn.'),
     },
   ],
   preview: {

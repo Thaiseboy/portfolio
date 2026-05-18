@@ -8,7 +8,6 @@ export interface Skill {
   name: string;
   imageUrl: string;
   level: "beginner" | "intermediate" | "advanced";
-  rating: number;
 }
 
 export interface Project {

@@ -35,18 +35,6 @@
               <p class="text-primary text-sm mb-md font-medium">
                 {{ skill.level }}
               </p>
-              <div class="bg-dark rounded-md h-2 overflow-hidden relative">
-                <div
-                  class="progress-bar h-full bg-gradient-to-r from-primary to-secondary rounded-md font-semibold text-[0] transition-[width] duration-1000 ease-out relative"
-                  role="progressbar"
-                  :style="{ width: skill.rating + '%' }"
-                  :aria-valuenow="skill.rating"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                >
-                  {{ skill.rating }}%
-                </div>
-              </div>
             </div>
           </div>
           <div v-else-if="!loading && skills.length === 0" class="no-skills">
@@ -83,7 +71,6 @@ const loadSkills = async () => {
     skills.value = data.map((skill) => ({
       ...skill,
       logoUrl: skill.imageUrl,
-      rating: skill.rating ?? 75,
       title: skill.name,
       level: levelLabels[skill.level] || "Intermediate",
     }));
@@ -145,32 +132,6 @@ onMounted(loadSkills);
   opacity: 1;
 }
 
-.progress-bar::after {
-  content: attr(aria-valuenow) "%";
-  position: absolute;
-  right: -30px;
-  top: -20px;
-  font-size: 0.75rem;
-  color: var(--color-primary);
-  font-weight: 600;
-}
-
-.progress-bar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
-  animation: shine 2s infinite;
-}
-
 .no-skills {
   @apply flex flex-col items-center justify-center p-xxl text-center w-full;
 }
@@ -208,12 +169,4 @@ onMounted(loadSkills);
   }
 }
 
-@keyframes shine {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
 </style>
