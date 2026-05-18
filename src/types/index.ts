@@ -5,9 +5,10 @@ export interface Photo {
 
 export interface Skill {
   _id: string;
-  title: string;
+  name: string;
   imageUrl: string;
-  skillLevel: number;
+  level: "beginner" | "intermediate" | "advanced";
+  rating: number;
 }
 
 export interface Project {

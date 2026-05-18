@@ -1,5 +1,5 @@
-import { ref } from 'vue';
-import sanityClient from '@/sanityClient';
+import { ref } from "vue";
+import sanityClient from "@/sanityClient";
 
 /**
  * Composable for handling Sanity CMS data fetching with enhanced error handling
@@ -14,22 +14,24 @@ export function useSanity() {
   const fetchData = async (query, retryOnFailure = true) => {
     loading.value = true;
     error.value = null;
-    
+
     try {
       const data = await sanityClient.fetch(query);
       retryCount.value = 0;
       return data;
     } catch (err) {
-      const errorMessage = err.message || 'Failed to fetch data from CMS';
+      const errorMessage = err.message || "Failed to fetch data from CMS";
       error.value = errorMessage;
-      
+
       if (retryOnFailure && retryCount.value < maxRetries) {
         retryCount.value++;
-        await new Promise(resolve => setTimeout(resolve, 1000 * retryCount.value));
+        await new Promise((resolve) =>
+          setTimeout(resolve, 1000 * retryCount.value),
+        );
         return fetchData(query, true);
       }
-      
-      console.error('Sanity fetch error:', err);
+
+      console.error("Sanity fetch error:", err);
       throw new Error(errorMessage);
     } finally {
       loading.value = false;
@@ -54,7 +56,8 @@ export function useSanity() {
       _id,
       name,
       "imageUrl": logo.asset->url,
-      skillLevel
+      level,
+      rating
     }`;
     return fetchData(query);
   };
@@ -86,6 +89,6 @@ export function useSanity() {
     fetchPhotos,
     fetchSkills,
     fetchProjects,
-    fetchContact
+    fetchContact,
   };
 }
