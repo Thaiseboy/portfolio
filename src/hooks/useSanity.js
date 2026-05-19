@@ -33,7 +33,7 @@ export function useSanity() {
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   const clearError = useCallback(() => {
@@ -66,8 +66,8 @@ export function useSanity() {
       title,
       description,
       "imageUrl": image.asset->url,
-      github,
-      url
+      "github": select(github == "null" => null, github),
+      "url": select(url == "null" => null, url)
     }`;
     return fetchData(query);
   }, [fetchData]);
