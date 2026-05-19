@@ -5,79 +5,87 @@
     </h1>
     <ErrorBoundary :on-retry="retryFetchSkills">
       <div class="overflow-x-auto py-lg scrollbar-hide">
-      <div class="inline-flex gap-lg px-lg min-w-max">
-        <SkeletonLoader
-          v-if="loading"
-          type="list"
-          :count="6"
-        />
-        <div
-          v-else-if="skills.length > 0"
-          v-for="skill in skills"
-          :id="`skill-${skill._id}`"
-          :key="skill._id"
-          class="skill-item"
-        >
-          <img
-            v-if="skill.logoUrl"
-            :src="skill.logoUrl"
-            :alt="`${skill.name} logo`"
-            class="w-[100px] h-[100px] object-contain mx-auto mb-sm transition-all duration-normal drop-shadow-md md:w-20 md:h-20 sm:w-[60px] sm:h-[60px]"
-          >
+        <div class="inline-flex gap-lg px-lg min-w-max">
+          <SkeletonLoader v-if="loading" type="list" :count="6" />
           <div
-            v-else
-            class="w-[100px] h-[100px] flex items-center justify-center bg-gradient-to-br from-dark-border to-dark-card text-white mx-auto mb-sm rounded-full text-sm text-center md:w-20 md:h-20 sm:w-[60px] sm:h-[60px]"
+            v-else-if="skills.length > 0"
+            v-for="skill in skills"
+            :id="`skill-${skill._id}`"
+            :key="skill._id"
+            class="skill-item"
           >
-            <span>No logo available</span>
-          </div>
-          <div class="relative z-10">
-            <h3 class="text-xl font-semibold text-white mb-xs md:text-lg sm:text-base">{{ skill.name || skill.title }}</h3>
-            <p class="text-primary text-sm mb-md font-medium">{{ skill.level }}</p>
-            <div class="bg-dark rounded-md h-2 overflow-hidden relative">
-              <div
-                class="progress-bar h-full bg-gradient-to-r from-primary to-secondary rounded-md font-semibold text-[0] transition-[width] duration-1000 ease-out relative"
-                role="progressbar"
-                :style="{width: skill.rating + '%'}"
-                :aria-valuenow="skill.rating"
-                aria-valuemin="0"
-                aria-valuemax="100"
+            <img
+              v-if="skill.logoUrl"
+              :src="skill.logoUrl"
+              :alt="`${skill.name} logo`"
+              class="w-[100px] h-[100px] object-contain mx-auto mb-sm transition-all duration-normal drop-shadow-md md:w-20 md:h-20 sm:w-[60px] sm:h-[60px]"
+            />
+            <div
+              v-else
+              class="w-[100px] h-[100px] flex items-center justify-center bg-gradient-to-br from-dark-border to-dark-card text-white mx-auto mb-sm rounded-full text-sm text-center md:w-20 md:h-20 sm:w-[60px] sm:h-[60px]"
+            >
+              <span>No logo available</span>
+            </div>
+            <div class="relative z-10">
+              <h3
+                class="text-xl font-semibold text-white mb-xs md:text-lg sm:text-base"
               >
-                {{ skill.rating }}%
+                {{ skill.name || skill.title }}
+              </h3>
+              <p class="text-primary text-sm mb-md font-medium">
+                {{ skill.level }}
+              </p>
+              <div class="bg-dark rounded-md h-2 overflow-hidden relative">
+                <div
+                  class="progress-bar h-full bg-gradient-to-r from-primary to-secondary rounded-md font-semibold text-[0] transition-[width] duration-1000 ease-out relative"
+                  role="progressbar"
+                  :style="{ width: skill.rating + '%' }"
+                  :aria-valuenow="skill.rating"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  {{ skill.rating }}%
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div v-else-if="!loading && skills.length === 0" class="no-skills">
-          <p>No skills available</p>
+          <div v-else-if="!loading && skills.length === 0" class="no-skills">
+            <p>No skills available</p>
+          </div>
         </div>
       </div>
-    </div>
-  </ErrorBoundary>
+    </ErrorBoundary>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useSanity } from '@/composables/useSanity';
-import ErrorBoundary from '@/components/ui/ErrorBoundary.vue';
-import SkeletonLoader from '@/components/ui/SkeletonLoader.vue';
+import { ref, onMounted } from "vue";
+import { useSanity } from "@/composables/useSanity";
+import ErrorBoundary from "@/components/ui/ErrorBoundary.vue";
+import SkeletonLoader from "@/components/ui/SkeletonLoader.vue";
 
 defineOptions({
-  name: 'SkillsPage'
+  name: "SkillsPage",
 });
 
 const skills = ref([]);
 const { loading, fetchSkills: fetchSkillsData, clearError } = useSanity();
 
+const levelLabels = {
+  beginner: "Beginner",
+  intermediate: "Intermediate",
+  advanced: "Advanced",
+};
+
 const loadSkills = async () => {
   try {
     const data = await fetchSkillsData();
-    skills.value = data.map(skill => ({
+    skills.value = data.map((skill) => ({
       ...skill,
       logoUrl: skill.imageUrl,
-      rating: skill.skillLevel || 75, // Default rating if not set
-      title: skill.name, // Map name to title for compatibility
-      level: skill.skillLevel ? `${skill.skillLevel}%` : 'Intermediate'
+      rating: skill.rating ?? 75,
+      title: skill.name,
+      level: levelLabels[skill.level] || "Intermediate",
     }));
   } catch (error) {
     console.error("Error fetching skills:", error);
@@ -111,13 +119,18 @@ onMounted(loadSkills);
 }
 
 .skill-item::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    rgba(255, 215, 0, 0.1),
+    transparent
+  );
   opacity: 0;
   transition: opacity 0.5s ease;
   animation: rotate 4s linear infinite;
@@ -133,7 +146,7 @@ onMounted(loadSkills);
 }
 
 .progress-bar::after {
-  content: attr(aria-valuenow) '%';
+  content: attr(aria-valuenow) "%";
   position: absolute;
   right: -30px;
   top: -20px;
@@ -143,13 +156,18 @@ onMounted(loadSkills);
 }
 
 .progress-bar::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
   animation: shine 2s infinite;
 }
 
@@ -158,7 +176,7 @@ onMounted(loadSkills);
 }
 
 .no-skills::before {
-  content: '🔧';
+  content: "🔧";
   font-size: 4rem;
   margin-bottom: 1.5rem;
   opacity: 0.5;
@@ -182,12 +200,20 @@ onMounted(loadSkills);
 }
 
 @keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes shine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 </style>

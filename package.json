@@ -12,7 +12,7 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
-    "@sanity/cli": "^3.54.0",
+    "@sanity/cli": "^4.21.1",
     "@sanity/client": "^6.21.3",
     "bootstrap-icons": "^1.11.3",
     "core-js": "^3.8.3",
@@ -38,6 +38,9 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.18",
     "vitest": "^4.0.13"
+  },
+  "engines": {
+    "node": "^22.0.0 || >=24.0.0"
   },
   "browserslist": [
     "> 1%",
