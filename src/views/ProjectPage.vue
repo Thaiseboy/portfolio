@@ -4,75 +4,88 @@
       <span class="text-red">Get</span> Inspired by my Projects &#x1F5C2;
     </h1>
     <ErrorBoundary :on-retry="retryFetchProjects">
-      <div class="projects-container">
-      <template v-if="loading">
-        <SkeletonLoader
-          type="card"
-          v-for="n in 6"
-          :key="n"
-          class="flex-[0_0_500px] h-[400px]"
-        />
-      </template>
-      <template v-else-if="projects.length > 0">
-        <div
-          v-for="project in projects"
-          :key="project._id"
-          class="project-item"
-        >
-          <img
-            v-if="project.image"
-            :src="project.image"
-            alt="Project image"
-            class="w-full h-[200px] object-cover transition-transform duration-normal"
+      <div class="projects-shell">
+        <p class="projects-intro">
+          A selection of work where structure, frontend detail and practical logic come together.
+        </p>
+
+        <div v-if="loading" class="projects-grid">
+          <SkeletonLoader
+            v-for="n in 6"
+            :key="n"
+            type="card"
+            class="project-skeleton"
+          />
+        </div>
+
+        <div v-else-if="projects.length > 0" class="projects-grid">
+          <article
+            v-for="project in projects"
+            :key="project._id"
+            class="project-card"
           >
-          <div class="p-6 md:p-4">
-            <h2 class="text-primary text-xl font-bold mb-3 leading-tight md:text-lg">
-              {{ project.title }}
-            </h2>
-            <div class="mb-6">
+            <div class="project-media">
+              <img
+                v-if="project.image"
+                :src="project.image"
+                :alt="`${project.title} preview`"
+              >
+              <div v-else class="project-media-fallback">
+                <span>{{ getProjectInitial(project.title) }}</span>
+              </div>
+            </div>
+
+            <div class="project-body">
+              <h2>{{ project.title }}</h2>
               <p
-                :class="{ 'expanded': project.showFullDescription }"
-                class="description-text text-white text-sm leading-relaxed mb-0 md:text-xs"
+                :class="{ expanded: project.showFullDescription }"
+                class="project-description"
               >
                 {{ project.description }}
               </p>
-            </div>
-            <div class="flex gap-3 flex-wrap items-center md:gap-2">
+
               <button
                 v-if="project.description && project.description.length > 150"
                 @click="toggleDescription(project)"
-                class="btn-read-more btn-project-small cursor-pointer"
+                class="project-read-more"
               >
                 {{ project.showFullDescription ? 'Show Less' : 'Read More' }}
               </button>
+            </div>
+
+            <div class="project-actions">
               <a
                 v-if="project.url"
                 :href="project.url"
                 target="_blank"
-                class="btn-explore btn-project-small no-underline"
-              >Explore Project</a>
+                rel="noopener noreferrer"
+                class="project-link project-link-primary"
+              >
+                View project
+              </a>
               <a
                 v-if="project.github"
                 :href="project.github"
                 target="_blank"
-                class="btn-github btn-project-small no-underline"
-              >GitHub</a>
+                rel="noopener noreferrer"
+                class="project-link"
+              >
+                GitHub
+              </a>
             </div>
-          </div>
+          </article>
         </div>
-      </template>
-      <div v-else-if="!loading && projects.length === 0" class="text-center text-white p-16">
-        <p class="text-lg">No projects available</p>
+
+        <div v-else-if="!loading && projects.length === 0" class="empty-projects">
+          <p>No projects available</p>
+        </div>
       </div>
-    </div>
-  </ErrorBoundary>
+    </ErrorBoundary>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ref, onMounted } from 'vue';
 import { useSanity } from '@/composables/useSanity';
 import ErrorBoundary from '@/components/ui/ErrorBoundary.vue';
 import SkeletonLoader from '@/components/ui/SkeletonLoader.vue';
@@ -80,8 +93,6 @@ import SkeletonLoader from '@/components/ui/SkeletonLoader.vue';
 defineOptions({
   name: 'ProjectPage'
 });
-
-gsap.registerPlugin(ScrollTrigger);
 
 const projects = ref([]);
 const { loading, fetchProjects: fetchProjectsData, clearError } = useSanity();
@@ -97,34 +108,14 @@ const loadProjects = async () => {
       github: project.github === null || project.github === 'null' ? '' : project.github,
       showFullDescription: false
     }));
-
-    setupScrollAnimations();
   } catch (error) {
     console.error("Error fetching projects:", error);
   }
 };
 
-const setupScrollAnimations = () => {
-  if (window.innerWidth > 768) {
-    nextTick(() => {
-      projects.value.forEach((_, index) => {
-        const element = document.querySelectorAll('.project-item')[index];
-        if (element) {
-          gsap.fromTo(
-            element,
-            { x: 50, opacity: 0 },
-            {
-              x: 0,
-              opacity: 1,
-              duration: 0.8,
-              delay: index * 0.1,
-              ease: "power2.out"
-            }
-          );
-        }
-      });
-    });
-  }
+const getProjectInitial = (title) => {
+  if (!title) return '?';
+  return title.charAt(0).toUpperCase();
 };
 
 const toggleDescription = (project) => {
@@ -140,112 +131,174 @@ onMounted(loadProjects);
 </script>
 
 <style scoped>
-.projects-container {
-  display: flex;
-  gap: 2rem;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 1rem;
-  scroll-behavior: smooth;
+.projects-shell {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
-.projects-container::-webkit-scrollbar {
-  height: 8px;
+.projects-intro {
+  max-width: 640px;
+  margin: 0 auto 2rem;
+  color: rgba(255, 255, 255, 0.78);
+  text-align: center;
+  line-height: 1.7;
 }
 
-.projects-container::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
 }
 
-.projects-container::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #FFD700, #FF0000);
-  border-radius: 4px;
-}
-
-.projects-container::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #e6c200, #cc0000);
-}
-
-.project-item {
-  flex: 0 0 500px;
-  max-width: 500px;
+.project-card,
+.empty-projects {
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   backdrop-filter: blur(10px);
 }
 
-.project-item:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.2);
+.project-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.project-item:hover img {
+.project-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 215, 0, 0.42);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+}
+
+.project-media {
+  height: 210px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.project-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-media img {
   transform: scale(1.05);
 }
 
-.description-text {
+.project-media-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.project-media-fallback span {
+  color: #FFD700;
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.project-body {
+  flex: 1;
+  padding: 1.5rem 1.5rem 1rem;
+}
+
+.project-body h2 {
+  margin: 0 0 0.75rem;
+  color: #FFD700;
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+.project-description {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
   overflow: hidden;
-  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  line-height: 1.7;
 }
 
-.description-text.expanded {
+.project-description.expanded {
   display: block;
   -webkit-line-clamp: unset;
   overflow: visible;
 }
 
-.btn-read-more {
+.project-read-more {
+  margin-top: 0.75rem;
+  padding: 0;
   background: none;
-  border: 1px solid #FFD700;
+  border: 0;
   color: #FFD700;
+  cursor: pointer;
+  font-weight: 700;
 }
 
-.btn-read-more:hover {
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.project-link-primary {
   background: #FFD700;
-  color: #000;
+  border-color: #FFD700;
+  color: #111;
+}
+
+.project-link:hover {
   transform: translateY(-2px);
+  border-color: rgba(255, 215, 0, 0.55);
 }
 
-.btn-explore {
-  background: linear-gradient(45deg, #dc3545, #e74c3c);
-  color: white;
+.project-skeleton {
+  min-height: 430px;
 }
 
-.btn-explore:hover {
-  background: linear-gradient(45deg, #c82333, #dc3545);
-  transform: translateY(-2px);
-}
-
-.btn-github {
-  background: linear-gradient(45deg, #6c757d, #5a6268);
-  color: white;
-}
-
-.btn-github:hover {
-  background: linear-gradient(45deg, #5a6268, #545b62);
-  transform: translateY(-2px);
+.empty-projects {
+  padding: 3rem 1.5rem;
+  color: rgba(255, 255, 255, 0.78);
+  text-align: center;
 }
 
 @media (max-width: 768px) {
-  .projects-container {
-    gap: 1rem;
-    padding: 1rem;
+  .projects-shell {
+    padding: 0 1rem;
   }
 
-  .project-item {
-    flex: 0 0 360px;
-    max-width: 360px;
+  .projects-grid {
+    grid-template-columns: 1fr;
   }
 
-  .description-text {
+  .project-media {
+    height: 190px;
+  }
+
+  .project-description {
     -webkit-line-clamp: 2;
   }
 }
