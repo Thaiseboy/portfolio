@@ -1,32 +1,22 @@
-import { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useSanity } from "@/hooks/useSanity";
+import { useDataFetch } from "@/hooks/useDataFetch";
 import { normalizePhoto } from "@/utils/sanityMappers";
 import ErrorBoundary from "@/components/ui/ErrorBoundary.jsx";
+import DataState from "@/components/ui/DataState.jsx";
 import SkeletonLoader from "@/components/ui/SkeletonLoader.jsx";
 
 export default function AboutPage() {
-  const [photos, setPhotos] = useState([]);
   const { loading, fetchPhotos, clearError } = useSanity();
-
-  const loadPhotos = async () => {
-    try {
-      const data = await fetchPhotos();
-      if (data && data.length > 0) {
-        setPhotos(data.map(normalizePhoto).filter((photo) => photo.url));
-      }
-    } catch (err) {
-      console.error("Error fetching photos:", err);
-    }
-  };
-
-  const retryFetchPhotos = () => {
-    clearError();
-    loadPhotos();
-  };
-
-  useEffect(() => {
-    loadPhotos();
+  const filterPhoto = useCallback((photo) => Boolean(photo.url), []);
+  const logPhotoError = useCallback((error) => {
+    console.error("Error fetching photos:", error);
   }, []);
+  const { items: photos, retry: retryFetchPhotos } = useDataFetch(fetchPhotos, normalizePhoto, {
+    clearError,
+    filter: filterPhoto,
+    onError: logPhotoError,
+  });
 
   return (
     <div className="page-container">
@@ -38,21 +28,22 @@ export default function AboutPage() {
         <div className="about-layout">
           <ErrorBoundary onRetry={retryFetchPhotos}>
             <div className="about-visual">
-              {loading && <SkeletonLoader type="list" count={4} />}
-              {!loading && photos.length > 0 && (
-                <>
-                  {photos.map((photo) => (
-                    <figure key={photo.id} className="photo-tile surface-panel">
-                      <img src={photo.url} alt={photo.title} />
-                    </figure>
-                  ))}
-                </>
-              )}
-              {!loading && photos.length === 0 && (
-                <div className="empty-photos surface-panel empty-state">
-                  <p>No photos available</p>
-                </div>
-              )}
+              <DataState
+                loading={loading}
+                items={photos}
+                emptyMessage="No photos available"
+                emptyClassName="empty-photos surface-panel empty-state"
+                renderLoading={() => <SkeletonLoader type="list" count={4} />}
+                renderItems={(items) => (
+                  <>
+                    {items.map((photo) => (
+                      <figure key={photo.id} className="photo-tile surface-panel">
+                        <img src={photo.url} alt={photo.title} />
+                      </figure>
+                    ))}
+                  </>
+                )}
+              />
             </div>
           </ErrorBoundary>
 

@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { useScrollNavigation } from "@/hooks/useScrollNavigation";
 
 const navItems = [
   { id: "home", icon: "house-door", label: "Home" },
@@ -12,42 +13,7 @@ const sectionIds = navItems.map((item) => item.id);
 
 export default function AppNavigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const observerRef = useRef(null);
-
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const foundIndex = sectionIds.indexOf(entry.target.id);
-          if (foundIndex !== -1) setCurrentIndex(foundIndex);
-        });
-      },
-      { threshold: 0.55 }
-    );
-
-    sectionIds.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observerRef.current.observe(element);
-    });
-
-    return () => observerRef.current?.disconnect();
-  }, []);
-
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  const goPrev = () => {
-    const nextIndex = (currentIndex - 1 + sectionIds.length) % sectionIds.length;
-    scrollToSection(sectionIds[nextIndex]);
-  };
-
-  const goNext = () => {
-    const nextIndex = (currentIndex + 1) % sectionIds.length;
-    scrollToSection(sectionIds[nextIndex]);
-  };
+  const { goNext, goPrev } = useScrollNavigation(sectionIds);
 
   return (
     <>

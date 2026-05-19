@@ -24,7 +24,6 @@ export const normalizePhoto = (photo, index) => ({
 export const normalizeSkill = (skill) => ({
   ...skill,
   logoUrl: skill.imageUrl,
-  title: skill.name,
   level: levelLabels[skill.level] || "Intermediate",
 });
 
@@ -33,5 +32,4 @@ export const normalizeProject = (project) => ({
   image: project.imageUrl,
   url: project.url === null || project.url === "null" ? "" : project.url,
   github: project.github === null || project.github === "null" ? "" : project.github,
-  showFullDescription: false,
 });

@@ -1,30 +1,20 @@
-import { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useSanity } from "@/hooks/useSanity";
+import { useDataFetch } from "@/hooks/useDataFetch";
 import { getInitials, normalizeSkill } from "@/utils/sanityMappers";
+import DataState from "@/components/ui/DataState.jsx";
 import ErrorBoundary from "@/components/ui/ErrorBoundary.jsx";
 import SkeletonLoader from "@/components/ui/SkeletonLoader.jsx";
 
 export default function SkillsPage() {
-  const [skills, setSkills] = useState([]);
   const { loading, fetchSkills, clearError } = useSanity();
-
-  const loadSkills = async () => {
-    try {
-      const data = await fetchSkills();
-      setSkills(data.map(normalizeSkill));
-    } catch (error) {
-      console.error("Error fetching skills:", error);
-    }
-  };
-
-  const retryFetchSkills = () => {
-    clearError();
-    loadSkills();
-  };
-
-  useEffect(() => {
-    loadSkills();
+  const logSkillError = useCallback((error) => {
+    console.error("Error fetching skills:", error);
   }, []);
+  const { items: skills, retry: retryFetchSkills } = useDataFetch(fetchSkills, normalizeSkill, {
+    clearError,
+    onError: logSkillError,
+  });
 
   return (
     <div className="page-container">
@@ -37,40 +27,38 @@ export default function SkillsPage() {
             <p>Tools I use to build reliable interfaces and keep projects maintainable.</p>
           </div>
 
-          {loading && (
-            <div className="skills-grid">
-              {Array.from({ length: 6 }).map((_, index) => (
-                <SkeletonLoader key={index} type="card" className="skill-skeleton" />
-              ))}
-            </div>
-          )}
+          <DataState
+            loading={loading}
+            items={skills}
+            emptyMessage="No skills available"
+            renderLoading={() => (
+              <div className="skills-grid">
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <SkeletonLoader key={index} type="card" className="skill-skeleton" />
+                ))}
+              </div>
+            )}
+            renderItems={(items) => (
+              <div className="skills-grid">
+                {items.map((skill) => (
+                  <article key={skill._id} id={`skill-${skill._id}`} className="skill-card surface-panel surface-hover">
+                    <div className="skill-logo">
+                      {skill.logoUrl ? (
+                        <img src={skill.logoUrl} alt={`${skill.name} logo`} />
+                      ) : (
+                        <span>{getInitials(skill.name)}</span>
+                      )}
+                    </div>
 
-          {!loading && skills.length > 0 && (
-            <div className="skills-grid">
-              {skills.map((skill) => (
-                <article key={skill._id} id={`skill-${skill._id}`} className="skill-card surface-panel surface-hover">
-                  <div className="skill-logo">
-                    {skill.logoUrl ? (
-                      <img src={skill.logoUrl} alt={`${skill.name} logo`} />
-                    ) : (
-                      <span>{getInitials(skill.name || skill.title)}</span>
-                    )}
-                  </div>
-
-                  <div className="skill-content">
-                    <h3>{skill.name || skill.title}</h3>
-                    <p>{skill.level}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-
-          {!loading && skills.length === 0 && (
-            <div className="empty-state surface-panel">
-              <p>No skills available</p>
-            </div>
-          )}
+                    <div className="skill-content">
+                      <h3>{skill.name}</h3>
+                      <p>{skill.level}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+          />
         </div>
       </ErrorBoundary>
     </div>

@@ -22,7 +22,7 @@ export default function ContactPage() {
 
   useEffect(() => {
     fetchCV();
-  }, []);
+  }, [fetchCV]);
 
   const sendEmail = async (event) => {
     event.preventDefault();
