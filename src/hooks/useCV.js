@@ -3,18 +3,18 @@ import { useSanity } from "@/hooks/useSanity";
 
 export function useCV() {
   const [cvLink, setCvLink] = useState(null);
-  const { loading, fetchContact, clearError } = useSanity();
+  const { loading, fetchCV: fetchCVData, clearError } = useSanity();
 
   const fetchCV = useCallback(async () => {
     try {
-      const result = await fetchContact();
+      const result = await fetchCVData();
       if (result && result.length > 0) {
         setCvLink(result[0].pdfUrl);
       }
     } catch (error) {
       console.error("Error fetching CV:", error);
     }
-  }, [fetchContact]);
+  }, [fetchCVData]);
 
   const downloadCV = useCallback(() => {
     if (cvLink) window.open(cvLink, "_blank");

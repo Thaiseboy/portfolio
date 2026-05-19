@@ -72,7 +72,7 @@ export function useSanity() {
     return fetchData(query);
   }, [fetchData]);
 
-  const fetchContact = useCallback(() => {
+  const fetchCV = useCallback(() => {
     const query = `*[_type == "cv"] {
       "pdfUrl": cvFile.asset->url
     }`;
@@ -87,6 +87,6 @@ export function useSanity() {
     fetchPhotos,
     fetchSkills,
     fetchProjects,
-    fetchContact,
+    fetchCV,
   };
 }
