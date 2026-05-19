@@ -4,75 +4,60 @@
       <span class="text-red">Get</span> to know me &#128526;
     </h1>
 
-    <div class="max-w-screen-xl mx-auto">
-      <ErrorBoundary :on-retry="retryFetchPhotos">
-        <div class="photo-gallery mb-xl">
-          <SkeletonLoader v-if="loading" type="list" :count="4" />
-          <div
-            v-else-if="photos.length > 0"
-            v-for="photo in photos"
-            :key="photo.id"
-            class="photo-box"
-          >
-            <img :src="photo.url" :alt="photo.title" class="photo-image" />
+    <div class="about-shell">
+      <div class="about-layout">
+        <section class="profile-panel">
+          <p class="about-eyebrow">
+            Frontend developer with broad development experience
+          </p>
+          <h2>
+            Dynamic web applications that are clear, fast and easy to use.
+          </h2>
+          <div class="about-copy">
+            <p>
+              I'm Master Supakon Karanyawad, a frontend developer with a passion
+              for building dynamic web applications that feel clear, fast and
+              easy to use.
+            </p>
+            <p>
+              In frontend development I work a lot with React, TypeScript and
+              Tailwind. In my current work I also maintain legacy frontend and
+              backend code with PHP, Zend Framework 1 and Bootstrap 5, and I
+              have backend experience with Laravel.
+            </p>
+            <p>
+              That combination helps me understand the full flow of a project,
+              from interface to backend logic, with a focus on reusable
+              components, clean structure, performance and maintainable code.
+            </p>
           </div>
-          <div
-            v-else-if="!loading && photos.length === 0"
-            class="flex flex-col items-center justify-center p-xxl text-center"
-          >
+
+          <div class="profile-meta">
+            <div>
+              <span>Current role</span>
+              <strong>Frontend Developer</strong>
+            </div>
+            <div>
+              <span>Work style</span>
+              <strong>Scalable and maintainable</strong>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <ErrorBoundary :on-retry="retryFetchPhotos">
+        <div class="photo-strip">
+          <SkeletonLoader v-if="loading" type="list" :count="4" />
+          <template v-else-if="photos.length > 0">
+            <figure v-for="photo in photos" :key="photo.id" class="photo-tile">
+              <img :src="photo.url" :alt="photo.title" />
+            </figure>
+          </template>
+          <div v-else-if="!loading && photos.length === 0" class="empty-photos">
             <p>No photos available</p>
           </div>
         </div>
       </ErrorBoundary>
-
-      <div class="about-layout">
-        <div class="about-intro">
-          <p class="about-eyebrow">
-            Frontend developer based in the Netherlands
-          </p>
-          <h2>
-            Building clear, maintainable interfaces with a practical mindset.
-          </h2>
-          <p>
-            I'm Master Supakon Karanyawad, a frontend developer who likes
-            turning complex ideas into clean, usable web experiences. I care
-            about structure, performance, and interfaces that feel natural to
-            use.
-          </p>
-          <p>
-            At Paramedia B.V. I work with both modern frontend development and
-            legacy PHP applications, including Zend Framework 1. That mix taught
-            me to improve systems carefully while still moving features forward.
-          </p>
-        </div>
-
-        <div class="about-highlights">
-          <article class="about-card">
-            <span>01</span>
-            <h3>Focus</h3>
-            <p>
-              Modern frontend work, reusable components, responsive layouts, and
-              clean UI behavior.
-            </p>
-          </article>
-          <article class="about-card">
-            <span>02</span>
-            <h3>Experience</h3>
-            <p>
-              Maintaining existing business systems while building new features
-              with a better structure.
-            </p>
-          </article>
-          <article class="about-card">
-            <span>03</span>
-            <h3>Mindset</h3>
-            <p>
-              Practical decisions, readable code, steady refactoring, and
-              attention to user experience.
-            </p>
-          </article>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -100,7 +85,7 @@ const loadPhotos = async () => {
           url: photo.imageUrl,
           title: `Photo ${index + 1}`,
         }))
-        .filter((photo) => photo.url); // Filter out photos without URLs
+        .filter((photo) => photo.url);
     }
   } catch (err) {
     console.error("Error fetching photos:", err);
@@ -116,83 +101,44 @@ onMounted(loadPhotos);
 </script>
 
 <style scoped>
-.photo-gallery {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 1rem;
-  scroll-behavior: smooth;
-  scrollbar-width: thin;
-  scrollbar-color: #ffd700 rgba(255, 255, 255, 0.1);
-}
-
-.photo-gallery::-webkit-scrollbar {
-  height: 8px;
-}
-
-.photo-gallery::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-
-.photo-gallery::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #ffd700, #ff0000);
-  border-radius: 4px;
-}
-
-.photo-gallery::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #e6c200, #cc0000);
-}
-
-.photo-box {
-  flex: 0 0 350px;
-  max-width: 350px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}
-
-.photo-box:hover {
-  transform: translateY(-8px) scale(1.05);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
-
-.photo-image {
-  width: 100%;
-  height: 350px;
-  object-fit: cover;
-  border-radius: 12px;
-  transition: transform 0.3s ease;
-}
-
-.photo-box:hover .photo-image {
-  transform: scale(1.1);
-}
-
-.about-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-  gap: 2rem;
-  align-items: stretch;
+.about-shell {
+  max-width: 1120px;
+  margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-.about-intro,
-.about-card {
+.about-layout {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.profile-panel,
+.photo-tile,
+.empty-photos {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   backdrop-filter: blur(10px);
 }
 
-.about-intro {
+.profile-panel {
+  position: relative;
+  overflow: hidden;
   padding: 2rem;
   color: #fff;
 }
 
+.profile-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), transparent 55%);
+  pointer-events: none;
+}
+
 .about-eyebrow {
+  position: relative;
+  z-index: 1;
   margin-bottom: 0.75rem;
   color: #ffd700;
   font-size: 0.9rem;
@@ -200,7 +146,9 @@ onMounted(loadPhotos);
   text-transform: uppercase;
 }
 
-.about-intro h2 {
+.profile-panel h2 {
+  position: relative;
+  z-index: 1;
   max-width: 760px;
   margin-bottom: 1.25rem;
   color: #fff;
@@ -208,73 +156,111 @@ onMounted(loadPhotos);
   line-height: 1.1;
 }
 
-.about-intro p {
+.about-copy,
+.profile-meta {
+  position: relative;
+  z-index: 1;
+}
+
+.about-copy {
+  max-width: 720px;
+}
+
+.about-copy p {
   margin-bottom: 1rem;
   color: rgba(255, 255, 255, 0.82);
   font-size: 1rem;
   line-height: 1.8;
 }
 
-.about-intro p:last-child {
+.about-copy p:last-child {
   margin-bottom: 0;
 }
 
-.about-highlights {
+.profile-meta {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+  margin-top: 2rem;
 }
 
-.about-card {
-  padding: 1.5rem;
-  color: #fff;
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease;
+.profile-meta div {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
 }
 
-.about-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 215, 0, 0.45);
+.profile-meta span {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
-.about-card span {
+.profile-meta strong {
   color: #ffd700;
-  font-weight: 800;
+  font-size: 0.95rem;
 }
 
-.about-card h3 {
-  margin: 0.35rem 0 0.5rem;
-  color: #fff;
-  font-size: 1.15rem;
+.photo-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.about-card p {
+.photo-tile {
+  min-height: 230px;
   margin: 0;
-  color: rgba(255, 255, 255, 0.75);
-  line-height: 1.6;
+  overflow: hidden;
+}
+
+.photo-tile img {
+  width: 100%;
+  height: 100%;
+  min-height: 230px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.photo-tile:hover img {
+  transform: scale(1.05);
+}
+
+.empty-photos {
+  grid-column: 1 / -1;
+  padding: 2rem;
+  text-align: center;
+}
+
+.empty-photos p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 @media (max-width: 768px) {
-  .photo-box {
-    flex: 0 0 250px;
-    max-width: 250px;
-  }
-
-  .photo-image {
-    height: 250px;
-  }
-
-  .about-layout {
-    grid-template-columns: 1fr;
+  .about-shell {
     padding: 0 1rem;
   }
 
-  .about-intro {
+  .profile-panel {
     padding: 1.5rem;
   }
 
-  .about-card {
-    padding: 1.25rem;
+  .profile-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-tile,
+  .photo-tile img {
+    min-height: 260px;
   }
 }
 </style>
