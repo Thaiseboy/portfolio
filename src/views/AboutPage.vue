@@ -4,7 +4,7 @@
       <span class="text-red">Get</span> to know me &#128526;
     </h1>
 
-    <div class="about-shell">
+    <div class="section-shell">
       <div class="about-layout">
         <ErrorBoundary :on-retry="retryFetchPhotos">
           <div class="about-visual">
@@ -13,21 +13,21 @@
               <figure
                 v-for="photo in photos"
                 :key="photo.id"
-                class="photo-tile"
+                class="photo-tile surface-panel"
               >
                 <img :src="photo.url" :alt="photo.title" />
               </figure>
             </template>
             <div
               v-else-if="!loading && photos.length === 0"
-              class="empty-photos"
+              class="empty-photos surface-panel empty-state"
             >
               <p>No photos available</p>
             </div>
           </div>
         </ErrorBoundary>
 
-        <section class="about-content">
+        <section class="about-content surface-panel">
           <p class="about-eyebrow">
             Frontend developer with broad development experience
           </p>
@@ -43,8 +43,8 @@
             <p>
               In frontend development I work a lot with React, TypeScript and
               Tailwind. In my current work I also maintain legacy frontend and
-              backend code with PHP, Zend Framework 1 and Bootstrap 5,
-              experience with Laravel.
+              backend code with PHP, Zend Framework 1 and Bootstrap 5, and I
+              have backend experience with Laravel.
             </p>
             <p>
               That combination helps me understand the full flow of a project,
@@ -61,6 +61,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useSanity } from "@/composables/useSanity";
+import { normalizePhoto } from "@/utils/sanityMappers";
 import ErrorBoundary from "@/components/ui/ErrorBoundary.vue";
 import SkeletonLoader from "@/components/ui/SkeletonLoader.vue";
 
@@ -76,11 +77,7 @@ const loadPhotos = async () => {
     const data = await fetchPhotos();
     if (data && data.length > 0) {
       photos.value = data
-        .map((photo, index) => ({
-          id: photo._id || index,
-          url: photo.imageUrl,
-          title: `Photo ${index + 1}`,
-        }))
+        .map(normalizePhoto)
         .filter((photo) => photo.url);
     }
   } catch (err) {
@@ -97,26 +94,11 @@ onMounted(loadPhotos);
 </script>
 
 <style scoped>
-.about-shell {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
 .about-layout {
   display: grid;
   grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
   gap: 1rem;
   align-items: stretch;
-}
-
-.about-content,
-.photo-tile,
-.empty-photos {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
 }
 
 .about-content {
@@ -214,10 +196,6 @@ onMounted(loadPhotos);
 }
 
 @media (max-width: 768px) {
-  .about-shell {
-    padding: 0 1rem;
-  }
-
   .about-layout {
     grid-template-columns: 1fr;
   }

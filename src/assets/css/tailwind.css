@@ -166,6 +166,70 @@
     @apply text-center mb-4 text-gold font-bold text-[clamp(2rem,5vw,4rem)] md:mb-4;
   }
 
+  .section-shell {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .section-intro {
+    max-width: 640px;
+    margin: 0 auto 2rem;
+    color: rgba(255, 255, 255, 0.78);
+    text-align: center;
+    line-height: 1.7;
+  }
+
+  .surface-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+  }
+
+  .surface-hover {
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .surface-hover:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 215, 0, 0.42);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+  }
+
+  .empty-state {
+    padding: 3rem 1.5rem;
+    color: rgba(255, 255, 255, 0.78);
+    text-align: center;
+  }
+
+  .empty-state p {
+    margin: 0;
+  }
+
+  .pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .pill-list span,
+  .pill {
+    padding: 0.45rem 0.75rem;
+    background: rgba(255, 215, 0, 0.12);
+    border: 1px solid rgba(255, 215, 0, 0.22);
+    border-radius: 999px;
+    color: #FFD700;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    .section-shell {
+      padding: 0 1rem;
+    }
+  }
+
   .nav-icon {
     @apply text-3xl transition-all duration-300 md:text-2xl sm:text-xl;
   }

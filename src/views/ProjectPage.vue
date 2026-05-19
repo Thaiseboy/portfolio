@@ -4,8 +4,8 @@
       <span class="text-red">Get</span> Inspired by my Projects &#x1F5C2;
     </h1>
     <ErrorBoundary :on-retry="retryFetchProjects">
-      <div class="projects-shell">
-        <p class="projects-intro">
+      <div class="section-shell">
+        <p class="section-intro">
           A selection of work where structure, frontend detail and practical logic come together.
         </p>
 
@@ -22,7 +22,7 @@
           <article
             v-for="project in projects"
             :key="project._id"
-            class="project-card"
+            class="project-card surface-panel surface-hover"
           >
             <div class="project-media">
               <img
@@ -31,7 +31,7 @@
                 :alt="`${project.title} preview`"
               >
               <div v-else class="project-media-fallback">
-                <span>{{ getProjectInitial(project.title) }}</span>
+                <span>{{ getInitials(project.title) }}</span>
               </div>
             </div>
 
@@ -76,7 +76,7 @@
           </article>
         </div>
 
-        <div v-else-if="!loading && projects.length === 0" class="empty-projects">
+        <div v-else-if="!loading && projects.length === 0" class="empty-state surface-panel">
           <p>No projects available</p>
         </div>
       </div>
@@ -87,6 +87,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useSanity } from '@/composables/useSanity';
+import { getInitials, normalizeProject } from '@/utils/sanityMappers';
 import ErrorBoundary from '@/components/ui/ErrorBoundary.vue';
 import SkeletonLoader from '@/components/ui/SkeletonLoader.vue';
 
@@ -101,21 +102,10 @@ const loadProjects = async () => {
   try {
     const data = await fetchProjectsData();
 
-    projects.value = data.map(project => ({
-      ...project,
-      image: project.imageUrl,
-      url: project.url === null || project.url === 'null' ? '' : project.url,
-      github: project.github === null || project.github === 'null' ? '' : project.github,
-      showFullDescription: false
-    }));
+    projects.value = data.map(normalizeProject);
   } catch (error) {
     console.error("Error fetching projects:", error);
   }
-};
-
-const getProjectInitial = (title) => {
-  if (!title) return '?';
-  return title.charAt(0).toUpperCase();
 };
 
 const toggleDescription = (project) => {
@@ -131,32 +121,10 @@ onMounted(loadProjects);
 </script>
 
 <style scoped>
-.projects-shell {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-.projects-intro {
-  max-width: 640px;
-  margin: 0 auto 2rem;
-  color: rgba(255, 255, 255, 0.78);
-  text-align: center;
-  line-height: 1.7;
-}
-
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.25rem;
-}
-
-.project-card,
-.empty-projects {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
 }
 
 .project-card {
@@ -164,13 +132,6 @@ onMounted(loadProjects);
   flex-direction: column;
   min-height: 100%;
   overflow: hidden;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.project-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 215, 0, 0.42);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
 }
 
 .project-media {
@@ -279,17 +240,7 @@ onMounted(loadProjects);
   min-height: 430px;
 }
 
-.empty-projects {
-  padding: 3rem 1.5rem;
-  color: rgba(255, 255, 255, 0.78);
-  text-align: center;
-}
-
 @media (max-width: 768px) {
-  .projects-shell {
-    padding: 0 1rem;
-  }
-
   .projects-grid {
     grid-template-columns: 1fr;
   }

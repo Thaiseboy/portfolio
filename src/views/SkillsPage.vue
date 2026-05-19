@@ -4,8 +4,8 @@
       <span class="text-red">Get</span> to Know My Skills &#x26A1;
     </h1>
     <ErrorBoundary :on-retry="retryFetchSkills">
-      <div class="skills-shell">
-        <div class="skills-intro">
+      <div class="section-shell">
+        <div class="section-intro">
           <p>Tools I use to build reliable interfaces and keep projects maintainable.</p>
         </div>
 
@@ -23,7 +23,7 @@
             v-for="skill in skills"
             :id="`skill-${skill._id}`"
             :key="skill._id"
-            class="skill-card"
+            class="skill-card surface-panel surface-hover"
           >
             <div class="skill-logo">
               <img
@@ -41,7 +41,7 @@
           </article>
         </div>
 
-        <div v-else-if="!loading && skills.length === 0" class="no-skills">
+        <div v-else-if="!loading && skills.length === 0" class="empty-state surface-panel">
           <p>No skills available</p>
         </div>
       </div>
@@ -52,6 +52,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useSanity } from "@/composables/useSanity";
+import { getInitials, normalizeSkill } from "@/utils/sanityMappers";
 import ErrorBoundary from "@/components/ui/ErrorBoundary.vue";
 import SkeletonLoader from "@/components/ui/SkeletonLoader.vue";
 
@@ -62,31 +63,10 @@ defineOptions({
 const skills = ref([]);
 const { loading, fetchSkills: fetchSkillsData, clearError } = useSanity();
 
-const levelLabels = {
-  beginner: "Beginner",
-  intermediate: "Intermediate",
-  advanced: "Advanced",
-};
-
-const getInitials = (name) => {
-  if (!name) return "?";
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-};
-
 const loadSkills = async () => {
   try {
     const data = await fetchSkillsData();
-    skills.value = data.map((skill) => ({
-      ...skill,
-      logoUrl: skill.imageUrl,
-      title: skill.name,
-      level: levelLabels[skill.level] || "Intermediate",
-    }));
+    skills.value = data.map(normalizeSkill);
   } catch (error) {
     console.error("Error fetching skills:", error);
   }
@@ -101,25 +81,6 @@ onMounted(loadSkills);
 </script>
 
 <style scoped>
-.skills-shell {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-.skills-intro {
-  max-width: 620px;
-  margin: 0 auto 2rem;
-  text-align: center;
-}
-
-.skills-intro p {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 1rem;
-  line-height: 1.7;
-}
-
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -136,12 +97,7 @@ onMounted(loadSkills);
   min-height: 210px;
   padding: 1.5rem 1rem;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
   color: #fff;
-  backdrop-filter: blur(10px);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .skill-card::before {
@@ -151,12 +107,6 @@ onMounted(loadSkills);
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), transparent 55%);
   opacity: 0.65;
   pointer-events: none;
-}
-
-.skill-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 215, 0, 0.45);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
 }
 
 .skill-logo,
@@ -226,27 +176,7 @@ onMounted(loadSkills);
   min-height: 210px;
 }
 
-.no-skills {
-  @apply flex flex-col items-center justify-center p-xxl text-center w-full;
-}
-
-.no-skills::before {
-  content: "🔧";
-  font-size: 4rem;
-  margin-bottom: 1.5rem;
-  opacity: 0.5;
-}
-
-.no-skills p {
-  opacity: 0.7;
-  font-size: 1.125rem;
-}
-
 @media (max-width: 768px) {
-  .skills-shell {
-    padding: 0 1rem;
-  }
-
   .skills-grid {
     grid-template-columns: 1fr;
   }
