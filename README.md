@@ -2,7 +2,7 @@
 
 > Modern portfolio website showcasing front-end development skills and projects
 
-![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)
+![React](https://img.shields.io/badge/React-149ECA?style=for-the-badge&logo=react&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Sanity](https://img.shields.io/badge/Sanity-F03E2F?style=for-the-badge&logo=sanity&logoColor=white)
@@ -13,7 +13,7 @@
 
 ## Features
 
-- **Vue 3 Composition API** with TypeScript support
+- **React with Vite** for a fast modern frontend setup
 - **Responsive Design** - Mobile-first approach
 - **Docker Ready** - Production and development containers
 - **Headless CMS** - Dynamic content with Sanity.io
@@ -21,7 +21,7 @@
 
 ## Tech Stack
 
-- **Frontend**: Vue.js 3, TypeScript, Bootstrap 5, GSAP
+- **Frontend**: React, TypeScript, Bootstrap 5, GSAP
 - **CMS**: Sanity.io
 - **DevOps**: Docker, Nginx
 - **Deployment**: Netlify
@@ -65,7 +65,7 @@ Pull requests are automatically labeled based on changed files:
 - `dependencies` - package.json or pnpm-lock.yaml changes
 - `documentation` - Markdown file changes
 - `styling` - CSS/SCSS changes
-- `vue-components` - Component changes
+- `components` - Component changes
 - `views` - View changes
 - `tests` - Test file changes
 - `ci/cd` - Workflow or config changes
@@ -87,4 +87,4 @@ Dependabot automatically:
 
 ---
 
-Built with Vue.js • TypeScript • Docker • Sanity CMS
+Built with React • TypeScript • Docker • Sanity CMS

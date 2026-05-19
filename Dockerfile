@@ -1,5 +1,5 @@
 # Multi-stage build for production optimization
-FROM node:20-alpine AS build-stage
+FROM node:22-alpine AS build-stage
 
 # Install build dependencies for native modules and pnpm
 RUN apk add --no-cache python3 make g++ autoconf automake libtool && \
@@ -19,10 +19,10 @@ RUN pnpm install --no-frozen-lockfile
 COPY . .
 
 # Set build-time environment variables
-ARG VUE_APP_SANITY_PROJECT_ID
-ARG VUE_APP_SANITY_DATASET  
-ARG VUE_APP_SANITY_API_VERSION
-ARG VUE_APP_SANITY_USE_CDN
+ARG VITE_SANITY_PROJECT_ID
+ARG VITE_SANITY_DATASET
+ARG VITE_SANITY_API_VERSION
+ARG VITE_SANITY_USE_CDN
 
 # Create production build
 RUN pnpm run build
@@ -30,10 +30,10 @@ RUN pnpm run build
 # Production stage with Nginx
 FROM nginx:alpine AS production-stage
 
-# Copy Vue build files to Nginx
+# Copy build files to Nginx
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Copy Nginx configuration for Vue Router (SPA)
+# Copy Nginx configuration for SPA routing
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 80

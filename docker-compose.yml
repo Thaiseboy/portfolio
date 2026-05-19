@@ -5,14 +5,14 @@ services:
     build: .
     ports:
       - "3000:80"
-    container_name: portfolio-vue
+    container_name: portfolio-react
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-      - VUE_APP_SANITY_PROJECT_ID=${VUE_APP_SANITY_PROJECT_ID}
-      - VUE_APP_SANITY_DATASET=${VUE_APP_SANITY_DATASET}
-      - VUE_APP_SANITY_API_VERSION=${VUE_APP_SANITY_API_VERSION}
-      - VUE_APP_SANITY_USE_CDN=${VUE_APP_SANITY_USE_CDN}
+      - VITE_SANITY_PROJECT_ID=${VITE_SANITY_PROJECT_ID}
+      - VITE_SANITY_DATASET=${VITE_SANITY_DATASET}
+      - VITE_SANITY_API_VERSION=${VITE_SANITY_API_VERSION}
+      - VITE_SANITY_USE_CDN=${VITE_SANITY_USE_CDN}
     networks:
       - portfolio-network
 
@@ -22,17 +22,17 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "8080:8080"
+      - "5173:5173"
     volumes:
       - .:/app
       - /app/node_modules
-    container_name: portfolio-vue-dev
+    container_name: portfolio-react-dev
     environment:
       - NODE_ENV=development
-      - VUE_APP_SANITY_PROJECT_ID=${VUE_APP_SANITY_PROJECT_ID}
-      - VUE_APP_SANITY_DATASET=${VUE_APP_SANITY_DATASET}
-      - VUE_APP_SANITY_API_VERSION=${VUE_APP_SANITY_API_VERSION}
-      - VUE_APP_SANITY_USE_CDN=${VUE_APP_SANITY_USE_CDN}
+      - VITE_SANITY_PROJECT_ID=${VITE_SANITY_PROJECT_ID}
+      - VITE_SANITY_DATASET=${VITE_SANITY_DATASET}
+      - VITE_SANITY_API_VERSION=${VITE_SANITY_API_VERSION}
+      - VITE_SANITY_USE_CDN=${VITE_SANITY_USE_CDN}
     networks:
       - portfolio-network
     profiles:

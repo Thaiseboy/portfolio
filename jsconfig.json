@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2020",
     "module": "esnext",
     "baseUrl": "./",
     "moduleResolution": "node",
@@ -15,6 +15,7 @@
       "dom.iterable",
       "scripthost"
     ],
-    "types": ["node", "estree"]
+    "jsx": "react-jsx",
+    "types": ["node", "estree", "vite/client"]
   }
 }

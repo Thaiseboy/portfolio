@@ -1,6 +1,8 @@
 export class EmailService {
   static async sendEmail(emailData) {
-    const apiUrl = process.env.VUE_APP_EMAIL_API_URL || 'https://formspree.io/f/YOUR_FORM_ID';
+    const apiUrl =
+      import.meta.env.VITE_EMAIL_API_URL ||
+      'https://formspree.io/f/YOUR_FORM_ID';
     
     try {
       const response = await fetch(apiUrl, {

@@ -1,6 +1,6 @@
 # Testing Setup
 
-This project uses **Vitest** for unit testing with Vue Test Utils for component testing.
+This project uses **Vitest** with React Testing Library for component testing.
 
 ## Commands
 
@@ -22,15 +22,15 @@ npm test tests/basic.test.js
 
 - `tests/basic.test.js` - Basic functionality tests
 - `tests/utils.test.js` - Utility function tests
-- `tests/components/` - Vue component tests (work in progress)
-- `tests/composables/` - Composable function tests (work in progress)
+- `tests/components/` - React component tests
+- `tests/hooks/` - Hook tests
 - `tests/views/` - View component tests (work in progress)
 
 ## Testing Environment
 
 - **Framework**: Vitest
 - **DOM Environment**: jsdom
-- **Vue Testing**: @vue/test-utils
+- **React Testing**: @testing-library/react
 - **Mocking**: Built-in Vitest mocking
 
 ## Configuration
