@@ -45,7 +45,6 @@ export function sanitizeInput(input) {
     .replace(/<script[^>]*>.*?<\/script>/gi, "")
     .replace(/&lt;script/gi, "")
     .replace(/[{}]/g, "")
-    // eslint-disable-next-line no-control-regex
     .replace(/[\u0000-\u001F\u007F-\u009F]/g, "")
     .trim();
 }

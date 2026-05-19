@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useSanity } from "@/hooks/useSanity";
 
 export function useCV() {
   const [cvLink, setCvLink] = useState(null);
-  const [cvLoading, setCvLoading] = useState(false);
-  const { fetchContact, clearError } = useSanity();
+  const { loading, fetchContact, clearError } = useSanity();
 
-  const fetchCV = async () => {
-    setCvLoading(true);
+  const fetchCV = useCallback(async () => {
     try {
       const result = await fetchContact();
       if (result && result.length > 0) {
@@ -15,19 +13,17 @@ export function useCV() {
       }
     } catch (error) {
       console.error("Error fetching CV:", error);
-    } finally {
-      setCvLoading(false);
     }
-  };
+  }, [fetchContact]);
 
-  const downloadCV = () => {
+  const downloadCV = useCallback(() => {
     if (cvLink) window.open(cvLink, "_blank");
-  };
+  }, [cvLink]);
 
-  const retryFetchCV = () => {
+  const retryFetchCV = useCallback(() => {
     clearError();
     fetchCV();
-  };
+  }, [clearError, fetchCV]);
 
-  return { cvLink, cvLoading, fetchCV, downloadCV, retryFetchCV };
+  return { cvLink, cvLoading: loading, fetchCV, downloadCV, retryFetchCV };
 }
