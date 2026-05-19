@@ -22,14 +22,17 @@ export const normalizePhoto = (photo, index) => ({
 });
 
 export const normalizeSkill = (skill) => ({
-  ...skill,
+  _id: skill._id,
+  name: skill.name,
   logoUrl: skill.imageUrl,
   level: levelLabels[skill.level] || "Intermediate",
 });
 
 export const normalizeProject = (project) => ({
-  ...project,
+  _id: project._id,
+  title: project.title,
+  description: project.description,
   image: project.imageUrl,
-  url: project.url === null || project.url === "null" ? "" : project.url,
-  github: project.github === null || project.github === "null" ? "" : project.github,
+  url: project.url ?? "",
+  github: project.github ?? "",
 });

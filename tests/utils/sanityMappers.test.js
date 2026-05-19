@@ -8,7 +8,9 @@ import {
 
 describe("Sanity mappers", () => {
   it("normalizes photos", () => {
-    expect(normalizePhoto({ _id: "1", imageUrl: "photo.jpg", title: "Me" }, 0)).toEqual({
+    expect(
+      normalizePhoto({ _id: "1", imageUrl: "photo.jpg", title: "Me" }, 0),
+    ).toEqual({
       id: "1",
       url: "photo.jpg",
       title: "Me",
@@ -16,17 +18,37 @@ describe("Sanity mappers", () => {
   });
 
   it("normalizes skills", () => {
-    expect(normalizeSkill({ _id: "1", name: "React", imageUrl: "react.svg", level: "advanced" })).toEqual({
+    expect(
+      normalizeSkill({
+        _id: "1",
+        name: "React",
+        imageUrl: "react.svg",
+        level: "advanced",
+        unusedField: "ignored",
+      }),
+    ).toEqual({
       _id: "1",
       name: "React",
-      imageUrl: "react.svg",
       logoUrl: "react.svg",
       level: "Advanced",
     });
   });
 
   it("normalizes projects", () => {
-    expect(normalizeProject({ _id: "1", title: "App", imageUrl: "app.jpg", url: "null", github: null })).toMatchObject({
+    expect(
+      normalizeProject({
+        _id: "1",
+        title: "App",
+        description: "Project description",
+        imageUrl: "app.jpg",
+        url: null,
+        github: null,
+        unusedField: "ignored",
+      }),
+    ).toEqual({
+      _id: "1",
+      title: "App",
+      description: "Project description",
       image: "app.jpg",
       url: "",
       github: "",
