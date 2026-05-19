@@ -7,24 +7,16 @@
         <HomePage />
       </section>
       <section id="about">
-        <LazySection>
-          <AboutPage />
-        </LazySection>
+        <AboutPage />
       </section>
       <section id="skills">
-        <LazySection>
-          <SkillsPage />
-        </LazySection>
+        <SkillsPage />
       </section>
       <section id="project">
-        <LazySection>
-          <ProjectPage />
-        </LazySection>
+        <ProjectPage />
       </section>
       <section id="contact">
-        <LazySection>
-          <ContactPage />
-        </LazySection>
+        <ContactPage />
       </section>
     </main>
     <AppFooter />
@@ -43,9 +35,6 @@ const AboutPage = defineAsyncComponent(() => import("@/views/AboutPage.vue"));
 const SkillsPage = defineAsyncComponent(() => import("@/views/SkillsPage.vue"));
 const ProjectPage = defineAsyncComponent(() => import("@/views/ProjectPage.vue"));
 const ContactPage = defineAsyncComponent(() => import("@/views/ContactPage.vue"));
-
-// LazySection component to handle intersection observer
-const LazySection = defineAsyncComponent(() => import("@/components/ui/LazySection.vue"));
 
 defineOptions({
   name: "App"
