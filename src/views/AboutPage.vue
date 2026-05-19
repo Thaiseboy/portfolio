@@ -6,7 +6,28 @@
 
     <div class="about-shell">
       <div class="about-layout">
-        <section class="profile-panel">
+        <ErrorBoundary :on-retry="retryFetchPhotos">
+          <div class="about-visual">
+            <SkeletonLoader v-if="loading" type="list" :count="4" />
+            <template v-else-if="photos.length > 0">
+              <figure
+                v-for="photo in photos"
+                :key="photo.id"
+                class="photo-tile"
+              >
+                <img :src="photo.url" :alt="photo.title" />
+              </figure>
+            </template>
+            <div
+              v-else-if="!loading && photos.length === 0"
+              class="empty-photos"
+            >
+              <p>No photos available</p>
+            </div>
+          </div>
+        </ErrorBoundary>
+
+        <section class="about-content">
           <p class="about-eyebrow">
             Frontend developer with broad development experience
           </p>
@@ -22,8 +43,8 @@
             <p>
               In frontend development I work a lot with React, TypeScript and
               Tailwind. In my current work I also maintain legacy frontend and
-              backend code with PHP, Zend Framework 1 and Bootstrap 5, and I
-              have backend experience with Laravel.
+              backend code with PHP, Zend Framework 1 and Bootstrap 5,
+              experience with Laravel.
             </p>
             <p>
               That combination helps me understand the full flow of a project,
@@ -31,33 +52,8 @@
               components, clean structure, performance and maintainable code.
             </p>
           </div>
-
-          <div class="profile-meta">
-            <div>
-              <span>Current role</span>
-              <strong>Frontend Developer</strong>
-            </div>
-            <div>
-              <span>Work style</span>
-              <strong>Scalable and maintainable</strong>
-            </div>
-          </div>
         </section>
       </div>
-
-      <ErrorBoundary :on-retry="retryFetchPhotos">
-        <div class="photo-strip">
-          <SkeletonLoader v-if="loading" type="list" :count="4" />
-          <template v-else-if="photos.length > 0">
-            <figure v-for="photo in photos" :key="photo.id" class="photo-tile">
-              <img :src="photo.url" :alt="photo.title" />
-            </figure>
-          </template>
-          <div v-else-if="!loading && photos.length === 0" class="empty-photos">
-            <p>No photos available</p>
-          </div>
-        </div>
-      </ErrorBoundary>
     </div>
   </div>
 </template>
@@ -108,11 +104,13 @@ onMounted(loadPhotos);
 }
 
 .about-layout {
-  max-width: 920px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+  gap: 1rem;
+  align-items: stretch;
 }
 
-.profile-panel,
+.about-content,
 .photo-tile,
 .empty-photos {
   background: rgba(255, 255, 255, 0.05);
@@ -121,19 +119,29 @@ onMounted(loadPhotos);
   backdrop-filter: blur(10px);
 }
 
-.profile-panel {
+.about-content {
   position: relative;
   overflow: hidden;
   padding: 2rem;
   color: #fff;
 }
 
-.profile-panel::before {
+.about-content::before {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), transparent 55%);
   pointer-events: none;
+}
+
+.about-visual {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.about-visual .photo-tile:first-of-type {
+  grid-row: span 2;
 }
 
 .about-eyebrow {
@@ -146,7 +154,7 @@ onMounted(loadPhotos);
   text-transform: uppercase;
 }
 
-.profile-panel h2 {
+.about-content h2 {
   position: relative;
   z-index: 1;
   max-width: 760px;
@@ -156,8 +164,7 @@ onMounted(loadPhotos);
   line-height: 1.1;
 }
 
-.about-copy,
-.profile-meta {
+.about-copy {
   position: relative;
   z-index: 1;
 }
@@ -177,43 +184,8 @@ onMounted(loadPhotos);
   margin-bottom: 0;
 }
 
-.profile-meta {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.profile-meta div {
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.22);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-}
-
-.profile-meta span {
-  display: block;
-  margin-bottom: 0.35rem;
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.profile-meta strong {
-  color: #ffd700;
-  font-size: 0.95rem;
-}
-
-.photo-strip {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
 .photo-tile {
-  min-height: 230px;
+  min-height: 190px;
   margin: 0;
   overflow: hidden;
 }
@@ -221,7 +193,7 @@ onMounted(loadPhotos);
 .photo-tile img {
   width: 100%;
   height: 100%;
-  min-height: 230px;
+  min-height: 190px;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
@@ -246,21 +218,36 @@ onMounted(loadPhotos);
     padding: 0 1rem;
   }
 
-  .profile-panel {
+  .about-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .about-content {
     padding: 1.5rem;
   }
 
-  .profile-meta {
-    grid-template-columns: 1fr;
-  }
-
-  .photo-strip {
-    grid-template-columns: 1fr;
+  .about-visual {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .photo-tile,
   .photo-tile img {
-    min-height: 260px;
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 520px) {
+  .about-visual {
+    grid-template-columns: 1fr;
+  }
+
+  .about-visual .photo-tile:first-of-type {
+    grid-row: auto;
+  }
+
+  .photo-tile,
+  .photo-tile img {
+    min-height: 240px;
   }
 }
 </style>
