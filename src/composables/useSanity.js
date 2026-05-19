@@ -56,8 +56,7 @@ export function useSanity() {
       _id,
       name,
       "imageUrl": logo.asset->url,
-      level,
-      rating
+      level
     }`;
     return fetchData(query);
   };

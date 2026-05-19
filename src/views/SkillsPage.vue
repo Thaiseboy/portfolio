@@ -4,54 +4,45 @@
       <span class="text-red">Get</span> to Know My Skills &#x26A1;
     </h1>
     <ErrorBoundary :on-retry="retryFetchSkills">
-      <div class="overflow-x-auto py-lg scrollbar-hide">
-        <div class="inline-flex gap-lg px-lg min-w-max">
-          <SkeletonLoader v-if="loading" type="list" :count="6" />
-          <div
-            v-else-if="skills.length > 0"
+      <div class="section-shell">
+        <div class="section-intro">
+          <p>Tools I use to build reliable interfaces and keep projects maintainable.</p>
+        </div>
+
+        <div v-if="loading" class="skills-grid">
+          <SkeletonLoader
+            v-for="n in 6"
+            :key="n"
+            type="card"
+            class="skill-skeleton"
+          />
+        </div>
+
+        <div v-else-if="skills.length > 0" class="skills-grid">
+          <article
             v-for="skill in skills"
             :id="`skill-${skill._id}`"
             :key="skill._id"
-            class="skill-item"
+            class="skill-card surface-panel surface-hover"
           >
-            <img
-              v-if="skill.logoUrl"
-              :src="skill.logoUrl"
-              :alt="`${skill.name} logo`"
-              class="w-[100px] h-[100px] object-contain mx-auto mb-sm transition-all duration-normal drop-shadow-md md:w-20 md:h-20 sm:w-[60px] sm:h-[60px]"
-            />
-            <div
-              v-else
-              class="w-[100px] h-[100px] flex items-center justify-center bg-gradient-to-br from-dark-border to-dark-card text-white mx-auto mb-sm rounded-full text-sm text-center md:w-20 md:h-20 sm:w-[60px] sm:h-[60px]"
-            >
-              <span>No logo available</span>
-            </div>
-            <div class="relative z-10">
-              <h3
-                class="text-xl font-semibold text-white mb-xs md:text-lg sm:text-base"
+            <div class="skill-logo">
+              <img
+                v-if="skill.logoUrl"
+                :src="skill.logoUrl"
+                :alt="`${skill.name} logo`"
               >
-                {{ skill.name || skill.title }}
-              </h3>
-              <p class="text-primary text-sm mb-md font-medium">
-                {{ skill.level }}
-              </p>
-              <div class="bg-dark rounded-md h-2 overflow-hidden relative">
-                <div
-                  class="progress-bar h-full bg-gradient-to-r from-primary to-secondary rounded-md font-semibold text-[0] transition-[width] duration-1000 ease-out relative"
-                  role="progressbar"
-                  :style="{ width: skill.rating + '%' }"
-                  :aria-valuenow="skill.rating"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                >
-                  {{ skill.rating }}%
-                </div>
-              </div>
+              <span v-else>{{ getInitials(skill.name || skill.title) }}</span>
             </div>
-          </div>
-          <div v-else-if="!loading && skills.length === 0" class="no-skills">
-            <p>No skills available</p>
-          </div>
+
+            <div class="skill-content">
+              <h3>{{ skill.name || skill.title }}</h3>
+              <p>{{ skill.level }}</p>
+            </div>
+          </article>
+        </div>
+
+        <div v-else-if="!loading && skills.length === 0" class="empty-state surface-panel">
+          <p>No skills available</p>
         </div>
       </div>
     </ErrorBoundary>
@@ -61,6 +52,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useSanity } from "@/composables/useSanity";
+import { getInitials, normalizeSkill } from "@/utils/sanityMappers";
 import ErrorBoundary from "@/components/ui/ErrorBoundary.vue";
 import SkeletonLoader from "@/components/ui/SkeletonLoader.vue";
 
@@ -71,22 +63,10 @@ defineOptions({
 const skills = ref([]);
 const { loading, fetchSkills: fetchSkillsData, clearError } = useSanity();
 
-const levelLabels = {
-  beginner: "Beginner",
-  intermediate: "Intermediate",
-  advanced: "Advanced",
-};
-
 const loadSkills = async () => {
   try {
     const data = await fetchSkillsData();
-    skills.value = data.map((skill) => ({
-      ...skill,
-      logoUrl: skill.imageUrl,
-      rating: skill.rating ?? 75,
-      title: skill.name,
-      level: levelLabels[skill.level] || "Intermediate",
-    }));
+    skills.value = data.map(normalizeSkill);
   } catch (error) {
     console.error("Error fetching skills:", error);
   }
@@ -101,119 +81,118 @@ onMounted(loadSkills);
 </script>
 
 <style scoped>
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1rem;
 }
 
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.skill-item {
-  @apply bg-dark-card rounded-lg p-md shadow-md transition-all duration-normal;
-  text-align: center;
-  min-width: 200px;
+.skill-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  min-height: 210px;
+  padding: 1.5rem 1rem;
   overflow: hidden;
+  color: #fff;
 }
 
-.skill-item::before {
+.skill-card::before {
   content: "";
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: conic-gradient(
-    from 0deg,
-    transparent,
-    rgba(255, 215, 0, 0.1),
-    transparent
-  );
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  animation: rotate 4s linear infinite;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), transparent 55%);
+  opacity: 0.65;
+  pointer-events: none;
 }
 
-.skill-item:hover {
-  transform: translateY(-12px) scale(1.05);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+.skill-logo,
+.skill-content,
+.skill-card h3,
+.skill-card p {
+  position: relative;
+  z-index: 1;
 }
 
-.skill-item:hover::before {
-  opacity: 1;
+.skill-content {
+  min-width: 0;
+  width: 100%;
+  text-align: center;
 }
 
-.progress-bar::after {
-  content: attr(aria-valuenow) "%";
-  position: absolute;
-  right: -30px;
-  top: -20px;
-  font-size: 0.75rem;
-  color: var(--color-primary);
-  font-weight: 600;
+.skill-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 92px;
+  height: 92px;
+  background: rgba(0, 0, 0, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
 }
 
-.progress-bar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
-  animation: shine 2s infinite;
+.skill-logo img {
+  max-width: 64px;
+  max-height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3));
 }
 
-.no-skills {
-  @apply flex flex-col items-center justify-center p-xxl text-center w-full;
+.skill-logo span {
+  color: #FFD700;
+  font-weight: 800;
 }
 
-.no-skills::before {
-  content: "🔧";
-  font-size: 4rem;
-  margin-bottom: 1.5rem;
-  opacity: 0.5;
+.skill-card h3 {
+  margin: 0 0 0.65rem;
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1.25;
 }
 
-.no-skills p {
-  opacity: 0.7;
-  font-size: 1.125rem;
+.skill-card p {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 108px;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  background: rgba(255, 215, 0, 0.12);
+  border: 1px solid rgba(255, 215, 0, 0.22);
+  border-radius: 999px;
+  color: #FFD700;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: normal;
+  text-align: center;
+}
+
+.skill-skeleton {
+  min-height: 210px;
 }
 
 @media (max-width: 768px) {
-  .skill-item {
-    min-width: 170px;
+  .skills-grid {
+    grid-template-columns: 1fr;
   }
-}
 
-@media (max-width: 576px) {
-  .skill-item {
-    min-width: 250px;
+  .skill-card {
+    min-height: 190px;
   }
-}
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
+  .skill-logo {
+    width: 82px;
+    height: 82px;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
-@keyframes shine {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
+  .skill-logo img {
+    max-width: 58px;
+    max-height: 58px;
   }
 }
 </style>

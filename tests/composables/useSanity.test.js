@@ -53,9 +53,7 @@ describe("useSanity", () => {
   });
 
   it("handles successful skills fetch", async () => {
-    const mockData = [
-      { _id: "1", name: "JavaScript", level: "advanced", rating: 90 },
-    ];
+    const mockData = [{ _id: "1", name: "JavaScript", level: "advanced" }];
     const client = await import("@/sanityClient.js");
     client.default.fetch.mockResolvedValue(mockData);
 
