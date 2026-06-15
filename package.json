@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@sanity/cli": "^4.21.1",
-    "@sanity/client": "^6.21.3",
+    "@sanity/client": "^7.22.1",
     "bootstrap-icons": "^1.11.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
