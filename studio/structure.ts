@@ -82,6 +82,11 @@ export const structure: StructureResolver = (S, context) =>
             .fetch<string | null>(
               '*[_type == "cv" && !(_id in path("drafts.**"))] | order(_updatedAt desc)[0]._id',
             )
-            .then((id) => S.document().schemaType('cv').documentId(id ?? 'cv').title('CV')),
+            .then((id) =>
+              S.document()
+                .schemaType('cv')
+                .documentId(id ?? 'cv')
+                .title('CV'),
+            ),
         ),
     ])

@@ -131,17 +131,31 @@ function StartScreen() {
             <Text size={1} weight="semibold">
               Tips voor projectteksten
             </Text>
-            <Text size={1}>Enter = nieuwe alinea · Shift + Enter = nieuwe regel binnen een alinea.</Text>
+            <Text size={1}>
+              Enter = nieuwe alinea · Shift + Enter = nieuwe regel binnen een alinea.
+            </Text>
             <Text size={1}>
               Kopjes, lijstjes, vet, links en codeblokken vind je in de balk boven het tekstvak.
             </Text>
-            <Text size={1}>Bij &quot;Volgorde&quot; bepaal je welk project bovenaan staat (laagste nummer eerst).</Text>
+            <Text size={1}>
+              Bij &quot;Volgorde&quot; bepaal je welk project bovenaan staat (laagste nummer eerst).
+            </Text>
           </Stack>
         </Card>
 
         <Flex gap={3} wrap="wrap">
-          <Button text="Alle projecten" mode="bleed" fontSize={2} onClick={() => open('projects')} />
-          <Button text="Alle skills" mode="bleed" fontSize={2} onClick={() => open('skills;skills-all')} />
+          <Button
+            text="Alle projecten"
+            mode="bleed"
+            fontSize={2}
+            onClick={() => open('projects')}
+          />
+          <Button
+            text="Alle skills"
+            mode="bleed"
+            fontSize={2}
+            onClick={() => open('skills;skills-all')}
+          />
           <Button text="Foto's Over mij" mode="bleed" fontSize={2} onClick={() => open('photos')} />
         </Flex>
 

@@ -40,7 +40,9 @@ export const normalizeSkill = (skill) => ({
 // Descriptions are rich text now; older ones are still plain strings.
 const descriptionText = (description) => {
   if (!description) return "";
-  return typeof description === "string" ? description : toPlainText(description);
+  return typeof description === "string"
+    ? description
+    : toPlainText(description);
 };
 
 export const normalizeProject = (project) => ({

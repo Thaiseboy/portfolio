@@ -24,8 +24,10 @@ export function validateEmail(email) {
 
 export function validateMessage(message) {
   if (!message || message.trim().length === 0) return "Message is required";
-  if (message.trim().length < 10) return "Message must be at least 10 characters long";
-  if (message.trim().length > 1000) return "Message must be less than 1000 characters";
+  if (message.trim().length < 10)
+    return "Message must be at least 10 characters long";
+  if (message.trim().length > 1000)
+    return "Message must be less than 1000 characters";
   return "";
 }
 

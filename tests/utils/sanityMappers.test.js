@@ -61,11 +61,32 @@ describe("Sanity mappers", () => {
 
   it("turns rich text project descriptions into a plain excerpt", () => {
     const description = [
-      { _type: "block", _key: "a", style: "normal", markDefs: [], children: [{ _type: "span", _key: "a1", text: "First paragraph.", marks: [] }] },
-      { _type: "block", _key: "b", style: "normal", markDefs: [], children: [{ _type: "span", _key: "b1", text: "Second one.", marks: [] }] },
+      {
+        _type: "block",
+        _key: "a",
+        style: "normal",
+        markDefs: [],
+        children: [
+          { _type: "span", _key: "a1", text: "First paragraph.", marks: [] },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "b",
+        style: "normal",
+        markDefs: [],
+        children: [
+          { _type: "span", _key: "b1", text: "Second one.", marks: [] },
+        ],
+      },
     ];
 
-    const project = normalizeProject({ _id: "2", title: "Rich", description, tags: ["React"] });
+    const project = normalizeProject({
+      _id: "2",
+      title: "Rich",
+      description,
+      tags: ["React"],
+    });
 
     expect(project.description).toBe(description);
     expect(project.excerpt).toBe("First paragraph.\n\nSecond one.");

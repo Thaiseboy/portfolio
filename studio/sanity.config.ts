@@ -47,7 +47,10 @@ export default defineConfig({
   document: {
     actions: (actions, {schemaType}) =>
       singletonTypes.has(schemaType)
-        ? [...actions.filter(({action}) => action && singletonActions.has(action)), ViewOnSiteAction]
+        ? [
+            ...actions.filter(({action}) => action && singletonActions.has(action)),
+            ViewOnSiteAction,
+          ]
         : [...actions, ViewOnSiteAction],
     // "Skill met niveau" is only offered inside the per-level skill lists.
     newDocumentOptions: (options, {creationContext}) =>

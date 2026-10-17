@@ -22,14 +22,26 @@ describe("useScrollNavigation", () => {
       observe() {}
       disconnect() {}
     };
-    sectionIds.forEach((id) => document.body.insertAdjacentHTML("beforeend", `<section id="${id}"></section>`));
+    sectionIds.forEach((id) =>
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        `<section id="${id}"></section>`,
+      ),
+    );
 
     const { result } = renderHook(() => useScrollNavigation(sectionIds));
 
     // A ratio threshold never fires for very tall sections; the middle line does.
-    expect(observer.options).toEqual({ rootMargin: "-45% 0px -54% 0px", threshold: 0 });
+    expect(observer.options).toEqual({
+      rootMargin: "-45% 0px -54% 0px",
+      threshold: 0,
+    });
 
-    act(() => observer.callback([{ isIntersecting: true, target: document.getElementById("project") }]));
+    act(() =>
+      observer.callback([
+        { isIntersecting: true, target: document.getElementById("project") },
+      ]),
+    );
 
     expect(result.current.currentIndex).toBe(2);
   });

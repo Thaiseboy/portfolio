@@ -8,7 +8,11 @@ import Reveal from "@/components/motion/Reveal.jsx";
 import contactPhoto from "@/assets/foto/optimized/get2.jpeg";
 
 const socials = [
-  { href: "https://www.linkedin.com/in/get-ms-karanyawad", icon: "linkedin", label: "LinkedIn" },
+  {
+    href: "https://www.linkedin.com/in/get-ms-karanyawad",
+    icon: "linkedin",
+    label: "LinkedIn",
+  },
   { href: "https://github.com/Thaiseboy/Hi-", icon: "github", label: "GitHub" },
 ];
 
@@ -66,7 +70,8 @@ export default function ContactPage() {
               <div>
                 <p className="m-0 text-xl font-bold">Get Karanyawad</p>
                 <p className="m-0 mt-2 flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-grey">
-                  <span className="h-2.5 w-2.5 animate-blink bg-accent" /> Frontend developer · NL
+                  <span className="h-2.5 w-2.5 animate-blink bg-accent" />{" "}
+                  Frontend developer · NL
                 </p>
               </div>
             </div>
@@ -80,30 +85,45 @@ export default function ContactPage() {
                 className="btn btn-ghost justify-between px-6 py-5 text-sm"
               >
                 <span className="flex items-center gap-3">
-                  <i className={`bi bi-${social.icon} text-xl`} /> {social.label}
+                  <i className={`bi bi-${social.icon} text-xl`} />{" "}
+                  {social.label}
                 </span>
                 <span aria-hidden="true">↗</span>
               </a>
             ))}
 
             <ErrorBoundary onRetry={retryFetchCV}>
-              {cvLoading && <SkeletonLoader type="box" width="100%" height="64px" />}
+              {cvLoading && (
+                <SkeletonLoader type="box" width="100%" height="64px" />
+              )}
               {!cvLoading && cvLink && (
-                <button type="button" className="btn btn-accent justify-between px-6 py-5 text-sm" onClick={downloadCV}>
+                <button
+                  type="button"
+                  className="btn btn-accent justify-between px-6 py-5 text-sm"
+                  onClick={downloadCV}
+                >
                   <span className="flex items-center gap-3">
-                    <i className="bi bi-file-earmark-arrow-down text-xl" /> Download CV
+                    <i className="bi bi-file-earmark-arrow-down text-xl" />{" "}
+                    Download CV
                   </span>
                   <span aria-hidden="true">↓</span>
                 </button>
               )}
-              {!cvLoading && !cvLink && <p className="m-0 font-mono text-xs text-grey">CV not available</p>}
+              {!cvLoading && !cvLink && (
+                <p className="m-0 font-mono text-xs text-grey">
+                  CV not available
+                </p>
+              )}
             </ErrorBoundary>
           </Reveal>
 
           <Reveal delay={0.1} className="card-brutal p-6 md:p-10">
             <form className="flex flex-col gap-6" onSubmit={sendEmail}>
               {/* Honeypot: hidden from visitors and screen readers; bots fill it in. */}
-              <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+              <div
+                aria-hidden="true"
+                className="absolute -left-[9999px] h-px w-px overflow-hidden"
+              >
                 <label htmlFor="website">Website</label>
                 <input
                   id="website"
@@ -111,7 +131,9 @@ export default function ContactPage() {
                   tabIndex={-1}
                   autoComplete="off"
                   value={form.website}
-                  onChange={(event) => updateField("website", event.target.value)}
+                  onChange={(event) =>
+                    updateField("website", event.target.value)
+                  }
                 />
               </div>
 
@@ -129,7 +151,9 @@ export default function ContactPage() {
                     maxLength="50"
                     {...bindField("name")}
                   />
-                  {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+                  {errors.name && (
+                    <div className="invalid-feedback">{errors.name}</div>
+                  )}
                 </div>
 
                 <div>
@@ -145,7 +169,9 @@ export default function ContactPage() {
                     maxLength="254"
                     {...bindField("email")}
                   />
-                  {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                  {errors.email && (
+                    <div className="invalid-feedback">{errors.email}</div>
+                  )}
                 </div>
               </div>
 
@@ -161,7 +187,9 @@ export default function ContactPage() {
                   maxLength="1000"
                   {...bindField("message")}
                 />
-                {errors.message && <div className="invalid-feedback">{errors.message}</div>}
+                {errors.message && (
+                  <div className="invalid-feedback">{errors.message}</div>
+                )}
                 <small className="mt-2 block text-right font-mono text-xs text-grey">
                   {form.message.length}/1000
                 </small>
@@ -176,8 +204,12 @@ export default function ContactPage() {
                 {isSubmitting ? "Sending..." : "Send message →"}
               </button>
 
-              {submitMessage && <div className="alert alert-success">{submitMessage}</div>}
-              {submitError && <div className="alert alert-danger">{submitError}</div>}
+              {submitMessage && (
+                <div className="alert alert-success">{submitMessage}</div>
+              )}
+              {submitError && (
+                <div className="alert alert-danger">{submitError}</div>
+              )}
             </form>
           </Reveal>
         </div>

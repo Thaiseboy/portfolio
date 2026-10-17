@@ -11,7 +11,8 @@ export default defineType({
     defineField({
       name: 'cvFile',
       title: 'CV-bestand',
-      description: 'Upload hier je meest recente CV als PDF. Bezoekers downloaden het via "Download CV".',
+      description:
+        'Upload hier je meest recente CV als PDF. Bezoekers downloaden het via "Download CV".',
       type: 'file',
       options: {storeOriginalFilename: true, accept: 'application/pdf'},
       validation: (rule) => rule.required().error('Upload een PDF.'),

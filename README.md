@@ -39,7 +39,9 @@ This project uses GitHub Actions and Netlify for automated testing, building, an
 ### Automated Workflows
 
 #### CI Pipeline
+
 Every push and PR triggers:
+
 - ESLint code quality checks
 - Unit tests with coverage
 - Production build verification
@@ -61,7 +63,9 @@ Every push and PR triggers:
    - Great for testing features in isolation
 
 #### PR Auto-Labeling
+
 Pull requests are automatically labeled based on changed files:
+
 - `dependencies` - package.json or pnpm-lock.yaml changes
 - `documentation` - Markdown file changes
 - `styling` - CSS/SCSS changes
@@ -71,7 +75,9 @@ Pull requests are automatically labeled based on changed files:
 - `ci/cd` - Workflow or config changes
 
 #### Dependency Updates
+
 Dependabot automatically:
+
 - Checks for updates weekly (Monday 9:00)
 - Creates PRs for npm package updates
 - Updates GitHub Actions versions

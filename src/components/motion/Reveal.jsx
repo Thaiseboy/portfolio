@@ -1,7 +1,14 @@
 import { motion } from "motion/react";
 
 // Fades and slides its children in once they scroll into view.
-export default function Reveal({ as = "div", delay = 0, y = 32, className = "", children, ...props }) {
+export default function Reveal({
+  as = "div",
+  delay = 0,
+  y = 32,
+  className = "",
+  children,
+  ...props
+}) {
   const Component = motion[as];
 
   return (

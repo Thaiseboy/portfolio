@@ -9,7 +9,9 @@ describe("SkeletonLoader", () => {
   });
 
   it("applies sizing", () => {
-    const { container } = render(<SkeletonLoader type="box" width="200px" height="50px" />);
+    const { container } = render(
+      <SkeletonLoader type="box" width="200px" height="50px" />,
+    );
     const element = container.querySelector(".skeleton-box");
     expect(element).toHaveStyle({ width: "200px", height: "50px" });
   });

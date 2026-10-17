@@ -15,10 +15,14 @@ export default function SkillsPage() {
   const logSkillError = useCallback((error) => {
     console.error("Error fetching skills:", error);
   }, []);
-  const { items: skills, retry: retryFetchSkills } = useDataFetch(fetchSkills, normalizeSkill, {
-    clearError,
-    onError: logSkillError,
-  });
+  const { items: skills, retry: retryFetchSkills } = useDataFetch(
+    fetchSkills,
+    normalizeSkill,
+    {
+      clearError,
+      onError: logSkillError,
+    },
+  );
 
   return (
     <div className="section stripes-light border-y-2 border-ink">
@@ -58,9 +62,15 @@ export default function SkillsPage() {
                     <div className="flex items-start justify-between">
                       <div className="flex h-14 w-14 items-center justify-center border-2 border-ink bg-white">
                         {skill.logoUrl ? (
-                          <img src={skill.logoUrl} alt={`${skill.name} logo`} className="h-9 w-9 object-contain" />
+                          <img
+                            src={skill.logoUrl}
+                            alt={`${skill.name} logo`}
+                            className="h-9 w-9 object-contain"
+                          />
                         ) : (
-                          <span className="font-mono font-bold text-night">{getInitials(skill.name)}</span>
+                          <span className="font-mono font-bold text-night">
+                            {getInitials(skill.name)}
+                          </span>
                         )}
                       </div>
                       <span className="font-mono text-xs font-bold text-grey-light group-hover:text-accent">
@@ -69,7 +79,9 @@ export default function SkillsPage() {
                     </div>
 
                     <div>
-                      <h3 className="mb-3 mt-0 text-lg font-bold leading-tight">{skill.name}</h3>
+                      <h3 className="mb-3 mt-0 text-lg font-bold leading-tight">
+                        {skill.name}
+                      </h3>
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                         <div className="flex gap-1" aria-hidden="true">
                           {levelSteps.map((step) => (

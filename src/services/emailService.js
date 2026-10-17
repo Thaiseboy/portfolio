@@ -22,7 +22,9 @@ export class EmailService {
       const result = await response.json().catch(() => null);
 
       if (!response.ok || !result?.success) {
-        throw new Error(result?.message || `HTTP error! status: ${response.status}`);
+        throw new Error(
+          result?.message || `HTTP error! status: ${response.status}`,
+        );
       }
 
       return {
@@ -33,7 +35,8 @@ export class EmailService {
       console.error("Email sending failed:", error);
       return {
         success: false,
-        message: "Failed to send your message. Please try again, or reach me on LinkedIn.",
+        message:
+          "Failed to send your message. Please try again, or reach me on LinkedIn.",
         error: error.message,
       };
     }

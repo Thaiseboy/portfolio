@@ -3,7 +3,17 @@ import profilePhoto from "@/assets/foto/optimized/get.jpeg";
 import AsciiPortrait from "@/components/motion/AsciiPortrait.jsx";
 import Marquee from "@/components/motion/Marquee.jsx";
 
-const stack = ["React", "TypeScript", "Tailwind", "JavaScript", "PHP", "Laravel", "Zend Framework", "Bootstrap 5", "Sanity"];
+const stack = [
+  "React",
+  "TypeScript",
+  "Tailwind",
+  "JavaScript",
+  "PHP",
+  "Laravel",
+  "Zend Framework",
+  "Bootstrap 5",
+  "Sanity",
+];
 
 const facts = [
   { label: "Base", value: "Netherlands" },
@@ -16,7 +26,11 @@ const rise = {
   visible: (step) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: 0.1 + step * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    transition: {
+      delay: 0.1 + step * 0.1,
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1],
+    },
   }),
 };
 
@@ -38,16 +52,30 @@ export default function HomePage() {
               Get<span className="animate-blink text-accent">_</span>
             </motion.h1>
 
-            <motion.p variants={rise} custom={2} className="mb-3 font-mono text-sm font-bold uppercase tracking-wider text-accent">
+            <motion.p
+              variants={rise}
+              custom={2}
+              className="mb-3 font-mono text-sm font-bold uppercase tracking-wider text-accent"
+            >
               Nice to meet you!
             </motion.p>
-            <motion.p variants={rise} custom={3} className="mb-8 max-w-xl text-lg leading-relaxed text-grey md:text-xl">
-              Hi, my name is <strong className="text-ink">Master Supakon Karanyawad</strong>, but you can call me{" "}
-              <strong className="text-ink">Get</strong>. I build dynamic web applications that are clear, fast and easy
-              to use.
+            <motion.p
+              variants={rise}
+              custom={3}
+              className="mb-8 max-w-xl text-lg leading-relaxed text-grey md:text-xl"
+            >
+              Hi, my name is{" "}
+              <strong className="text-ink">Master Supakon Karanyawad</strong>,
+              but you can call me <strong className="text-ink">Get</strong>. I
+              build dynamic web applications that are clear, fast and easy to
+              use.
             </motion.p>
 
-            <motion.div variants={rise} custom={4} className="mb-10 flex flex-wrap gap-4">
+            <motion.div
+              variants={rise}
+              custom={4}
+              className="mb-10 flex flex-wrap gap-4"
+            >
               <a href="#project" className="btn">
                 View projects →
               </a>
@@ -74,7 +102,11 @@ export default function HomePage() {
               </a>
             </motion.div>
 
-            <motion.ul variants={rise} custom={5} className="m-0 flex list-none flex-wrap gap-3 p-0">
+            <motion.ul
+              variants={rise}
+              custom={5}
+              className="m-0 flex list-none flex-wrap gap-3 p-0"
+            >
               {facts.map((fact) => (
                 <li key={fact.label} className="chip">
                   <b>{fact.label}</b> {fact.value}
@@ -87,9 +119,16 @@ export default function HomePage() {
             className="mx-auto w-full max-w-md lg:max-w-none"
             initial={{ opacity: 0, rotate: 3, y: 40 }}
             animate={{ opacity: 1, rotate: 0, y: 0 }}
-            transition={{ delay: 0.35, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              delay: 0.35,
+              duration: 0.8,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           >
-            <AsciiPortrait src={profilePhoto} alt="Portrait of Master Supakon Karanyawad" />
+            <AsciiPortrait
+              src={profilePhoto}
+              alt="Portrait of Master Supakon Karanyawad"
+            />
           </motion.div>
         </div>
       </div>

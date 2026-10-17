@@ -36,8 +36,7 @@ export default defineType({
                 title: 'Adres',
                 description: 'Een volledige URL (https://…) of een e-mailadres (mailto:…).',
                 type: 'url',
-                validation: (rule) =>
-                  rule.required().uri({scheme: ['http', 'https', 'mailto']}),
+                validation: (rule) => rule.required().uri({scheme: ['http', 'https', 'mailto']}),
               }),
             ],
           }),

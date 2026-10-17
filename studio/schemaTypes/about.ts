@@ -12,12 +12,14 @@ export default defineType({
       title: 'Titel',
       description: 'Een korte titel voor de foto; schermlezers lezen deze voor.',
       type: 'string',
-      validation: (rule) => rule.required().warning('Een titel helpt bezoekers met een schermlezer.'),
+      validation: (rule) =>
+        rule.required().warning('Een titel helpt bezoekers met een schermlezer.'),
     }),
     defineField({
       name: 'image',
       title: 'Foto',
-      description: 'Wordt vierkant getoond. Klik op het potloodje om het belangrijkste deel te kiezen.',
+      description:
+        'Wordt vierkant getoond. Klik op het potloodje om het belangrijkste deel te kiezen.',
       type: 'image',
       options: {hotspot: true},
       validation: (rule) => rule.required().error('Kies een foto.'),

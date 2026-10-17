@@ -6,22 +6,39 @@ const isExternal = (href = "") => /^https?:\/\//.test(href);
 const components = {
   block: {
     normal: ({ children }) => <p className="m-0">{children}</p>,
-    h3: ({ children }) => <h4 className="m-0 mt-2 text-lg font-bold uppercase leading-tight">{children}</h4>,
+    h3: ({ children }) => (
+      <h4 className="m-0 mt-2 text-lg font-bold uppercase leading-tight">
+        {children}
+      </h4>
+    ),
     h4: ({ children }) => (
-      <h5 className="m-0 mt-1 font-mono text-xs font-bold uppercase tracking-wider text-accent">{children}</h5>
+      <h5 className="m-0 mt-1 font-mono text-xs font-bold uppercase tracking-wider text-accent">
+        {children}
+      </h5>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="m-0 border-l-4 border-accent pl-4 italic">{children}</blockquote>
+      <blockquote className="m-0 border-l-4 border-accent pl-4 italic">
+        {children}
+      </blockquote>
     ),
   },
   list: {
-    bullet: ({ children }) => <ul className="m-0 list-none space-y-1.5 p-0">{children}</ul>,
-    number: ({ children }) => <ol className="m-0 list-decimal space-y-1.5 pl-5 marker:font-mono marker:text-accent">{children}</ol>,
+    bullet: ({ children }) => (
+      <ul className="m-0 list-none space-y-1.5 p-0">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="m-0 list-decimal space-y-1.5 pl-5 marker:font-mono marker:text-accent">
+        {children}
+      </ol>
+    ),
   },
   listItem: {
     bullet: ({ children }) => (
       <li className="flex gap-3">
-        <span aria-hidden="true" className="mt-[0.55em] h-1.5 w-1.5 shrink-0 bg-accent" />
+        <span
+          aria-hidden="true"
+          className="mt-[0.55em] h-1.5 w-1.5 shrink-0 bg-accent"
+        />
         <span>{children}</span>
       </li>
     ),
@@ -31,13 +48,17 @@ const components = {
     strong: ({ children }) => <strong className="font-bold">{children}</strong>,
     em: ({ children }) => <em>{children}</em>,
     code: ({ children }) => (
-      <code className="bg-accent/15 px-1 py-0.5 font-mono text-[0.85em]">{children}</code>
+      <code className="bg-accent/15 px-1 py-0.5 font-mono text-[0.85em]">
+        {children}
+      </code>
     ),
     link: ({ value, children }) => (
       <a
         href={value?.href}
         className="font-bold text-accent underline underline-offset-4"
-        {...(isExternal(value?.href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        {...(isExternal(value?.href)
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
       >
         {children}
       </a>

@@ -4,7 +4,13 @@ import { useInView, useReducedMotion } from "motion/react";
 const GLYPHS = "!<>-_\\/[]{}=+*^?#ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 // "Decodes" text from random glyphs to the real characters when it scrolls into view.
-export default function ScrambleText({ text, as: Tag = "span", className = "", delay = 0, duration = 900 }) {
+export default function ScrambleText({
+  text,
+  as: Tag = "span",
+  className = "",
+  delay = 0,
+  duration = 900,
+}) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const shouldReduceMotion = useReducedMotion();
@@ -27,7 +33,9 @@ export default function ScrambleText({ text, as: Tag = "span", className = "", d
       setOutput(
         Array.from(text)
           .map((char, index) =>
-            index < revealed || char === " " ? char : GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
+            index < revealed || char === " "
+              ? char
+              : GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
           )
           .join(""),
       );

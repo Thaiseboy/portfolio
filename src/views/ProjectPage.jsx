@@ -13,10 +13,14 @@ export default function ProjectPage() {
   const logProjectError = useCallback((error) => {
     console.error("Error fetching projects:", error);
   }, []);
-  const { items: projects, retry: retryFetchProjects } = useDataFetch(fetchProjects, normalizeProject, {
-    clearError,
-    onError: logProjectError,
-  });
+  const { items: projects, retry: retryFetchProjects } = useDataFetch(
+    fetchProjects,
+    normalizeProject,
+    {
+      clearError,
+      onError: logProjectError,
+    },
+  );
 
   return (
     <div className="section container">
@@ -42,7 +46,11 @@ export default function ProjectPage() {
           renderItems={(items) => (
             <div className="flex flex-col gap-8">
               {items.map((project, index) => (
-                <ProjectCard key={project._id} project={project} index={index} />
+                <ProjectCard
+                  key={project._id}
+                  project={project}
+                  index={index}
+                />
               ))}
             </div>
           )}

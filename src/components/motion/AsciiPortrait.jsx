@@ -22,7 +22,10 @@ function imageToAscii(image, columns) {
     luminances.push(
       data[offset + 3] < 128
         ? null
-        : (0.299 * data[offset] + 0.587 * data[offset + 1] + 0.114 * data[offset + 2]) / 255,
+        : (0.299 * data[offset] +
+            0.587 * data[offset + 1] +
+            0.114 * data[offset + 2]) /
+            255,
     );
   }
   const visible = luminances.filter((value) => value !== null);
@@ -34,7 +37,12 @@ function imageToAscii(image, columns) {
     let line = "";
     for (let x = 0; x < columns; x += 1) {
       const luminance = luminances[y * columns + x];
-      line += luminance === null ? " " : RAMP[1 + Math.round(((luminance - min) / range) * (RAMP.length - 2))];
+      line +=
+        luminance === null
+          ? " "
+          : RAMP[
+              1 + Math.round(((luminance - min) / range) * (RAMP.length - 2))
+            ];
     }
     lines.push(line);
   }
@@ -75,7 +83,9 @@ export default function AsciiPortrait({ src, alt, columns = 64 }) {
         <span>
           <span className="text-accent">■</span> Fig.01 — Self portrait
         </span>
-        <span className="text-white/60">{ascii ? `${ascii.rows} lines` : "loading"}</span>
+        <span className="text-white/60">
+          {ascii ? `${ascii.rows} lines` : "loading"}
+        </span>
       </figcaption>
 
       <div

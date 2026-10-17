@@ -10,7 +10,11 @@ export default function SectionHeader({ index, eyebrow, title, intro }) {
         </p>
         <ScrambleText as="h2" text={title} className="section-heading m-0" />
       </div>
-      {intro && <p className="m-0 text-base leading-relaxed text-grey md:text-right">{intro}</p>}
+      {intro && (
+        <p className="m-0 text-base leading-relaxed text-grey md:text-right">
+          {intro}
+        </p>
+      )}
     </Reveal>
   );
 }

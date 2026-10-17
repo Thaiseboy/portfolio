@@ -52,7 +52,8 @@ export default defineType({
     defineField({
       name: 'image',
       title: 'Afbeelding',
-      description: 'Een screenshot van het project. Klik op het potloodje om het belangrijkste deel te kiezen.',
+      description:
+        'Een screenshot van het project. Klik op het potloodje om het belangrijkste deel te kiezen.',
       type: 'image',
       group: 'media',
       options: {hotspot: true},
