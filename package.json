@@ -6,6 +6,8 @@
     "dev": "vite --host 0.0.0.0",
     "serve": "vite --host 0.0.0.0",
     "build": "vite build",
+    "build:studio": "pnpm --dir studio install --frozen-lockfile && pnpm --dir studio exec sanity build ../dist/studio -y",
+    "build:all": "pnpm run build && pnpm run build:studio",
     "preview": "vite preview",
     "lint": "eslint src --ext .js,.jsx",
     "test": "vitest",

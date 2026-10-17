@@ -1,6 +1,6 @@
 [build]
   # Build command using pnpm
-  command = "pnpm run build"
+  command = "pnpm run build:all"
   publish = "dist"
 
   # Environment variables for build
@@ -10,21 +10,21 @@
 
 # Production context: main branch deploys
 [context.production]
-  command = "pnpm run build"
+  command = "pnpm run build:all"
 
   [context.production.environment]
     NODE_ENV = "production"
 
 # Deploy Preview context: all pull requests
 [context.deploy-preview]
-  command = "pnpm run build"
+  command = "pnpm run build:all"
 
   [context.deploy-preview.environment]
     NODE_ENV = "production"
 
 # Branch Deploy context: all branches except main
 [context.branch-deploy]
-  command = "pnpm run build"
+  command = "pnpm run build:all"
 
   [context.branch-deploy.environment]
     NODE_ENV = "production"

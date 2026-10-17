@@ -4,5 +4,8 @@ export default defineCliConfig({
   api: {
     projectId: 'w696z6zz',
     dataset: 'portfolio-thaiseboy'
+  },
+  project: {
+    basePath: '/studio'
   }
 })
