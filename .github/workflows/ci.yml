@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -38,10 +38,14 @@ jobs:
       - name: Run test coverage
         run: pnpm run test:coverage
 
-      - name: Build project
-        run: pnpm run build
+      - name: Build site and Studio
+        run: pnpm run build:all
         env:
           NODE_ENV: production
+          # Public values (also in studio/sanity.config.ts); no secrets needed to build.
+          VITE_SANITY_PROJECT_ID: w696z6zz
+          VITE_SANITY_DATASET: portfolio-thaiseboy
+          VITE_SANITY_API_VERSION: '2023-01-01'
 
   build-info:
     name: Build Information
