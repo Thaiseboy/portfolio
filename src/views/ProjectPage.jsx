@@ -6,6 +6,7 @@ import ProjectCard from "@/components/project/ProjectCard.jsx";
 import DataState from "@/components/ui/DataState.jsx";
 import ErrorBoundary from "@/components/ui/ErrorBoundary.jsx";
 import SkeletonLoader from "@/components/ui/SkeletonLoader.jsx";
+import SectionHeader from "@/components/ui/SectionHeader.jsx";
 
 export default function ProjectPage() {
   const { loading, fetchProjects, clearError } = useSanity();
@@ -18,36 +19,34 @@ export default function ProjectPage() {
   });
 
   return (
-    <div className="page-container">
-      <h1 className="page-title">
-        <span className="text-red">Get</span> Inspired by my Projects &#x1F5C2;
-      </h1>
-      <ErrorBoundary onRetry={retryFetchProjects}>
-        <div className="section-shell">
-          <p className="section-intro">
-            A selection of work where structure, frontend detail and practical logic come together.
-          </p>
+    <div className="section container">
+      <SectionHeader
+        index="03"
+        eyebrow="Projects"
+        title="Selected work"
+        intro="A selection of work where structure, frontend detail and practical logic come together."
+      />
 
-          <DataState
-            loading={loading}
-            items={projects}
-            emptyMessage="No projects available"
-            renderLoading={() => (
-              <div className="projects-grid">
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <SkeletonLoader key={index} type="card" className="project-skeleton" />
-                ))}
-              </div>
-            )}
-            renderItems={(items) => (
-              <div className="projects-grid">
-                {items.map((project) => (
-                  <ProjectCard key={project._id} project={project} />
-                ))}
-              </div>
-            )}
-          />
-        </div>
+      <ErrorBoundary onRetry={retryFetchProjects}>
+        <DataState
+          loading={loading}
+          items={projects}
+          emptyMessage="No projects available"
+          renderLoading={() => (
+            <div className="flex flex-col gap-8">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <SkeletonLoader key={index} type="card" />
+              ))}
+            </div>
+          )}
+          renderItems={(items) => (
+            <div className="flex flex-col gap-8">
+              {items.map((project, index) => (
+                <ProjectCard key={project._id} project={project} index={index} />
+              ))}
+            </div>
+          )}
+        />
       </ErrorBoundary>
     </div>
   );

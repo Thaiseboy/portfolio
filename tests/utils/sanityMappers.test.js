@@ -31,6 +31,7 @@ describe("Sanity mappers", () => {
       name: "React",
       logoUrl: "react.svg",
       level: "Advanced",
+      levelRank: 3,
     });
   });
 

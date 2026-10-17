@@ -4,6 +4,12 @@ const levelLabels = {
   advanced: "Advanced",
 };
 
+const levelRanks = {
+  beginner: 1,
+  intermediate: 2,
+  advanced: 3,
+};
+
 export const getInitials = (name) => {
   if (!name) return "?";
 
@@ -26,6 +32,7 @@ export const normalizeSkill = (skill) => ({
   name: skill.name,
   logoUrl: skill.imageUrl,
   level: levelLabels[skill.level] || "Intermediate",
+  levelRank: levelRanks[skill.level] || 2,
 });
 
 export const normalizeProject = (project) => ({
