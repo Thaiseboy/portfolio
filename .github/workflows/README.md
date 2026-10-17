@@ -10,7 +10,7 @@ a run that is still in progress for the same PR or branch.
 
 1. Install dependencies with pnpm (version from `packageManager` in `package.json`)
 2. `pnpm run lint`
-3. `pnpm run test:coverage` (all tests, once, with coverage)
+3. `pnpm run test` (all tests, once; `test:coverage` stays available locally)
 4. `pnpm run build:all` (site and Sanity Studio)
 
 Node.js 22. The public Sanity project ID, dataset and API version are set in the
@@ -37,6 +37,6 @@ Netlify builds and deploys by itself (see `netlify.toml` in the project root):
 ```bash
 pnpm install
 pnpm run lint
-pnpm run test:coverage
+pnpm run test -- --run
 pnpm run build:all
 ```

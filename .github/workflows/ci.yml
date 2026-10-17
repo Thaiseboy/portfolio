@@ -41,8 +41,9 @@ jobs:
       - name: Run linter
         run: pnpm run lint
 
-      - name: Run tests with coverage
-        run: pnpm run test:coverage
+      # Vitest runs once (not in watch mode) because GitHub sets CI=true.
+      - name: Run tests
+        run: pnpm run test
 
       - name: Build site and Studio
         run: pnpm run build:all
