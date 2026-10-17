@@ -1,10 +1,20 @@
 name: CI Pipeline
 
+# Runs once per pull request push and once per push to main; feature branches
+# without a PR do not trigger a run.
 on:
   push:
-    branches: ['**']
+    branches: [main]
   pull_request:
     branches: [main]
+
+# A newer push to the same PR or branch cancels the run that is still going.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -15,16 +25,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Uses the pnpm version from "packageManager" in package.json.
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 10.9.0
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'pnpm'
+          node-version: "22"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -32,10 +41,7 @@ jobs:
       - name: Run linter
         run: pnpm run lint
 
-      - name: Run tests
-        run: pnpm run test
-
-      - name: Run test coverage
+      - name: Run tests with coverage
         run: pnpm run test:coverage
 
       - name: Build site and Studio
@@ -45,36 +51,4 @@ jobs:
           # Public values (also in studio/sanity.config.ts); no secrets needed to build.
           VITE_SANITY_PROJECT_ID: w696z6zz
           VITE_SANITY_DATASET: portfolio-thaiseboy
-          VITE_SANITY_API_VERSION: '2023-01-01'
-
-  build-info:
-    name: Build Information
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    permissions:
-      contents: read
-      issues: write
-      pull-requests: write
-
-    steps:
-      - name: Comment PR
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const prNumber = context.issue.number;
-            const branchName = context.payload.pull_request.head.ref;
-
-            github.rest.issues.createComment({
-              issue_number: prNumber,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## 🚀 Deployment Preview
-
-              Branch: \`${branchName}\`
-
-              **Netlify** will automatically deploy a preview for this PR.
-              Check the Netlify bot comment below for the preview URL.
-
-              ---
-              ✅ CI Pipeline passed - Ready for review!`
-            });
+          VITE_SANITY_API_VERSION: "2023-01-01"
