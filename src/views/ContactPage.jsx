@@ -33,7 +33,7 @@ export default function ContactPage() {
 
   const sendEmail = async (event) => {
     event.preventDefault();
-    await submitForm("get_sarun@hotmail.com");
+    await submitForm();
   };
 
   const bindField = (field) => ({
@@ -102,6 +102,19 @@ export default function ContactPage() {
 
           <Reveal delay={0.1} className="card-brutal p-6 md:p-10">
             <form className="flex flex-col gap-6" onSubmit={sendEmail}>
+              {/* Honeypot: hidden from visitors and screen readers; bots fill it in. */}
+              <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+                <label htmlFor="website">Website</label>
+                <input
+                  id="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={form.website}
+                  onChange={(event) => updateField("website", event.target.value)}
+                />
+              </div>
+
               <div className="grid gap-6 md:grid-cols-2">
                 <div>
                   <label htmlFor="name" className="form-label">

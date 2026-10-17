@@ -29,7 +29,16 @@
   [context.branch-deploy.environment]
     NODE_ENV = "production"
 
+[functions]
+  directory = "netlify/functions"
+
 # Redirect rules
+# The contact form posts to /api/contact (netlify/functions/contact.mjs).
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
 [[redirects]]
   from = "/studio/*"
   to = "/studio/index.html"
