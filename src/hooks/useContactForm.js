@@ -45,8 +45,10 @@ export function useContactForm() {
       });
 
       if (result.success) {
+        // Clear the fields but keep the confirmation visible (resetForm would clear it too).
+        setForm(initialForm);
+        validation.clearErrors();
         setSubmitMessage(result.message);
-        resetForm();
         return true;
       }
 
