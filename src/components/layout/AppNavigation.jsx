@@ -13,7 +13,7 @@ const sectionIds = [...navItems.map((item) => item.id), "contact"];
 
 export default function AppNavigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { currentIndex } = useScrollNavigation(sectionIds, { threshold: 0.35 });
+  const { currentIndex } = useScrollNavigation(sectionIds);
   const activeId = sectionIds[currentIndex];
 
   return (
