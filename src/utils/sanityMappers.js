@@ -1,3 +1,5 @@
+import { toPlainText } from "@portabletext/react";
+
 const levelLabels = {
   beginner: "Beginner",
   intermediate: "Intermediate",
@@ -35,11 +37,20 @@ export const normalizeSkill = (skill) => ({
   levelRank: levelRanks[skill.level] || 2,
 });
 
+// Descriptions are rich text now; older ones are still plain strings.
+const descriptionText = (description) => {
+  if (!description) return "";
+  return typeof description === "string" ? description : toPlainText(description);
+};
+
 export const normalizeProject = (project) => ({
   _id: project._id,
   title: project.title,
-  description: project.description,
+  description: project.description ?? null,
+  excerpt: descriptionText(project.description),
+  tags: project.tags ?? [],
   image: project.imageUrl,
+  imageAlt: project.imageAlt ?? "",
   url: project.url ?? "",
   github: project.github ?? "",
 });

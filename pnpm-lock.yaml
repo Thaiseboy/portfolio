@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@portabletext/react':
+        specifier: ^8.0.1
+        version: 8.0.1(react@19.2.6)
       '@sanity/cli':
         specifier: ^4.21.1
         version: 4.22.0(@types/node@22.19.19)(react@19.2.6)(sass@1.93.3)(terser@5.44.0)(yaml@2.8.2)
@@ -1497,6 +1500,20 @@ packages:
   '@pnpm/npm-conf@2.3.1':
     resolution: {integrity: sha512-c83qWb22rNRuB0UaVCI0uRPNRr8Z0FWnEIvT47jiHAmOIUHbBOg5XvV7pM5x+rKn9HRpjxquDbXYSXr3fAKFcw==}
     engines: {node: '>=12'}
+
+  '@portabletext/react@8.0.1':
+    resolution: {integrity: sha512-Fy9UxVhppgEckEvczZytg4bBxiPcZIM49NrJ3sizEoz19aNzJWEYoUj7f3TI94907psEk0yfR145eoOgkedM2A==}
+    engines: {node: '>=22.12'}
+    peerDependencies:
+      react: ^19
+
+  '@portabletext/toolkit@6.0.0':
+    resolution: {integrity: sha512-+qSqe0KnefuZfNLUhzQRTpbSKxslZof+3pNwxg0DC8dfZ1yLKyyBUw6iR7EpDL+SJlrnpiBfEcfmEuFitK1NSQ==}
+    engines: {node: '>=22.12'}
+
+  '@portabletext/types@4.0.2':
+    resolution: {integrity: sha512-djfIGU9n6DRrunlvj2nIDAp17URo/nA4jSXGvf+Gupx8NLLy9fmJBZ3GL8yhqn9lSVc+cKCharjOa3aOBnWbRw==}
+    engines: {node: '>=20.19 <22 || >=22.12'}
 
   '@rolldown/pluginutils@1.0.0-rc.3':
     resolution: {integrity: sha512-eybk3TjzzzV97Dlj5c+XrBFW57eTNhzod66y9HrBlzJ6NsCrWCp/2kaPS3K9wJmurBC0Tdw4yPjXKZqlznim3Q==}
@@ -5104,6 +5121,18 @@ snapshots:
       '@pnpm/config.env-replace': 1.1.0
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
+
+  '@portabletext/react@8.0.1(react@19.2.6)':
+    dependencies:
+      '@portabletext/toolkit': 6.0.0
+      '@portabletext/types': 4.0.2
+      react: 19.2.6
+
+  '@portabletext/toolkit@6.0.0':
+    dependencies:
+      '@portabletext/types': 4.0.2
+
+  '@portabletext/types@4.0.2': {}
 
   '@rolldown/pluginutils@1.0.0-rc.3': {}
 

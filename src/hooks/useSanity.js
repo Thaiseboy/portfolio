@@ -61,11 +61,13 @@ export function useSanity() {
   }, [fetchData]);
 
   const fetchProjects = useCallback(() => {
-    const query = `*[_type == "project"] {
+    const query = `*[_type == "project"] | order(coalesce(order, 9999) asc, _createdAt desc) {
       _id,
       title,
       description,
+      tags,
       "imageUrl": image.asset->url,
+      "imageAlt": image.alt,
       "github": select(github == "null" => null, github),
       "url": select(url == "null" => null, url)
     }`;
@@ -73,7 +75,7 @@ export function useSanity() {
   }, [fetchData]);
 
   const fetchCV = useCallback(() => {
-    const query = `*[_type == "cv"] {
+    const query = `*[_type == "cv" && defined(cvFile.asset)] | order(_updatedAt desc)[0...1] {
       "pdfUrl": cvFile.asset->url
     }`;
     return fetchData(query);

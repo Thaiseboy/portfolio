@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { getInitials } from "@/utils/sanityMappers";
+import RichText from "@/components/ui/RichText.jsx";
 
 export default function ProjectCard({ project, index }) {
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const hasLongDescription = project.description && project.description.length > 150;
+  const hasLongDescription =
+    project.excerpt.length > 150 || (Array.isArray(project.description) && project.description.length > 1);
   // Alternate dark and light cards, like an index of case studies.
   const isDark = index % 2 === 0;
   const number = String(index + 1).padStart(2, "0");
@@ -33,14 +35,47 @@ export default function ProjectCard({ project, index }) {
 
         <h3 className="m-0 text-2xl font-bold uppercase leading-tight md:text-3xl">{project.title}</h3>
 
-        <div>
-          <p
-            className={`m-0 leading-relaxed ${isDark ? "text-white/75" : "text-grey"} ${
-              showFullDescription ? "" : "line-clamp-3"
-            }`}
-          >
-            {project.description}
-          </p>
+        {project.tags.length > 0 && (
+          <ul className="m-0 flex list-none flex-wrap gap-2 p-0" aria-label="Built with">
+            {project.tags.map((tag) => (
+              <li
+                key={tag}
+                className={`border px-2 py-1 font-mono text-[0.65rem] font-bold uppercase tracking-wider ${
+                  isDark ? "border-white/30 text-white/80" : "border-ink/25 text-grey"
+                }`}
+              >
+                {tag}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <div className={`leading-relaxed ${isDark ? "text-white/75" : "text-grey"}`}>
+          <AnimatePresence initial={false} mode="wait">
+            {showFullDescription ? (
+              <motion.div
+                key="full"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden"
+              >
+                <RichText value={project.description} />
+              </motion.div>
+            ) : (
+              <motion.p
+                key="excerpt"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="m-0 line-clamp-3"
+              >
+                {project.excerpt}
+              </motion.p>
+            )}
+          </AnimatePresence>
           {hasLongDescription && (
             <button
               type="button"
@@ -70,7 +105,7 @@ export default function ProjectCard({ project, index }) {
         {project.image ? (
           <img
             src={project.image}
-            alt={`${project.title} preview`}
+            alt={project.imageAlt || `${project.title} preview`}
             className="absolute inset-0 h-full w-full object-cover grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
           />
         ) : (

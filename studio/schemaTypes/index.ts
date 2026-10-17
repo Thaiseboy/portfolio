@@ -1,6 +1,7 @@
-import skill from './skill';
-import project from './project';
-import contact from './contact';
-import aboutMePhotos from './about';
+import skill from './skill'
+import project from './project'
+import contact from './contact'
+import aboutMePhotos from './about'
+import richText from './richText'
 
-export const schemaTypes = [skill, project, contact, aboutMePhotos];
+export const schemaTypes = [project, skill, aboutMePhotos, contact, richText]

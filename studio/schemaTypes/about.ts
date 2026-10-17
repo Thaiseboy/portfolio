@@ -1,27 +1,36 @@
-import { defineType } from 'sanity';
+import {defineField, defineType} from 'sanity'
+import {ImagesIcon} from '@sanity/icons/Images'
 
 export default defineType({
   name: 'aboutMePhotos',
-  title: 'About Me Photos',
+  title: "Foto's Over mij",
   type: 'document',
+  icon: ImagesIcon,
   fields: [
-    {
+    defineField({
       name: 'title',
-      title: 'Title',
+      title: 'Titel',
+      description: 'Een korte titel voor de foto; schermlezers lezen deze voor.',
       type: 'string',
-      description: 'Een korte titel voor de foto',
-    },
-    {
+      validation: (rule) => rule.required().warning('Een titel helpt bezoekers met een schermlezer.'),
+    }),
+    defineField({
       name: 'image',
-      title: 'Image',
+      title: 'Foto',
+      description: 'Wordt vierkant getoond. Klik op het potloodje om het belangrijkste deel te kiezen.',
       type: 'image',
-      options: { hotspot: true },
-    },
-    {
+      options: {hotspot: true},
+      validation: (rule) => rule.required().error('Kies een foto.'),
+    }),
+    defineField({
       name: 'description',
-      title: 'Description',
+      title: 'Beschrijving',
+      description: 'Een korte beschrijving van de foto (alleen voor jezelf).',
       type: 'text',
-      description: 'Een korte beschrijving van de foto',
-    },
+      rows: 3,
+    }),
   ],
-});
+  preview: {
+    select: {title: 'title', subtitle: 'description', media: 'image'},
+  },
+})
