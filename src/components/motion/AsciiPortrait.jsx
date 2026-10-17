@@ -70,12 +70,12 @@ export default function AsciiPortrait({ src, alt, columns = 64 }) {
   };
 
   return (
-    <figure className="card-brutal relative m-0 bg-ink text-white shadow-brutal-accent">
+    <figure className="card-brutal relative m-0 bg-night text-white shadow-brutal-accent">
       <figcaption className="flex items-center justify-between gap-4 border-b-2 border-white/15 px-4 py-3 font-mono text-[0.65rem] font-bold uppercase tracking-wider">
         <span>
           <span className="text-accent">■</span> Fig.01 — Self portrait
         </span>
-        <span className="text-grey-light">{ascii ? `${ascii.rows} lines` : "loading"}</span>
+        <span className="text-white/60">{ascii ? `${ascii.rows} lines` : "loading"}</span>
       </figcaption>
 
       <div
@@ -115,7 +115,7 @@ export default function AsciiPortrait({ src, alt, columns = 64 }) {
       </div>
 
       <div className="flex items-center justify-between border-t-2 border-white/15 px-4 py-3 font-mono text-[0.65rem] font-bold uppercase tracking-wider">
-        <span className="text-grey-light">Hover to decode</span>
+        <span className="text-white/60">Hover to decode</span>
         <span>Get_</span>
       </div>
     </figure>

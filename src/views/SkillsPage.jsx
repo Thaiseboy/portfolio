@@ -56,11 +56,11 @@ export default function SkillsPage() {
                     transition={{ duration: 0.45, delay: (index % 4) * 0.06 }}
                   >
                     <div className="flex items-start justify-between">
-                      <div className="flex h-14 w-14 items-center justify-center border-2 border-ink bg-paper">
+                      <div className="flex h-14 w-14 items-center justify-center border-2 border-ink bg-white">
                         {skill.logoUrl ? (
                           <img src={skill.logoUrl} alt={`${skill.name} logo`} className="h-9 w-9 object-contain" />
                         ) : (
-                          <span className="font-mono font-bold">{getInitials(skill.name)}</span>
+                          <span className="font-mono font-bold text-night">{getInitials(skill.name)}</span>
                         )}
                       </div>
                       <span className="font-mono text-xs font-bold text-grey-light group-hover:text-accent">
@@ -70,12 +70,12 @@ export default function SkillsPage() {
 
                     <div>
                       <h3 className="mb-3 mt-0 text-lg font-bold leading-tight">{skill.name}</h3>
-                      <div className="flex items-center gap-3">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                         <div className="flex gap-1" aria-hidden="true">
                           {levelSteps.map((step) => (
                             <span
                               key={step}
-                              className={`h-2.5 w-5 border-2 border-ink ${step <= skill.levelRank ? "bg-accent" : "bg-white"}`}
+                              className={`h-2.5 w-5 border-2 border-ink ${step <= skill.levelRank ? "bg-accent" : "bg-surface"}`}
                             />
                           ))}
                         </div>

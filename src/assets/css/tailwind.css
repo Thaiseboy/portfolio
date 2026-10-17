@@ -3,11 +3,34 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --gd-accent: #DC2626;
-    --gd-ink: #0E1116;
-    --gd-paper: #F6F7F9;
+  /* Theme colours as "R G B" so Tailwind can add opacity (bg-ink/15). */
+  :root,
+  [data-theme="light"] {
+    --c-paper: 246 247 249;
+    --c-surface: 255 255 255;
+    --c-ink: 14 17 22;
+    --c-grey: 75 85 99;
+    --c-grey-light: 156 163 175;
+    --c-accent: 220 38 38;
+    --c-accent-hover: 185 28 28;
+    --c-accent-subtle: 253 232 232;
+    --c-on-accent: 255 255 255;
     --header-height: 72px;
+    color-scheme: light;
+  }
+
+  /* Dark is the default theme (set on <html> before first paint). */
+  [data-theme="dark"] {
+    --c-paper: 14 17 22;
+    --c-surface: 22 26 33;
+    --c-ink: 246 247 249;
+    --c-grey: 156 163 175;
+    --c-grey-light: 107 114 128;
+    --c-accent: 248 113 113;
+    --c-accent-hover: 252 165 165;
+    --c-accent-subtle: 59 20 22;
+    --c-on-accent: 14 17 22;
+    color-scheme: dark;
   }
 
   html {
@@ -34,17 +57,33 @@
     overflow-x: clip;
   }
 
+  /* Without view transitions the theme still eases between colours. */
+  html.theme-fade body,
+  html.theme-fade body * {
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease !important;
+  }
+
   ::selection {
-    @apply bg-accent text-white;
+    @apply bg-accent text-on-accent;
   }
 
   :focus-visible {
-    outline: 3px solid var(--gd-accent);
+    outline: 3px solid rgb(var(--c-accent));
     outline-offset: 3px;
   }
 
   main section {
     scroll-margin-top: var(--header-height);
+  }
+
+  /* The theme switch animates its own circular reveal (useTheme). */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
   }
 
   ::-webkit-scrollbar {
@@ -75,15 +114,15 @@
 
   /* Small mono label with a hard shadow, like a terminal tag. */
   .tag {
-    @apply inline-flex items-center gap-2 border-2 border-ink bg-ink px-3 py-1.5 font-mono text-[0.7rem] font-bold uppercase tracking-wider text-white shadow-brutal-accent;
+    @apply inline-flex items-center gap-2 border-2 border-ink bg-ink px-3 py-1.5 font-mono text-[0.7rem] font-bold uppercase tracking-wider text-paper shadow-brutal-accent;
   }
 
   .tag-light {
-    @apply border-ink bg-white text-ink shadow-brutal-sm;
+    @apply border-ink bg-surface text-ink shadow-brutal-sm;
   }
 
   .chip {
-    @apply inline-flex items-center gap-2 border-2 border-ink/15 bg-white px-3 py-1.5 font-mono text-xs;
+    @apply inline-flex items-center gap-2 border-2 border-ink/15 bg-surface px-3 py-1.5 font-mono text-xs;
   }
 
   .chip b {
@@ -96,7 +135,7 @@
 
   /* Buttons press into their shadow on hover. */
   .btn {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 border-2 border-ink bg-ink px-5 py-3 font-mono text-xs font-bold uppercase tracking-wider text-white no-underline shadow-brutal transition-[transform,box-shadow,background-color] duration-150;
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 border-2 border-ink bg-ink px-5 py-3 font-mono text-xs font-bold uppercase tracking-wider text-paper no-underline shadow-brutal transition-[transform,box-shadow,background-color] duration-150;
   }
 
   .btn:hover {
@@ -115,7 +154,7 @@
   }
 
   .btn-accent {
-    @apply bg-accent text-white;
+    @apply bg-accent text-on-accent;
   }
 
   .btn-accent:hover {
@@ -123,7 +162,7 @@
   }
 
   .btn-ghost {
-    @apply bg-white text-ink;
+    @apply bg-surface text-ink;
   }
 
   .btn-ghost:hover {
@@ -131,11 +170,11 @@
   }
 
   .card-brutal {
-    @apply border-2 border-ink bg-white shadow-brutal;
+    @apply border-2 border-ink bg-surface shadow-brutal;
   }
 
   .stripes-dark {
-    background-color: var(--gd-ink);
+    @apply bg-night;
     background-image: repeating-linear-gradient(
       -45deg,
       rgba(255, 255, 255, 0.07) 0 2px,
@@ -144,23 +183,23 @@
   }
 
   .stripes-light {
-    background-color: #fff;
+    @apply bg-surface;
     background-image: repeating-linear-gradient(
       90deg,
-      rgba(14, 17, 22, 0.08) 0 2px,
+      rgb(var(--c-ink) / 0.08) 0 2px,
       transparent 2px 22px
     );
   }
 
   .grid-paper {
     background-image:
-      linear-gradient(rgba(14, 17, 22, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(14, 17, 22, 0.05) 1px, transparent 1px);
+      linear-gradient(rgb(var(--c-ink) / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--c-ink) / 0.05) 1px, transparent 1px);
     background-size: 32px 32px;
   }
 
   .surface-panel {
-    @apply border-2 border-ink bg-white;
+    @apply border-2 border-ink bg-surface;
   }
 
   .empty-state {
@@ -180,7 +219,7 @@
   }
 
   .form-control:focus {
-    @apply bg-white shadow-brutal-sm outline-none;
+    @apply bg-surface shadow-brutal-sm outline-none;
   }
 
   .form-control.is-invalid {
@@ -196,15 +235,20 @@
   }
 
   .alert-success {
-    @apply bg-white text-ink shadow-brutal-sm;
+    @apply bg-surface text-ink shadow-brutal-sm;
   }
 
   .alert-danger {
-    @apply bg-accent text-white shadow-brutal-sm;
+    @apply bg-accent text-on-accent shadow-brutal-sm;
   }
 
   .skeleton {
-    background: linear-gradient(90deg, rgba(14, 17, 22, 0.06), rgba(14, 17, 22, 0.14), rgba(14, 17, 22, 0.06));
+    background: linear-gradient(
+      90deg,
+      rgb(var(--c-ink) / 0.06),
+      rgb(var(--c-ink) / 0.14),
+      rgb(var(--c-ink) / 0.06)
+    );
     background-size: 200% 100%;
     @apply animate-skeleton-pulse border-2 border-ink/10;
   }

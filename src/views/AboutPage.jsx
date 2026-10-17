@@ -33,7 +33,7 @@ export default function AboutPage() {
           <p className="tag tag-light m-0">Frontend developer with broad development experience</p>
           <h3 className="mb-6 mt-6 text-[clamp(1.6rem,3vw,2.5rem)] font-bold leading-tight">
             Dynamic web applications that are clear, fast and{" "}
-            <span className="bg-accent px-1 text-white">easy to use.</span>
+            <span className="bg-accent px-1 text-on-accent">easy to use.</span>
           </h3>
           <div className="space-y-4 text-base leading-relaxed text-grey md:text-lg">
             <p className="m-0">
