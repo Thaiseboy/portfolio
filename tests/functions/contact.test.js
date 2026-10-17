@@ -40,7 +40,7 @@ describe("contact function", () => {
     const payload = JSON.parse(options.body);
     expect(payload.to).toEqual(["get_sarun@hotmail.com"]);
     expect(payload.reply_to).toBe("jane@example.com");
-    expect(payload.subject).toBe("Portfolio contact: Jane Doe");
+    expect(payload.subject).toBe("Nieuw bericht van Jane Doe via getdeveloper.nl");
   });
 
   it("uses the configured sender and recipient", async () => {

@@ -4,6 +4,7 @@ import {
   validateMessage,
   validateName,
 } from "../../src/utils/contactValidation.js";
+import { buildContactEmail } from "../emails/contactEmail.mjs";
 
 // Sends contact form messages through Resend. The API key stays on the server:
 // set RESEND_API_KEY (and optionally CONTACT_TO_EMAIL / CONTACT_FROM_EMAIL) in Netlify.
@@ -26,14 +27,6 @@ const json = (status, body) =>
     status,
     headers: { "Content-Type": "application/json" },
   });
-
-const escapeHtml = (value) =>
-  value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
 
 export async function handleContact(
   request,
@@ -84,6 +77,8 @@ export async function handleContact(
     });
   }
 
+  const mail = buildContactEmail({ name, email, message });
+
   const response = await fetchImpl(RESEND_URL, {
     method: "POST",
     headers: {
@@ -94,9 +89,9 @@ export async function handleContact(
       from: formatSender(env.CONTACT_FROM_EMAIL),
       to: [env.CONTACT_TO_EMAIL || DEFAULT_TO],
       reply_to: email,
-      subject: `Portfolio contact: ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-      html: `<p><strong>Name:</strong> ${escapeHtml(name)}<br><strong>Email:</strong> ${escapeHtml(email)}</p><p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>`,
+      subject: mail.subject,
+      text: mail.text,
+      html: mail.html,
     }),
   });
 
