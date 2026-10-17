@@ -1,5 +1,7 @@
+import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import {
+  useFormValidation,
   sanitizeInput,
   validateEmail,
   validateMessage,
@@ -31,5 +33,14 @@ describe("form validation helpers", () => {
     expect(sanitizeInput("<script>alert(\"xss\")</script>")).toBe("scriptalert(\"xss\")/script");
     expect(sanitizeInput("javascript:alert(\"xss\")")).toBe("alert(\"xss\")");
     expect(sanitizeInput("  normal text  ")).toBe("normal text");
+  });
+
+  it("validates the value just typed, not the previous render's form", () => {
+    // `form` is still empty, as it is in the same tick as onChange.
+    const { result } = renderHook(() => useFormValidation({ name: "", email: "", message: "" }));
+
+    act(() => result.current.validateField("message", "A pasted message that is long enough."));
+
+    expect(result.current.errors.message).toBe("");
   });
 });

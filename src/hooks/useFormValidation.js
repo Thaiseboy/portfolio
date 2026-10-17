@@ -6,12 +6,13 @@ export { sanitizeInput, validateEmail, validateMessage, validateName } from "@/u
 export function useFormValidation(form) {
   const [errors, setErrors] = useState({ name: "", email: "", message: "" });
 
-  const validateField = (field) => {
+  // Pass the new value from onChange: `form` still holds the previous one until the next render.
+  const validateField = (field, value = form[field]) => {
     setErrors((current) => {
       const next = { ...current };
-      if (field === "name") next.name = validateName(form.name);
-      if (field === "email") next.email = validateEmail(form.email);
-      if (field === "message") next.message = validateMessage(form.message);
+      if (field === "name") next.name = validateName(value);
+      if (field === "email") next.email = validateEmail(value);
+      if (field === "message") next.message = validateMessage(value);
       return next;
     });
   };

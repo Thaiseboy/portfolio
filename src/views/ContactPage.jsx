@@ -41,7 +41,7 @@ export default function ContactPage() {
     onBlur: () => validateField(field),
     onChange: (event) => {
       updateField(field, event.target.value);
-      validateField(field);
+      validateField(field, event.target.value);
     },
   });
 

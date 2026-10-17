@@ -13,6 +13,15 @@ const DEFAULT_TO = "get_sarun@hotmail.com";
 // Works without a verified domain, but Resend then only delivers to the account owner.
 const DEFAULT_FROM = "Portfolio <onboarding@resend.dev>";
 
+// Resend wants "email@x" or "Name <email@x>"; "<email@x>" or a bare address gets a display name.
+export function formatSender(value) {
+  const sender = (value || "").trim();
+  if (!sender) return DEFAULT_FROM;
+  if (/^[^<>]+<[^<>\s]+@[^<>\s]+>$/.test(sender)) return sender;
+  const address = sender.replace(/^<|>$/g, "").trim();
+  return `Portfolio <${address}>`;
+}
+
 const json = (status, body) =>
   new Response(JSON.stringify(body), {
     status,
@@ -69,7 +78,7 @@ export async function handleContact(request, env = process.env, fetchImpl = fetc
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: env.CONTACT_FROM_EMAIL || DEFAULT_FROM,
+      from: formatSender(env.CONTACT_FROM_EMAIL),
       to: [env.CONTACT_TO_EMAIL || DEFAULT_TO],
       reply_to: email,
       subject: `Portfolio contact: ${name}`,

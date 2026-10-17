@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from "vitest";
-import { handleContact } from "../../netlify/functions/contact.mjs";
+import { formatSender, handleContact } from "../../netlify/functions/contact.mjs";
 
 const post = (body) =>
   new Request("https://getdeveloper.nl/api/contact", {
@@ -47,6 +47,13 @@ describe("contact function", () => {
     const payload = JSON.parse(fetchImpl.mock.calls[0][1].body);
     expect(payload.to).toEqual(["me@getdeveloper.nl"]);
     expect(payload.from).toBe("Portfolio <contact@getdeveloper.nl>");
+  });
+
+  it("turns a sender without a display name into a valid from field", () => {
+    expect(formatSender("<contact@getdeveloper.nl>")).toBe("Portfolio <contact@getdeveloper.nl>");
+    expect(formatSender("contact@getdeveloper.nl")).toBe("Portfolio <contact@getdeveloper.nl>");
+    expect(formatSender("Get <contact@getdeveloper.nl>")).toBe("Get <contact@getdeveloper.nl>");
+    expect(formatSender("")).toBe("Portfolio <onboarding@resend.dev>");
   });
 
   it("ignores a recipient sent by the browser", async () => {
