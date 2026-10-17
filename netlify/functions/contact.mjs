@@ -13,13 +13,12 @@ const DEFAULT_TO = "get_sarun@hotmail.com";
 // Works without a verified domain, but Resend then only delivers to the account owner.
 const DEFAULT_FROM = "Portfolio <onboarding@resend.dev>";
 
-// Resend wants "email@x" or "Name <email@x>"; "<email@x>" or a bare address gets a display name.
+// Resend wants "email@x" or "Name <email@x>"; "<email@x>" is sent as the bare address.
 export function formatSender(value) {
   const sender = (value || "").trim();
   if (!sender) return DEFAULT_FROM;
   if (/^[^<>]+<[^<>\s]+@[^<>\s]+>$/.test(sender)) return sender;
-  const address = sender.replace(/^<|>$/g, "").trim();
-  return `Portfolio <${address}>`;
+  return sender.replace(/^<|>$/g, "").trim();
 }
 
 const json = (status, body) =>
@@ -36,7 +35,11 @@ const escapeHtml = (value) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-export async function handleContact(request, env = process.env, fetchImpl = fetch) {
+export async function handleContact(
+  request,
+  env = process.env,
+  fetchImpl = fetch,
+) {
   if (request.method !== "POST") {
     return json(405, { success: false, message: "Method not allowed." });
   }
@@ -50,7 +53,10 @@ export async function handleContact(request, env = process.env, fetchImpl = fetc
 
   // Honeypot: real visitors never see or fill this field.
   if (body?.website) {
-    return json(200, { success: true, message: "Thanks! Your message has been sent." });
+    return json(200, {
+      success: true,
+      message: "Thanks! Your message has been sent.",
+    });
   }
 
   const name = sanitizeInput(String(body?.name ?? ""));
@@ -63,12 +69,19 @@ export async function handleContact(request, env = process.env, fetchImpl = fetc
   };
 
   if (errors.name || errors.email || errors.message) {
-    return json(400, { success: false, message: "Please check the form fields.", errors });
+    return json(400, {
+      success: false,
+      message: "Please check the form fields.",
+      errors,
+    });
   }
 
   if (!env.RESEND_API_KEY) {
     console.error("RESEND_API_KEY is not set");
-    return json(500, { success: false, message: "Email is not configured yet." });
+    return json(500, {
+      success: false,
+      message: "Email is not configured yet.",
+    });
   }
 
   const response = await fetchImpl(RESEND_URL, {
@@ -89,10 +102,16 @@ export async function handleContact(request, env = process.env, fetchImpl = fetc
 
   if (!response.ok) {
     console.error("Resend error", response.status, await response.text());
-    return json(502, { success: false, message: "Sending failed. Please try again later." });
+    return json(502, {
+      success: false,
+      message: "Sending failed. Please try again later.",
+    });
   }
 
-  return json(200, { success: true, message: "Thanks! Your message has been sent." });
+  return json(200, {
+    success: true,
+    message: "Thanks! Your message has been sent.",
+  });
 }
 
 export default (request) => handleContact(request);
