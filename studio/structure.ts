@@ -1,5 +1,6 @@
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
 import {BoltIcon} from '@sanity/icons/Bolt'
+import {InboxIcon} from '@sanity/icons/Inbox'
 import {DocumentPdfIcon} from '@sanity/icons/DocumentPdf'
 import {ImagesIcon} from '@sanity/icons/Images'
 import {ProjectsIcon} from '@sanity/icons/Projects'
@@ -8,6 +9,26 @@ import {apiVersion} from './siteUrl'
 
 // Only one CV exists; it is opened directly instead of through a list.
 export const singletonTypes = new Set(['cv'])
+
+// Created by the website only: no "new" button, only delete.
+export const websiteTypes = new Set(['contactMessage'])
+
+function messageList(S: StructureBuilder, id: string, title: string, filter: string) {
+  return S.listItem()
+    .id(id)
+    .title(title)
+    .schemaType('contactMessage')
+    .child(
+      S.documentList()
+        .id(id)
+        .title(title)
+        .schemaType('contactMessage')
+        .apiVersion(apiVersion)
+        .filter(filter)
+        .defaultOrdering([{field: 'receivedAt', direction: 'desc'}])
+        .initialValueTemplates([]),
+    )
+}
 
 function skillList(S: StructureBuilder, id: string, title: string, level: string | null) {
   return S.listItem()
@@ -35,6 +56,25 @@ export const structure: StructureResolver = (S, context) =>
   S.list()
     .title('Inhoud')
     .items([
+      S.listItem()
+        .id('inbox')
+        .title('Inbox')
+        .icon(InboxIcon)
+        .child(
+          S.list()
+            .id('inbox')
+            .title('Inbox')
+            .items([
+              messageList(
+                S,
+                'inbox-unread',
+                'Ongelezen',
+                '_type == "contactMessage" && unread == true',
+              ),
+              messageList(S, 'inbox-all', 'Alle berichten', '_type == "contactMessage"'),
+            ]),
+        ),
+      S.divider(),
       S.listItem()
         .id('projects')
         .title('Projecten')

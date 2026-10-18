@@ -3,5 +3,15 @@ import project from './project'
 import contact from './contact'
 import aboutMePhotos from './about'
 import richText from './richText'
+import replyText from './replyText'
+import contactMessage from './contactMessage'
 
-export const schemaTypes = [project, skill, aboutMePhotos, contact, richText]
+export const schemaTypes = [
+  contactMessage,
+  project,
+  skill,
+  aboutMePhotos,
+  contact,
+  richText,
+  replyText,
+]

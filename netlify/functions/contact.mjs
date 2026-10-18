@@ -4,57 +4,48 @@ import {
   validateMessage,
   validateName,
 } from "../../src/utils/contactValidation.js";
+import { isUuid, messageId } from "../../studio/shared/replyRules.js";
 import { buildContactEmail } from "../emails/contactEmail.mjs";
+import {
+  json,
+  ownerAddress,
+  readJson,
+  sendMail,
+  studioMessageHref,
+  writeClient,
+} from "../lib/inbox.mjs";
 
-// Sends contact form messages through Resend. The API key stays on the server:
-// set RESEND_API_KEY (and optionally CONTACT_TO_EMAIL / CONTACT_FROM_EMAIL) in Netlify.
+export { formatSender } from "../lib/inbox.mjs";
 
-const RESEND_URL = "https://api.resend.com/emails";
-const DEFAULT_TO = "get_sarun@hotmail.com";
-// Works without a verified domain, but Resend then only delivers to the account owner.
-const DEFAULT_FROM = "Portfolio <onboarding@resend.dev>";
+// A contact form message: stored in the Studio inbox (with SANITY_WRITE_TOKEN) and mailed to Get
+// through Resend (RESEND_API_KEY). Either one is enough for the visitor to see "sent".
 
-// Resend wants "email@x" or "Name <email@x>"; "<email@x>" is sent as the bare address.
-export function formatSender(value) {
-  const sender = (value || "").trim();
-  if (!sender) return DEFAULT_FROM;
-  if (/^[^<>]+<[^<>\s]+@[^<>\s]+>$/.test(sender)) return sender;
-  return sender.replace(/^<|>$/g, "").trim();
-}
-
-const json = (status, body) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
+const SENT = { success: true, message: "Thanks! Your message has been sent." };
 
 export async function handleContact(
   request,
   env = process.env,
   fetchImpl = fetch,
+  client = writeClient(env),
 ) {
   if (request.method !== "POST") {
     return json(405, { success: false, message: "Method not allowed." });
   }
 
-  let body;
-  try {
-    body = await request.json();
-  } catch {
+  const body = await readJson(request);
+
+  if (!body) {
     return json(400, { success: false, message: "Invalid request." });
   }
 
   // Honeypot: real visitors never see or fill this field.
-  if (body?.website) {
-    return json(200, {
-      success: true,
-      message: "Thanks! Your message has been sent.",
-    });
+  if (body.website) {
+    return json(200, SENT);
   }
 
-  const name = sanitizeInput(String(body?.name ?? ""));
-  const email = sanitizeInput(String(body?.email ?? ""));
-  const message = sanitizeInput(String(body?.message ?? ""));
+  const name = sanitizeInput(String(body.name ?? ""));
+  const email = sanitizeInput(String(body.email ?? ""));
+  const message = sanitizeInput(String(body.message ?? ""));
   const errors = {
     name: validateName(name),
     email: validateEmail(email),
@@ -69,44 +60,61 @@ export async function handleContact(
     });
   }
 
-  if (!env.RESEND_API_KEY) {
-    console.error("RESEND_API_KEY is not set");
-    return json(500, {
-      success: false,
-      message: "Email is not configured yet.",
-    });
+  // The form's request id: a repeat after a timeout is stored and mailed once.
+  const id = messageId(
+    isUuid(body.requestId) ? body.requestId : crypto.randomUUID(),
+  );
+  const receivedAt = new Date();
+  let stored = false;
+
+  if (client) {
+    try {
+      await client.createIfNotExists({
+        _id: id,
+        _type: "contactMessage",
+        name,
+        email,
+        message,
+        receivedAt: receivedAt.toISOString(),
+        unread: true,
+      });
+      stored = true;
+    } catch (error) {
+      console.error(
+        "Message could not be stored",
+        error instanceof Error ? error.message : error,
+      );
+    }
   }
 
-  const mail = buildContactEmail({ name, email, message });
-
-  const response = await fetchImpl(RESEND_URL, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${env.RESEND_API_KEY}`,
-      "Content-Type": "application/json",
+  const mail = buildContactEmail({
+    name,
+    email,
+    message,
+    sentAt: receivedAt,
+    studioHref: stored ? studioMessageHref(id, env) : null,
+  });
+  const result = await sendMail(
+    {
+      ...mail,
+      to: [ownerAddress(env)],
+      replyTo: email,
+      idempotencyKey: `${id}-notify`,
     },
-    body: JSON.stringify({
-      from: formatSender(env.CONTACT_FROM_EMAIL),
-      to: [env.CONTACT_TO_EMAIL || DEFAULT_TO],
-      reply_to: email,
-      subject: mail.subject,
-      text: mail.text,
-      html: mail.html,
-    }),
-  });
+    env,
+    fetchImpl,
+  );
 
-  if (!response.ok) {
-    console.error("Resend error", response.status, await response.text());
-    return json(502, {
-      success: false,
-      message: "Sending failed. Please try again later.",
-    });
+  if (result.status === "sent" || stored) {
+    return json(200, SENT);
   }
 
-  return json(200, {
-    success: true,
-    message: "Thanks! Your message has been sent.",
-  });
+  return result.status === "notConfigured"
+    ? json(500, { success: false, message: "Email is not configured yet." })
+    : json(502, {
+        success: false,
+        message: "Sending failed. Please try again later.",
+      });
 }
 
 export default (request) => handleContact(request);
