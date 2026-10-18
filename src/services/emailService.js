@@ -1,58 +1,42 @@
+// The contact Netlify Function (netlify/functions/contact.mjs) sends the mail via Resend.
+const CONTACT_ENDPOINT = "/api/contact";
+
 export class EmailService {
   static async sendEmail(emailData) {
-    const apiUrl =
-      import.meta.env.VITE_EMAIL_API_URL ||
-      'https://formspree.io/f/YOUR_FORM_ID';
-    
     try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
+      const response = await fetch(CONTACT_ENDPOINT, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
         body: JSON.stringify({
           name: emailData.name,
           email: emailData.email,
           message: emailData.message,
-          subject: emailData.subject,
+          website: emailData.website,
         }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      // Without the function (plain `vite` dev server) this returns index.html, not JSON.
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok || !result?.success) {
+        throw new Error(
+          result?.message || `HTTP error! status: ${response.status}`,
+        );
       }
 
       return {
         success: true,
-        message: 'Email sent successfully!',
+        message: result.message,
       };
     } catch (error) {
-      console.error('Email sending failed:', error);
+      console.error("Email sending failed:", error);
       return {
         success: false,
-        message: 'Failed to send email. Please try again.',
-        error: error.message,
-      };
-    }
-  }
-
-  static async sendEmailWithMailto(emailData) {
-    try {
-      const emailBody = `Name: ${emailData.name}\nEmail: ${emailData.email}\nMessage: ${emailData.message}`;
-      const mailtoUrl = `mailto:${emailData.to}?subject=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailBody)}`;
-      
-      window.location.href = mailtoUrl;
-      
-      return {
-        success: true,
-        message: 'Email client opened successfully!',
-      };
-    } catch (error) {
-      console.error('Mailto failed:', error);
-      return {
-        success: false,
-        message: 'Failed to open email client.',
+        message:
+          "Failed to send your message. Please try again, or reach me on LinkedIn.",
         error: error.message,
       };
     }

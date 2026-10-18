@@ -1,42 +1,48 @@
-export default {
+import {defineField, defineType} from 'sanity'
+import {BoltIcon} from '@sanity/icons/Bolt'
+
+export const skillLevels = [
+  {title: 'Beginner', value: 'beginner'},
+  {title: 'Intermediate', value: 'intermediate'},
+  {title: 'Advanced', value: 'advanced'},
+]
+
+export default defineType({
   name: 'skill',
   title: 'Skill',
   type: 'document',
+  icon: BoltIcon,
   fields: [
-    {
+    defineField({
       name: 'name',
-      title: 'Name',
+      title: 'Naam',
+      description: 'De naam van de vaardigheid, bijv. React of Laravel.',
       type: 'string',
-      description: 'De naam van de vaardigheid (bijv. HTML, CSS, JavaScript).',
-    },
-    {
+      validation: (rule) => rule.required().error('Vul een naam in.'),
+    }),
+    defineField({
       name: 'level',
-      title: 'Level',
+      title: 'Niveau',
+      description: 'Op de site als 1, 2 of 3 rode blokjes.',
       type: 'string',
-      description: 'Het niveau van de vaardigheid (bijv. beginner, intermediate, advanced).',
-      options: {
-        list: [
-          {title: 'Beginner', value: 'beginner'},
-          {title: 'Intermediate', value: 'intermediate'},
-          {title: 'Advanced', value: 'advanced'},
-        ],
-        layout: 'radio', 
-      },
-    },
-    {
+      options: {list: skillLevels, layout: 'radio', direction: 'horizontal'},
+      initialValue: 'intermediate',
+      validation: (rule) => rule.required().error('Kies een niveau.'),
+    }),
+    defineField({
       name: 'logo',
       title: 'Logo',
+      description: 'Liefst een vierkant logo met transparante of witte achtergrond.',
       type: 'image',
-      options: {
-        hotspot: true, 
-      },
-      description: 'Upload het logo van de vaardigheid.',
-    },
+      options: {hotspot: true},
+    }),
   ],
+  orderings: [{title: 'Naam (A–Z)', name: 'nameAsc', by: [{field: 'name', direction: 'asc'}]}],
   preview: {
-    select: {
-      title: 'name',
-      media: 'logo',
+    select: {title: 'name', level: 'level', media: 'logo'},
+    prepare({title, level, media}) {
+      const label = skillLevels.find((option) => option.value === level)?.title
+      return {title: title || 'Naamloze skill', subtitle: label ?? 'Geen niveau', media}
     },
   },
-}
+})

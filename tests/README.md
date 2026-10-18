@@ -41,12 +41,13 @@ npm test tests/basic.test.js
 ## Writing Tests
 
 Basic test structure:
-```javascript
-import { describe, it, expect } from 'vitest'
 
-describe('Component Name', () => {
-  it('should do something', () => {
-    expect(true).toBe(true)
-  })
-})
+```javascript
+import { describe, it, expect } from "vitest";
+
+describe("Component Name", () => {
+  it("should do something", () => {
+    expect(true).toBe(true);
+  });
+});
 ```

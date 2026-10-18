@@ -1,5 +1,7 @@
+import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import {
+  useFormValidation,
   sanitizeInput,
   validateEmail,
   validateMessage,
@@ -10,8 +12,12 @@ describe("form validation helpers", () => {
   it("validates names", () => {
     expect(validateName("")).toBe("Name is required");
     expect(validateName("a")).toBe("Name must be at least 2 characters long");
-    expect(validateName("a".repeat(51))).toBe("Name must be less than 50 characters");
-    expect(validateName("123")).toBe("Name can only contain letters, spaces, hyphens, and apostrophes");
+    expect(validateName("a".repeat(51))).toBe(
+      "Name must be less than 50 characters",
+    );
+    expect(validateName("123")).toBe(
+      "Name can only contain letters, spaces, hyphens, and apostrophes",
+    );
     expect(validateName("John Doe")).toBe("");
   });
 
@@ -23,13 +29,33 @@ describe("form validation helpers", () => {
 
   it("validates message", () => {
     expect(validateMessage("")).toBe("Message is required");
-    expect(validateMessage("short")).toBe("Message must be at least 10 characters long");
+    expect(validateMessage("short")).toBe(
+      "Message must be at least 10 characters long",
+    );
     expect(validateMessage("This is a valid message")).toBe("");
   });
 
   it("sanitizes input", () => {
-    expect(sanitizeInput("<script>alert(\"xss\")</script>")).toBe("scriptalert(\"xss\")/script");
-    expect(sanitizeInput("javascript:alert(\"xss\")")).toBe("alert(\"xss\")");
+    expect(sanitizeInput('<script>alert("xss")</script>')).toBe(
+      'scriptalert("xss")/script',
+    );
+    expect(sanitizeInput('javascript:alert("xss")')).toBe('alert("xss")');
     expect(sanitizeInput("  normal text  ")).toBe("normal text");
+  });
+
+  it("validates the value just typed, not the previous render's form", () => {
+    // `form` is still empty, as it is in the same tick as onChange.
+    const { result } = renderHook(() =>
+      useFormValidation({ name: "", email: "", message: "" }),
+    );
+
+    act(() =>
+      result.current.validateField(
+        "message",
+        "A pasted message that is long enough.",
+      ),
+    );
+
+    expect(result.current.errors.message).toBe("");
   });
 });

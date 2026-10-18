@@ -1,36 +1,36 @@
 version: 2
 
+# Monthly, with minor and patch updates bundled into one PR per ecosystem,
+# so CI does not run for every single package bump.
 updates:
-  # Enable version updates for npm/pnpm
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
-    open-pull-requests-limit: 5
-    reviewers:
-      - "mastersupakonkaranyawad"
+      interval: "monthly"
+    open-pull-requests-limit: 3
     labels:
       - "dependencies"
-      - "automated"
     commit-message:
       prefix: "chore"
       include: "scope"
     versioning-strategy: increase
+    groups:
+      npm-minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
 
-  # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
-    open-pull-requests-limit: 3
+      interval: "monthly"
+    open-pull-requests-limit: 2
     labels:
       - "dependencies"
-      - "ci/cd"
-      - "automated"
     commit-message:
       prefix: "chore"
       include: "scope"
+    groups:
+      github-actions:
+        patterns:
+          - "*"

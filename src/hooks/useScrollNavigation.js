@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 
+// A section is active while it crosses a thin line just above the middle of the
+// viewport. Unlike a ratio threshold, this also works for sections taller than the screen.
+const MIDDLE_LINE = "-45% 0px -54% 0px";
+
 export function useScrollNavigation(sectionIds, options = {}) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const threshold = options.threshold ?? 0.55;
+  const rootMargin = options.rootMargin ?? MIDDLE_LINE;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -13,7 +17,7 @@ export function useScrollNavigation(sectionIds, options = {}) {
           if (foundIndex !== -1) setCurrentIndex(foundIndex);
         });
       },
-      { threshold }
+      { rootMargin, threshold: 0 }
     );
 
     sectionIds.forEach((id) => {
@@ -22,7 +26,7 @@ export function useScrollNavigation(sectionIds, options = {}) {
     });
 
     return () => observer.disconnect();
-  }, [sectionIds, threshold]);
+  }, [sectionIds, rootMargin]);
 
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });

@@ -6,6 +6,8 @@ const initialForm = {
   name: "",
   email: "",
   message: "",
+  // Honeypot field, hidden from visitors; bots fill it in.
+  website: "",
 };
 
 export function useContactForm() {
@@ -26,7 +28,7 @@ export function useContactForm() {
     setSubmitError("");
   };
 
-  const submitForm = async (emailAddress = "get_sarun@hotmail.com") => {
+  const submitForm = async () => {
     const isValid = validation.validateAllFields();
     if (!isValid) return false;
 
@@ -35,23 +37,18 @@ export function useContactForm() {
     setSubmitError("");
 
     try {
-      const sanitizedName = sanitizeInput(form.name);
-      const emailData = {
-        name: sanitizedName,
+      const result = await EmailService.sendEmail({
+        name: sanitizeInput(form.name),
         email: sanitizeInput(form.email),
         message: sanitizeInput(form.message),
-        to: emailAddress,
-        subject: `Portfolio Contact: ${sanitizedName}`,
-      };
-
-      const hasEmailApi = Boolean(import.meta.env.VITE_EMAIL_API_URL);
-      const result = hasEmailApi
-        ? await EmailService.sendEmail(emailData)
-        : await EmailService.sendEmailWithMailto(emailData);
+        website: form.website,
+      });
 
       if (result.success) {
+        // Clear the fields but keep the confirmation visible (resetForm would clear it too).
+        setForm(initialForm);
+        validation.clearErrors();
         setSubmitMessage(result.message);
-        resetForm();
         return true;
       }
 

@@ -1,67 +1,85 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { useScrollNavigation } from "@/hooks/useScrollNavigation";
 
 const navItems = [
-  { id: "home", icon: "house-door", label: "Home" },
-  { id: "about", icon: "person", label: "About" },
-  { id: "skills", icon: "tools", label: "Skills" },
-  { id: "project", icon: "folder2-open", label: "Project" },
-  { id: "contact", icon: "envelope", label: "Contact" },
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "skills", label: "Skills" },
+  { id: "project", label: "Projects" },
 ];
 
-const sectionIds = navItems.map((item) => item.id);
+const sectionIds = [...navItems.map((item) => item.id), "contact"];
 
 export default function AppNavigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { goNext, goPrev } = useScrollNavigation(sectionIds);
+  const { currentIndex } = useScrollNavigation(sectionIds);
+  const activeId = sectionIds[currentIndex];
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setIsMenuOpen((open) => !open)}
-        className={`hamburger-btn fixed top-4 left-6 z-[1001] ${isMenuOpen ? "is-open" : ""}`}
-        aria-label="Toggle menu"
-      >
-        <span className="hamburger-line" />
-        <span className="hamburger-line" />
-        <span className="hamburger-line" />
-      </button>
-
-      <nav
-        className={`fixed left-6 z-[1000] transition-all ${
-          isMenuOpen
-            ? "top-20 opacity-100 visible duration-700 ease-out"
-            : "-top-10 opacity-0 invisible duration-500 ease-in"
-        }`}
-      >
-        <ul className="flex justify-center items-center list-none m-0 p-0 gap-4 md:gap-3 sm:gap-2.5">
-          {navItems.map((item, index) => (
-            <li
-              key={item.id}
-              className={`nav-item ${isMenuOpen ? "nav-item-show" : ""}`}
-              style={{
-                transitionDelay: isMenuOpen ? `${index * 0.08}s` : "0s",
-                animationDelay: isMenuOpen ? `${index * 0.08}s` : "0s",
-              }}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <a className="nav-link nav-link-icon" href={`#${item.id}`} aria-label={item.label}>
-                <i className={`bi bi-${item.icon} nav-icon`} />
-              </a>
-            </li>
-          ))}
-        </ul>
+      <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
+        {navItems.map((item) => (
+          <a
+            key={item.id}
+            href={`#${item.id}`}
+            className={`nav-link ${activeId === item.id ? "is-active" : ""}`}
+          >
+            {item.label}
+          </a>
+        ))}
+        <a href="#contact" className="btn btn-accent px-4 py-2.5">
+          Get in touch
+        </a>
       </nav>
 
-      <div className="fixed bottom-6 right-6 z-[1000] flex flex-col gap-3 max-[640px]:right-4 max-[640px]:bottom-4">
-        <button type="button" onClick={goPrev} className="btn-scroll-glass" aria-label="Previous section">
-          <i className="bi bi-chevron-up text-2xl" />
-        </button>
-        <button type="button" onClick={goNext} className="btn-scroll-glass" aria-label="Next section">
-          <i className="bi bi-chevron-down text-2xl" />
-        </button>
-      </div>
+      <button
+        type="button"
+        className="btn btn-ghost px-3 py-2 md:hidden"
+        aria-expanded={isMenuOpen}
+        aria-controls="mobile-menu"
+        onClick={() => setIsMenuOpen((open) => !open)}
+      >
+        {isMenuOpen ? "Close" : "Menu"}
+      </button>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.nav
+            id="mobile-menu"
+            aria-label="Main"
+            className="absolute inset-x-0 top-full border-b-2 border-ink bg-paper md:hidden"
+            initial={{ clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={{ clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <ul className="container m-0 flex list-none flex-col gap-1 py-6">
+              {[...navItems, { id: "contact", label: "Contact" }].map(
+                (item, index) => (
+                  <motion.li
+                    key={item.id}
+                    initial={{ opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.08 + index * 0.05 }}
+                  >
+                    <a
+                      href={`#${item.id}`}
+                      className="flex items-baseline gap-4 py-2 text-3xl font-bold uppercase text-ink no-underline"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <span className="font-mono text-xs text-accent">
+                        0{index + 1}
+                      </span>
+                      {item.label}
+                    </a>
+                  </motion.li>
+                ),
+              )}
+            </ul>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </>
   );
 }
