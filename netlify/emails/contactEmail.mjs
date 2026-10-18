@@ -289,7 +289,7 @@ export function buildReplyEmail({
         ? `<div style="margin:12px 0 0;">${label("Your message")}${quote(original).replace("margin:0 0 28px", "margin:0")}</div>`
         : "",
     ].join("\n"),
-    footer: `Get Karanyawad &middot; frontend developer &middot; <a href="https://getdeveloper.nl" style="color:${COLORS.accent};">getdeveloper.nl</a>`,
+    footer: `Get Karanyawad &middot; Web developer &middot; <a href="https://getdeveloper.nl" style="color:${COLORS.accent};">getdeveloper.nl</a>`,
   });
 
   const text = [
@@ -298,7 +298,7 @@ export function buildReplyEmail({
     ...(original ? ["", "--- Your message ---", original] : []),
     "",
     "--",
-    "Get Karanyawad · frontend developer · getdeveloper.nl",
+    "Get Karanyawad · Web developer · getdeveloper.nl",
   ].join("\n");
 
   return { subject, html, text };
