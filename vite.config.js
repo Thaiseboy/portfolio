@@ -21,6 +21,10 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    // The functions run under `netlify dev` (port 8888, see netlify.toml), so /api also works on :5173.
+    server: {
+      proxy: { "/api": "http://localhost:8888" },
+    },
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
