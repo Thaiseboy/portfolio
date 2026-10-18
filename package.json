@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "vite --host 0.0.0.0",
+    "netlify": "pnpm --package=netlify-cli@27.13.0 dlx netlify",
+    "dev:netlify": "pnpm --package=netlify-cli@27.13.0 dlx netlify dev",
     "serve": "vite --host 0.0.0.0",
     "build": "vite build",
     "build:studio": "pnpm --dir studio install --frozen-lockfile && pnpm --dir studio exec sanity build ../dist/studio -y",

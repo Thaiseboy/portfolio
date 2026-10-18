@@ -29,6 +29,14 @@
   [context.branch-deploy.environment]
     NODE_ENV = "production"
 
+# Local testing: `pnpm dev:netlify` runs Vite with the functions on http://localhost:8888.
+[dev]
+  command = "pnpm run dev"
+  targetPort = 5173
+  port = 8888
+  framework = "#custom"
+  autoLaunch = false
+
 [functions]
   directory = "netlify/functions"
   # Bundles the shared files (studio/shared, netlify/lib) and @sanity/client into each function.

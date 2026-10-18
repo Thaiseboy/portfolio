@@ -25,3 +25,6 @@ pnpm-debug.log*
 *.sw?
 coverage/
 .claude/
+
+# Local Netlify folder
+.netlify

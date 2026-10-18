@@ -129,8 +129,8 @@ describe("inbox reply", () => {
     const first = await handleReply(replyRequest(send), env, fetchImpl, client);
     const again = await handleReply(replyRequest(send), env, fetchImpl, client);
 
-    expect(await first.json()).toEqual({ status: "sent" });
-    expect(await again.json()).toEqual({ status: "sent" });
+    expect(await first.json()).toEqual({ status: "sent", to: "jane@example.com" });
+    expect(await again.json()).toEqual({ status: "sent", to: "jane@example.com" });
     expect(resendCalls(fetchImpl)).toHaveLength(1);
 
     const [, options] = resendCalls(fetchImpl)[0];
@@ -150,12 +150,12 @@ describe("inbox reply", () => {
   it("records a failure and may be sent again with the same key", async () => {
     const client = fakeSanity({ docs: message(), assets });
     const failed = await handleReply(replyRequest(send), env, fakeFetch({ resendStatus: 500 }), client);
-    expect(await failed.json()).toEqual({ status: "failed" });
+    expect(await failed.json()).toEqual({ status: "failed", to: "jane@example.com" });
     expect(client.store[ID].replies[0].status).toBe("failed");
 
     const fetchImpl = fakeFetch();
     const retry = await handleReply(replyRequest(send), env, fetchImpl, client);
-    expect(await retry.json()).toEqual({ status: "sent" });
+    expect(await retry.json()).toEqual({ status: "sent", to: "jane@example.com" });
     expect(client.store[ID].replies).toHaveLength(1);
     expect(resendCalls(fetchImpl)[0][1].headers["Idempotency-Key"]).toBe(`${ID}-reply-${KEY}`);
   });
@@ -164,7 +164,7 @@ describe("inbox reply", () => {
     const client = fakeSanity({ docs: message(), assets });
     client.conflicts = 1;
     const response = await handleReply(replyRequest(send), env, fakeFetch(), client);
-    expect(await response.json()).toEqual({ status: "sent" });
+    expect(await response.json()).toEqual({ status: "sent", to: "jane@example.com" });
     expect(client.store[ID].replies).toHaveLength(1);
   });
 
@@ -229,5 +229,47 @@ describe("visitor reaction", () => {
     const honeypot = await handleReaction(post({ ...link(), message: "spam", requestId: KEY, website: "x" }), env, fakeFetch(), client);
     expect(honeypot.status).toBe(200);
     expect(client.store[ID].replies).toHaveLength(10);
+  });
+});
+
+describe("test environments", () => {
+  const send = { id: ID, subject: "Re: your message", body, files: [], photos: [], key: KEY };
+
+  it("sends replies to Get in deploy previews and under netlify dev, to the visitor in production", async () => {
+    const cases = [
+      [{ ...env, CONTEXT: "deploy-preview", DEPLOY_PRIME_URL: "https://deploy-preview-51--thaiseboy.netlify.app" }, "get_sarun@hotmail.com", true],
+      [{ ...env, CONTEXT: "dev", NETLIFY_DEV: "true" }, "get_sarun@hotmail.com", true],
+      [{ ...env, CONTEXT: "production" }, "jane@example.com", false],
+      // Without a known context it counts as production: visitors must never miss a reply.
+      [{ ...env, CONTEXT: undefined }, "jane@example.com", false],
+    ];
+
+    for (const [testEnv, expectedTo, isTest] of cases) {
+      const client = fakeSanity({ docs: message(), assets });
+      const fetchImpl = fakeFetch();
+      const response = await handleReply(replyRequest(send), testEnv, fetchImpl, client);
+
+      expect(await response.json()).toEqual({ status: "sent", to: expectedTo });
+      const payload = JSON.parse(resendCalls(fetchImpl)[0][1].body);
+      expect(payload.to).toEqual([expectedTo]);
+      expect(payload.subject.startsWith("[TEST → jane@example.com] ")).toBe(isTest);
+    }
+  });
+
+  it("lets only the local Studio call the reply function, and only under netlify dev", async () => {
+    const { default: handler } = await import("../../netlify/functions/inbox-reply.mjs");
+    const preflight = (origin) =>
+      new Request("http://localhost:8888/api/inbox-reply", { method: "OPTIONS", headers: { Origin: origin } });
+
+    process.env.NETLIFY_DEV = "true";
+    try {
+      const local = await handler(preflight("http://localhost:3333"));
+      const other = await handler(preflight("https://evil.example"));
+      expect(local.status).toBe(204);
+      expect(local.headers.get("access-control-allow-origin")).toBe("http://localhost:3333");
+      expect(other.headers.get("access-control-allow-origin")).toBeNull();
+    } finally {
+      delete process.env.NETLIFY_DEV;
+    }
   });
 });

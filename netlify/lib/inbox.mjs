@@ -38,14 +38,53 @@ export function sanityProject(env = process.env) {
 }
 
 /** Production links point to the real domain; deploy previews to their own URL. */
+/** Under `netlify dev` (local testing): the site on 8888, the Studio on its own dev server. */
+export const LOCAL_SITE_URL = "http://localhost:8888";
+export const LOCAL_STUDIO_ORIGIN = "http://localhost:3333";
+const isLocal = (env) => env.NETLIFY_DEV === "true";
+
 export function siteUrl(env = process.env) {
+  if (isLocal(env)) return LOCAL_SITE_URL;
   const url =
     env.CONTEXT === "production" ? env.URL : env.DEPLOY_PRIME_URL || env.URL;
   return (url || "https://getdeveloper.nl").replace(/\/+$/, "");
 }
 
 export function studioMessageHref(id, env = process.env) {
-  return `${siteUrl(env)}/studio/intent/edit/id=${encodeURIComponent(id)};type=${MESSAGE_TYPE}`;
+  const studio = isLocal(env) ? LOCAL_STUDIO_ORIGIN : siteUrl(env);
+  return `${studio}/studio/intent/edit/id=${encodeURIComponent(id)};type=${MESSAGE_TYPE}`;
+}
+
+/**
+ * Lets the local Studio (localhost:3333) call a function under `netlify dev`; online the Studio is on
+ * the same domain and nothing changes. The Studio login is still checked with Sanity either way.
+ */
+export function withLocalStudioCors(handler, env = process.env) {
+  return async (request) => {
+    const allowed =
+      isLocal(env) && request.headers.get("origin") === LOCAL_STUDIO_ORIGIN;
+    const cors = allowed
+      ? {
+          "Access-Control-Allow-Origin": LOCAL_STUDIO_ORIGIN,
+          "Access-Control-Allow-Headers": "Authorization, Content-Type",
+          "Access-Control-Allow-Methods": "POST, OPTIONS",
+          Vary: "Origin",
+        }
+      : null;
+
+    if (request.method === "OPTIONS")
+      return new Response(null, {
+        status: cors ? 204 : 405,
+        headers: cors ?? {},
+      });
+
+    const response = await handler(request);
+    if (cors)
+      Object.entries(cors).forEach(([name, value]) =>
+        response.headers.set(name, value),
+      );
+    return response;
+  };
 }
 
 /** Null without SANITY_WRITE_TOKEN: then messages are only mailed, not stored. */
@@ -129,6 +168,28 @@ export async function sendMail(mail, env = process.env, fetchImpl = fetch) {
 /** The address mail to Get goes to. */
 export function ownerAddress(env = process.env) {
   return env.CONTACT_TO_EMAIL || "get_sarun@hotmail.com";
+}
+
+/**
+ * Local testing and deploy previews never mail a visitor: replies go to Get instead. Only these
+ * explicit contexts count as a test; anything else (also a missing CONTEXT) sends for real.
+ */
+export function isTestMode(env = process.env) {
+  return (
+    env.NETLIFY_DEV === "true" ||
+    ["deploy-preview", "branch-deploy", "dev"].includes(env.CONTEXT)
+  );
+}
+
+/** Where a reply to `visitor` goes, and its subject, in this environment. */
+export function replyRecipient(visitor, subject, env = process.env) {
+  return isTestMode(env)
+    ? {
+        to: ownerAddress(env),
+        subject: `[TEST → ${visitor}] ${subject}`,
+        test: true,
+      }
+    : { to: visitor, subject, test: false };
 }
 
 // --- Studio user -------------------------------------------------------------------------------

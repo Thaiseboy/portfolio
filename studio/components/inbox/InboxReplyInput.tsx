@@ -12,9 +12,15 @@ import {apiVersion} from '../../siteUrl'
 
 const SUGGESTED_SUBJECT = 'Re: your message via getdeveloper.nl'
 const REQUEST_TIMEOUT_MS = 60_000
+// Online the functions are on the Studio's own domain; under `sanity dev` studio/.env points to
+// `netlify dev`. A build ignores it, so a local build never calls localhost.
+const API_BASE = import.meta.env.DEV ? (import.meta.env.SANITY_STUDIO_API_URL ?? '') : ''
+// Locally and in deploy previews the website sends replies to Get, not to the visitor.
+const IS_TEST = typeof window !== 'undefined' && window.location.hostname !== 'getdeveloper.nl'
 
 type Preview = {
   to: string
+  test?: boolean
   subject: string
   html: string
   attachments: {filename: string; size: number}[]
@@ -70,11 +76,12 @@ async function feedbackOf(response: Response, to: string): Promise<Feedback> {
   const result = (await response.json().catch(() => null)) as {
     status?: string
     error?: string
+    to?: string
   } | null
 
   if (response.ok) {
     return result?.status === 'sent'
-      ? {tone: 'positive', text: `Verzonden naar ${to}.`, keepKey: false}
+      ? {tone: 'positive', text: `Verzonden naar ${result.to ?? to}.`, keepKey: false}
       : result?.status === 'notConfigured'
         ? {
             tone: 'critical',
@@ -164,7 +171,7 @@ export function InboxReplyInput(props: ObjectInputProps) {
     }
 
     try {
-      return await fetch('/api/inbox-reply', {
+      return await fetch(`${API_BASE}/api/inbox-reply`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Authorization: `Bearer ${token}`},
         body: JSON.stringify({id, subject, body: draft.body ?? [], files, photos, ...extra}),
@@ -203,7 +210,11 @@ export function InboxReplyInput(props: ObjectInputProps) {
   const sendButton = (
     <Button
       icon={EnvelopeIcon}
-      text={busy === 'send' ? 'Wordt verstuurd…' : `Versturen naar ${email}`}
+      text={
+        busy === 'send'
+          ? 'Wordt verstuurd…'
+          : `Versturen naar ${preview?.to ?? (IS_TEST ? 'je eigen adres (test)' : email)}`
+      }
       tone="primary"
       disabled={busy !== null}
       onClick={send}
@@ -220,6 +231,14 @@ export function InboxReplyInput(props: ObjectInputProps) {
       <Text size={1}>
         <strong>Aan:</strong> {email || '–'}
       </Text>
+      {IS_TEST && (
+        <Card tone="caution" padding={3} radius={2} border>
+          <Text size={1}>
+            <strong>Testomgeving:</strong> antwoorden gaan naar je eigen adres, niet naar de
+            bezoeker. Het onderwerp begint dan met [TEST → {email || 'bezoeker'}].
+          </Text>
+        </Card>
+      )}
       {!subject && (
         <Box>
           <Button
@@ -281,7 +300,7 @@ export function InboxReplyInput(props: ObjectInputProps) {
         >
           <Box padding={4}>
             <Text size={2}>
-              &lsquo;{subject}&rsquo; versturen naar {email}
+              &lsquo;{subject}&rsquo; versturen naar {IS_TEST ? 'je eigen adres (test)' : email}
               {extras ? `, met ${extras}` : ''}?
             </Text>
           </Box>

@@ -22,7 +22,9 @@ import {
   ownerAddress,
   reactionHref,
   readJson,
+  replyRecipient,
   sendMail,
+  withLocalStudioCors,
   writeClient,
 } from "../lib/inbox.mjs";
 
@@ -211,6 +213,9 @@ export async function handleReply(
       original: message.message,
     });
 
+    // Local testing and deploy previews send to Get, never to the visitor.
+    const recipient = replyRecipient(message.email, mail.subject, env);
+
     if (reply.preview) {
       // Photos straight from the Sanity CDN, so the Studio can show them without attachments.
       const html = assets.reduce(
@@ -221,8 +226,9 @@ export async function handleReply(
         mail.html,
       );
       return json(200, {
-        to: message.email,
-        subject: mail.subject,
+        to: recipient.to,
+        test: recipient.test,
+        subject: recipient.subject,
         html,
         attachments: assets
           .filter((asset) => !asset.contentId)
@@ -239,7 +245,8 @@ export async function handleReply(
       const existing = current.replies?.find((item) => item._key === reply.key);
       const now = new Date().toISOString();
 
-      if (existing?.status === "sent") return json(200, { status: "sent" });
+      if (existing?.status === "sent")
+        return json(200, { status: "sent", to: existing.to });
 
       if (
         existing?.status === "pending" &&
@@ -273,8 +280,8 @@ export async function handleReply(
                 createdAt: now,
                 lastAttemptAt: now,
                 sentBy: user.name,
-                to: message.email,
-                subject: reply.subject,
+                to: recipient.to,
+                subject: recipient.subject,
                 body: reply.body,
                 message: plain,
                 files: references("file", reply.files),
@@ -297,7 +304,8 @@ export async function handleReply(
       result = await sendMail(
         {
           ...mail,
-          to: [message.email],
+          subject: recipient.subject,
+          to: [recipient.to],
           // Visitors answer Get directly; contact@ cannot receive mail.
           replyTo: ownerAddress(env),
           attachments,
@@ -342,7 +350,7 @@ export async function handleReply(
       }
     }
 
-    return json(200, { status: result.status });
+    return json(200, { status: result.status, to: recipient.to });
   } catch (error) {
     console.error(
       "Inbox reply could not be processed",
@@ -352,4 +360,4 @@ export async function handleReply(
   }
 }
 
-export default (request) => handleReply(request);
+export default withLocalStudioCors((request) => handleReply(request));
