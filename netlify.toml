@@ -31,6 +31,8 @@
 
 [functions]
   directory = "netlify/functions"
+  # Bundles the shared files (studio/shared, netlify/lib) and @sanity/client into each function.
+  node_bundler = "esbuild"
 
 # Redirect rules
 # The contact form posts to /api/contact (netlify/functions/contact.mjs).
@@ -57,6 +59,12 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# The reaction page is reached only through a personal link.
+[[headers]]
+  for = "/reply"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
 
 # Cache static assets
 [[headers]]

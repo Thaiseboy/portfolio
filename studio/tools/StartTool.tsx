@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react'
 import {AddIcon} from '@sanity/icons/Add'
 import {DocumentPdfIcon} from '@sanity/icons/DocumentPdf'
 import {HomeIcon} from '@sanity/icons/Home'
+import {InboxIcon} from '@sanity/icons/Inbox'
 import {ImagesIcon} from '@sanity/icons/Images'
 import {LaunchIcon} from '@sanity/icons/Launch'
 import {Box, Button, Card, Container, Flex, Grid, Heading, Stack, Text} from '@sanity/ui'
@@ -9,12 +10,13 @@ import {useClient, type Tool} from 'sanity'
 import {useRouter} from 'sanity/router'
 import {apiVersion, SITE_URL} from '../siteUrl'
 
-type Counts = {projects: number; skills: number; photos: number; hasCv: boolean}
+type Counts = {projects: number; skills: number; photos: number; unread: number; hasCv: boolean}
 
 const COUNTS_QUERY = `{
   "projects": count(*[_type == "project" && !(_id in path("drafts.**"))]),
   "skills": count(*[_type == "skill" && !(_id in path("drafts.**"))]),
   "photos": count(*[_type == "aboutMePhotos" && !(_id in path("drafts.**"))]),
+  "unread": count(*[_type == "contactMessage" && unread == true]),
   "hasCv": count(*[_type == "cv" && defined(cvFile.asset)]) > 0
 }`
 
@@ -42,6 +44,12 @@ function StartScreen() {
     {label: 'Projecten', value: counts?.projects, path: 'projects'},
     {label: 'Skills', value: counts?.skills, path: 'skills;skills-all'},
     {label: "Foto's", value: counts?.photos, path: 'photos'},
+    {
+      label: 'Ongelezen e-mails',
+      value: counts?.unread,
+      path: 'inbox;inbox-unread',
+      highlight: Boolean(counts?.unread),
+    },
   ]
 
   return (
@@ -55,6 +63,15 @@ function StartScreen() {
             Wat wil je doen?
           </Text>
         </Stack>
+
+        <Button
+          icon={InboxIcon}
+          text={counts?.unread ? `Inbox (${counts.unread} ongelezen)` : 'Inbox'}
+          tone={counts?.unread ? 'caution' : 'primary'}
+          fontSize={3}
+          padding={5}
+          onClick={() => open('inbox;inbox-all')}
+        />
 
         <Grid gridTemplateColumns={[1, 1, 2]} gap={4}>
           <Button
@@ -103,7 +120,7 @@ function StartScreen() {
           />
         </Grid>
 
-        <Grid gridTemplateColumns={3} gap={3}>
+        <Grid gridTemplateColumns={[2, 2, 4]} gap={3}>
           {stats.map((stat) => (
             <Card
               key={stat.label}
@@ -111,6 +128,7 @@ function StartScreen() {
               padding={4}
               radius={3}
               shadow={1}
+              tone={stat.highlight ? 'caution' : 'default'}
               onClick={() => open(stat.path)}
               style={{cursor: 'pointer', textAlign: 'left'}}
             >

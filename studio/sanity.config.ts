@@ -4,7 +4,7 @@ import {visionTool} from '@sanity/vision'
 import {codeInput} from '@sanity/code-input'
 import {nlNLLocale} from '@sanity/locale-nl-nl'
 import {schemaTypes} from './schemaTypes'
-import {singletonTypes, structure} from './structure'
+import {singletonTypes, structure, websiteTypes} from './structure'
 import {startTool} from './tools/StartTool'
 import {ViewOnSiteAction} from './actions/ViewOnSiteAction'
 
@@ -33,7 +33,9 @@ export default defineConfig({
     types: schemaTypes,
     // No "new CV" template: the structure opens the one CV directly.
     templates: (templates) => [
-      ...templates.filter(({schemaType}) => !singletonTypes.has(schemaType)),
+      ...templates.filter(
+        ({schemaType}) => !singletonTypes.has(schemaType) && !websiteTypes.has(schemaType),
+      ),
       {
         id: 'skill-with-level',
         title: 'Skill met niveau',
@@ -45,13 +47,16 @@ export default defineConfig({
   },
 
   document: {
+    // Messages come from the contact form: they are only deleted, by hand.
     actions: (actions, {schemaType}) =>
-      singletonTypes.has(schemaType)
-        ? [
-            ...actions.filter(({action}) => action && singletonActions.has(action)),
-            ViewOnSiteAction,
-          ]
-        : [...actions, ViewOnSiteAction],
+      websiteTypes.has(schemaType)
+        ? actions.filter(({action}) => action === 'delete')
+        : singletonTypes.has(schemaType)
+          ? [
+              ...actions.filter(({action}) => action && singletonActions.has(action)),
+              ViewOnSiteAction,
+            ]
+          : [...actions, ViewOnSiteAction],
     // "Skill met niveau" is only offered inside the per-level skill lists.
     newDocumentOptions: (options, {creationContext}) =>
       creationContext.type === 'global'
