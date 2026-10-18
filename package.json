@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
+    "dev": "pnpm run --parallel \"/^dev:(netlify|studio)$/\"",
+    "dev:site": "vite --host 0.0.0.0",
+    "dev:studio": "pnpm --dir studio dev",
     "netlify": "pnpm --package=netlify-cli@27.13.0 dlx netlify",
-    "dev:netlify": "pnpm --package=netlify-cli@27.13.0 dlx netlify dev",
+    "dev:netlify": "pnpm --package=netlify-cli@27.13.0 dlx netlify dev --offline",
     "serve": "vite --host 0.0.0.0",
     "build": "vite build",
     "build:studio": "pnpm --dir studio install --frozen-lockfile && pnpm --dir studio exec sanity build ../dist/studio -y",

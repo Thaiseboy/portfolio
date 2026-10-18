@@ -29,9 +29,10 @@
   [context.branch-deploy.environment]
     NODE_ENV = "production"
 
-# Local testing: `pnpm dev:netlify` runs Vite with the functions on http://localhost:8888.
+# Local testing: `pnpm run dev` starts this (Vite with the functions on http://localhost:8888)
+# together with the Studio on http://localhost:3333/studio.
 [dev]
-  command = "pnpm run dev"
+  command = "pnpm run dev:site"
   targetPort = 5173
   port = 8888
   framework = "#custom"
