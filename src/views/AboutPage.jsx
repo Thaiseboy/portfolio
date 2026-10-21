@@ -43,20 +43,22 @@ export default function AboutPage() {
           </h3>
           <div className="space-y-4 text-base leading-relaxed text-grey md:text-lg">
             <p className="m-0">
-              I&apos;m Master Supakon Karanyawad, a frontend developer with a
-              passion for building dynamic web applications that feel clear,
-              fast and easy to use.
+              I specialize in PHP development, working daily on both frontend
+              and backend development. In my current role, I primarily use PHP,
+              Zend Framework 1, and Bootstrap 5 to build, maintain, and improve
+              web applications.
             </p>
             <p className="m-0">
-              In frontend development I work a lot with React, TypeScript and
-              Tailwind. In my current work I also maintain legacy frontend and
-              backend code with PHP, Zend Framework 1 and Bootstrap 5, and I
-              have backend experience with Laravel.
+              Alongside my full time job, I develop websites for clients using
+              modern technologies such as React, TypeScript, Laravel, and
+              Tailwind CSS.
             </p>
             <p className="m-0">
-              That combination helps me understand the full flow of a project,
-              from interface to backend logic, with a focus on reusable
-              components, clean structure, performance and maintainable code.
+              This combination gives me experience in both legacy systems and
+              modern web development, allowing me to work across the entire
+              development process, from responsive user interfaces to backend
+              functionality, with a strong focus on clean code, reusable
+              components, performance, and maintainability.
             </p>
           </div>
         </Reveal>
