@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import sanityClient from "@/sanityClient";
+import { ABOUT_DOCUMENT_ID } from "../../studio/shared/aboutDefaults.js";
 
 export function useSanity() {
   const [loading, setLoading] = useState(false);
@@ -50,6 +51,17 @@ export function useSanity() {
     return fetchData(query);
   }, [fetchData]);
 
+  const fetchAbout = useCallback(() => {
+    const query = `*[_id == "${ABOUT_DOCUMENT_ID}"][0] {
+      title,
+      tagline,
+      heading,
+      highlight,
+      body
+    }`;
+    return fetchData(query);
+  }, [fetchData]);
+
   const fetchSkills = useCallback(() => {
     const query = `*[_type == "skill"] {
       _id,
@@ -87,6 +99,7 @@ export function useSanity() {
     retryCount,
     clearError,
     fetchPhotos,
+    fetchAbout,
     fetchSkills,
     fetchProjects,
     fetchCV,
