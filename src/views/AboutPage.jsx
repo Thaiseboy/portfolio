@@ -1,9 +1,11 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { useSanity } from "@/hooks/useSanity";
 import { useDataFetch } from "@/hooks/useDataFetch";
-import { normalizePhoto } from "@/utils/sanityMappers";
+import { normalizeAbout, normalizePhoto } from "@/utils/sanityMappers";
+import { ABOUT_DEFAULTS } from "../../studio/shared/aboutDefaults.js";
 import ErrorBoundary from "@/components/ui/ErrorBoundary.jsx";
+import RichText from "@/components/ui/RichText.jsx";
 import DataState from "@/components/ui/DataState.jsx";
 import SkeletonLoader from "@/components/ui/SkeletonLoader.jsx";
 import SectionHeader from "@/components/ui/SectionHeader.jsx";
@@ -28,39 +30,45 @@ export default function AboutPage() {
     },
   );
 
+  // Own useSanity, so loading the text does not flip the photos' loading state.
+  const { fetchAbout } = useSanity();
+  const [about, setAbout] = useState(ABOUT_DEFAULTS);
+  useEffect(() => {
+    let active = true;
+    fetchAbout()
+      .then((doc) => {
+        if (active) setAbout(normalizeAbout(doc));
+      })
+      .catch((error) => console.error("Error fetching About text:", error));
+    return () => {
+      active = false;
+    };
+  }, [fetchAbout]);
+
   return (
     <div className="section container">
-      <SectionHeader index="01" eyebrow="About" title="Get to know me" />
+      <SectionHeader index="01" eyebrow="About" title={about.title} />
 
       <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
         <Reveal className="card-brutal p-6 md:p-10">
-          <p className="tag tag-light m-0">
-            Frontend developer with broad development experience
-          </p>
-          <h3 className="mb-6 mt-6 text-[clamp(1.6rem,3vw,2.5rem)] font-bold leading-tight">
-            Dynamic web applications that are clear, fast and{" "}
-            <span className="bg-accent px-1 text-on-accent">easy to use.</span>
+          {about.tagline && (
+            <p className="tag tag-light m-0 mb-6">{about.tagline}</p>
+          )}
+          <h3 className="mb-6 text-[clamp(1.6rem,3vw,2.5rem)] font-bold leading-tight">
+            {about.heading}
+            {about.highlight && (
+              <>
+                {" "}
+                <span className="bg-accent px-1 text-on-accent">
+                  {about.highlight}
+                </span>
+              </>
+            )}
           </h3>
-          <div className="space-y-4 text-base leading-relaxed text-grey md:text-lg">
-            <p className="m-0">
-              I specialize in PHP development, working daily on both frontend
-              and backend development. In my current role, I primarily use PHP,
-              Zend Framework 1, and Bootstrap 5 to build, maintain, and improve
-              web applications.
-            </p>
-            <p className="m-0">
-              Alongside my full time job, I develop websites for clients using
-              modern technologies such as React, TypeScript, Laravel, and
-              Tailwind CSS.
-            </p>
-            <p className="m-0">
-              This combination gives me experience in both legacy systems and
-              modern web development, allowing me to work across the entire
-              development process, from responsive user interfaces to backend
-              functionality, with a strong focus on clean code, reusable
-              components, performance, and maintainability.
-            </p>
-          </div>
+          <RichText
+            value={about.body}
+            className="text-base leading-relaxed text-grey md:text-lg"
+          />
         </Reveal>
 
         <ErrorBoundary onRetry={retryFetchPhotos}>

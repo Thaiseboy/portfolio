@@ -6,6 +6,7 @@ export const SITE_URL = 'https://getdeveloper.nl'
 export const SITE_SECTIONS: Record<string, string> = {
   project: 'project',
   skill: 'skills',
+  aboutPage: 'about',
   aboutMePhotos: 'about',
   cv: 'contact',
 }
