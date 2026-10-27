@@ -21,8 +21,10 @@
 
 ## Tech Stack
 
-- **Frontend**: React, TypeScript, Bootstrap 5, GSAP
-- **CMS**: Sanity.io
+- **Frontend**: React 19 with Vite, Tailwind CSS, Motion (animations), Lenis (smooth scrolling), Bootstrap Icons
+- **CMS**: Sanity.io, with a Studio in TypeScript (served at `/studio`)
+- **Backend**: Netlify Functions, mail through Resend
+- **Testing**: Vitest and Testing Library
 - **DevOps**: Docker, Nginx
 - **Deployment**: Netlify
 
