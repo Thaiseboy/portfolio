@@ -5,6 +5,7 @@ import {Box, Button, Card, Dialog, Flex, Stack, Text} from '@sanity/ui'
 import {set, setIfMissing, useClient, useFormValue, type ObjectInputProps} from 'sanity'
 import {normalizeReplyBody, normalizeReplySubject} from '../../shared/replyRules.js'
 import {apiVersion} from '../../siteUrl'
+import {loadReplyKey, storeReplyKey, type ReplyKey} from './replyKey'
 
 // Reply to the visitor from the Studio. The concept is saved in the message as you type; the website
 // (/api/inbox-reply) sends it in the mail template after a preview or a short confirmation, records it
@@ -36,24 +37,11 @@ function assetIds(items: AssetItem[] | undefined): string[] {
 /** One key per concept; kept in the tab, so a repeat after a reload still never sends twice. */
 function useReplyKey(messageId: string, content: string) {
   const storageKey = `inbox-reply-key:${messageId}`
-  const [state, setState] = useState(() => {
-    try {
-      const stored = JSON.parse(sessionStorage.getItem(storageKey) ?? 'null')
-      if (stored?.content === content && typeof stored.key === 'string')
-        return stored as {content: string; key: string}
-    } catch {
-      // No storage: a new key.
-    }
-    return {content, key: crypto.randomUUID()}
-  })
+  const [state, setState] = useState(() => loadReplyKey(storageKey, content))
 
-  function save(next: {content: string; key: string}) {
+  function save(next: ReplyKey) {
     setState(next)
-    try {
-      sessionStorage.setItem(storageKey, JSON.stringify(next))
-    } catch {
-      // Only a convenience.
-    }
+    storeReplyKey(storageKey, next)
   }
 
   // A changed concept is a new message.
@@ -106,6 +94,12 @@ async function feedbackOf(response: Response, to: string): Promise<Feedback> {
         tone: 'caution',
         text: "Deze mail wordt al verstuurd. Wacht even en kijk bij 'Gesprek'.",
         keepKey: true,
+      }
+    case 410:
+      return {
+        tone: 'caution',
+        text: "Deze mail is meer dan een dag geleden al geprobeerd en is misschien toch aangekomen. Kijk bij 'Gesprek'; klik daarna nog eens op versturen om hem als nieuwe mail te sturen.",
+        keepKey: false,
       }
     case 422:
       return {

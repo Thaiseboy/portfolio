@@ -97,6 +97,13 @@ describe("reaction link", () => {
 
 describe("inbox reply", () => {
   const send = { id: ID, subject: "Re: your message", body, files: [FILE], photos: [PHOTO], key: KEY };
+  /** The concept as the Studio saves it in the message. */
+  const draftOf = (reply) => ({
+    subject: reply.subject,
+    body: reply.body,
+    files: reply.files.map((ref, index) => ({ _key: `f${index}`, _type: "file", asset: { _type: "reference", _ref: ref } })),
+    photos: reply.photos.map((ref, index) => ({ _key: `p${index}`, _type: "image", asset: { _type: "reference", _ref: ref } })),
+  });
 
   it("needs a Studio login that may edit the message", async () => {
     const client = fakeSanity({ docs: message(), assets });
@@ -122,7 +129,7 @@ describe("inbox reply", () => {
 
   it("sends once with attachments, records it, marks the message read and empties the concept", async () => {
     const docs = message();
-    docs[ID].replyDraft = { subject: send.subject, body };
+    docs[ID].replyDraft = draftOf(send);
     const client = fakeSanity({ docs, assets });
     const fetchImpl = fakeFetch();
 
@@ -158,6 +165,29 @@ describe("inbox reply", () => {
     expect(await retry.json()).toEqual({ status: "sent" });
     expect(client.store[ID].replies).toHaveLength(1);
     expect(resendCalls(fetchImpl)[0][1].headers["Idempotency-Key"]).toBe(`${ID}-reply-${KEY}`);
+  });
+
+  it("keeps the concept when an upload changed during sending", async () => {
+    const docs = message();
+    docs[ID].replyDraft = { ...draftOf(send), photos: [] };
+    const client = fakeSanity({ docs, assets });
+
+    const response = await handleReply(replyRequest(send), env, fakeFetch(), client);
+    expect(await response.json()).toEqual({ status: "sent" });
+    expect(client.store[ID].replyDraft).toEqual({ ...draftOf(send), photos: [] });
+  });
+
+  it("does not retry a key after Resend's idempotency window", async () => {
+    const docs = message();
+    const longAgo = new Date(Date.now() - 23 * 60 * 60 * 1000 - 1000).toISOString();
+    docs[ID].replies = [{ _key: KEY, status: "failed", createdAt: longAgo, lastAttemptAt: longAgo }];
+    const client = fakeSanity({ docs, assets });
+    const fetchImpl = fakeFetch();
+
+    const response = await handleReply(replyRequest(send), env, fetchImpl, client);
+    expect(response.status).toBe(410);
+    expect(resendCalls(fetchImpl)).toHaveLength(0);
+    expect(client.store[ID].replies[0].status).toBe("failed");
   });
 
   it("survives the concept being saved meanwhile", async () => {

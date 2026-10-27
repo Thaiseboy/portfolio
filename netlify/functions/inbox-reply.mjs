@@ -36,6 +36,8 @@ const SANITY_CDN = "https://cdn.sanity.io/";
 const PHOTO_TRANSFORM = "w=1000&fit=max&fm=jpg&q=80";
 /** "pending" longer than this was interrupted and may be sent again (same key). */
 const STALE_PENDING_MS = 10 * 60 * 1000;
+/** Resend keeps an idempotency key for 24 hours; later the same key could send a second mail. */
+const RETRY_WINDOW_MS = 23 * 60 * 60 * 1000;
 
 const refuse = (error, status, headers) => json(status, { error }, headers);
 
@@ -153,10 +155,18 @@ function references(type, ids) {
   }));
 }
 
+const assetRefs = (items) =>
+  (Array.isArray(items) ? items : []).flatMap((item) =>
+    item?.asset?._ref ? [item.asset._ref] : [],
+  );
+
+/** Also the uploads: a file or photo added during sending must not be lost with the concept. */
 const sameDraft = (draft, request) =>
   normalizeReplySubject(draft?.subject) === request.subject &&
   JSON.stringify(normalizeReplyBody(draft?.body)) ===
-    JSON.stringify(request.body);
+    JSON.stringify(request.body) &&
+  JSON.stringify(assetRefs(draft?.files)) === JSON.stringify(request.files) &&
+  JSON.stringify(assetRefs(draft?.photos)) === JSON.stringify(request.photos);
 
 export async function handleReply(
   request,
@@ -190,7 +200,7 @@ export async function handleReply(
   const loadMessage = () =>
     client.fetch(
       `*[_type == $type && _id == $id][0]{ _id, _rev, name, email, message, replyDraft,
-        "replies": replies[]{ _key, status, lastAttemptAt } }`,
+        "replies": replies[]{ _key, status, createdAt, lastAttemptAt } }`,
       { type: MESSAGE_TYPE, id: reply.id },
     );
 
@@ -248,9 +258,19 @@ export async function handleReply(
         return refuse("in-progress", 409);
       }
 
+      // A failed or interrupted attempt may still have been delivered: after the window only a new
+      // key (a deliberate second click in the Studio) sends it.
+      if (
+        existing &&
+        !(Date.now() - Date.parse(existing.createdAt ?? 0) < RETRY_WINDOW_MS)
+      ) {
+        return refuse("expired", 410);
+      }
+
       try {
         if (existing) {
-          // An earlier attempt failed or was interrupted: same key, so Resend sends it at most once.
+          // An earlier attempt failed or was interrupted, within the window: same key, so Resend
+          // sends it at most once.
           await client
             .patch(reply.id)
             .ifRevisionId(current._rev)
