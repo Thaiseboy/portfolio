@@ -1,4 +1,5 @@
 import { toPlainText } from "@portabletext/react";
+import { ABOUT_DEFAULTS } from "../../studio/shared/aboutDefaults.js";
 
 const levelLabels = {
   beginner: "Beginner",
@@ -28,6 +29,19 @@ export const normalizePhoto = (photo, index) => ({
   url: photo.imageUrl,
   title: photo.title || `Photo ${index + 1}`,
 });
+
+// Without a published document the default texts show; the optional label and highlight may be
+// left empty on purpose, so only the required fields fall back.
+export const normalizeAbout = (about) =>
+  about
+    ? {
+        title: about.title || ABOUT_DEFAULTS.title,
+        tagline: about.tagline ?? "",
+        heading: about.heading || ABOUT_DEFAULTS.heading,
+        highlight: about.highlight ?? "",
+        body: about.body?.length ? about.body : ABOUT_DEFAULTS.body,
+      }
+    : ABOUT_DEFAULTS;
 
 export const normalizeSkill = (skill) => ({
   _id: skill._id,

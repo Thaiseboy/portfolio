@@ -4,11 +4,12 @@ import {visionTool} from '@sanity/vision'
 import {codeInput} from '@sanity/code-input'
 import {nlNLLocale} from '@sanity/locale-nl-nl'
 import {schemaTypes} from './schemaTypes'
-import {singletonTypes, structure} from './structure'
+import {ABOUT_TEMPLATE_ID, singletonTypes, structure, websiteTypes} from './structure'
+import {ABOUT_DEFAULTS} from './shared/aboutDefaults.js'
 import {startTool} from './tools/StartTool'
 import {ViewOnSiteAction} from './actions/ViewOnSiteAction'
 
-// The CV can only be published or reverted, never duplicated or deleted.
+// The CV and the About text can only be published or reverted, never duplicated or deleted.
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
 
 export default defineConfig({
@@ -31,9 +32,18 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
-    // No "new CV" template: the structure opens the one CV directly.
+    // No "new CV" or "new About text" template: the structure opens each one directly.
     templates: (templates) => [
-      ...templates.filter(({schemaType}) => !singletonTypes.has(schemaType)),
+      ...templates.filter(
+        ({schemaType}) => !singletonTypes.has(schemaType) && !websiteTypes.has(schemaType),
+      ),
+      // Fills the About text with the current site texts the first time it is opened.
+      {
+        id: ABOUT_TEMPLATE_ID,
+        title: 'Tekst Over mij',
+        schemaType: 'aboutPage',
+        value: ABOUT_DEFAULTS,
+      },
       {
         id: 'skill-with-level',
         title: 'Skill met niveau',
@@ -45,17 +55,22 @@ export default defineConfig({
   },
 
   document: {
+    // Messages come from the contact form: they are only deleted, by hand.
     actions: (actions, {schemaType}) =>
-      singletonTypes.has(schemaType)
-        ? [
-            ...actions.filter(({action}) => action && singletonActions.has(action)),
-            ViewOnSiteAction,
-          ]
-        : [...actions, ViewOnSiteAction],
-    // "Skill met niveau" is only offered inside the per-level skill lists.
+      websiteTypes.has(schemaType)
+        ? actions.filter(({action}) => action === 'delete')
+        : singletonTypes.has(schemaType)
+          ? [
+              ...actions.filter(({action}) => action && singletonActions.has(action)),
+              ViewOnSiteAction,
+            ]
+          : [...actions, ViewOnSiteAction],
+    // "Skill met niveau" is only offered inside the per-level skill lists; the About text is never new.
     newDocumentOptions: (options, {creationContext}) =>
-      creationContext.type === 'global'
-        ? options.filter(({templateId}) => templateId !== 'skill-with-level')
-        : options,
+      options.filter(
+        ({templateId}) =>
+          templateId !== ABOUT_TEMPLATE_ID &&
+          (creationContext.type !== 'global' || templateId !== 'skill-with-level'),
+      ),
   },
 })

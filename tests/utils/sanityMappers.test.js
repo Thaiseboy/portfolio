@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   getInitials,
+  normalizeAbout,
   normalizePhoto,
   normalizeProject,
   normalizeSkill,
 } from "@/utils/sanityMappers";
+import { ABOUT_DEFAULTS } from "../../studio/shared/aboutDefaults.js";
 
 describe("Sanity mappers", () => {
   it("normalizes photos", () => {
@@ -91,6 +93,29 @@ describe("Sanity mappers", () => {
     expect(project.description).toBe(description);
     expect(project.excerpt).toBe("First paragraph.\n\nSecond one.");
     expect(project.tags).toEqual(["React"]);
+  });
+
+  it("falls back to the default About texts", () => {
+    expect(normalizeAbout(null)).toBe(ABOUT_DEFAULTS);
+
+    const body = [{ _type: "block", _key: "a", children: [] }];
+    expect(
+      normalizeAbout({ title: "Hi", heading: "Kop", tagline: null, body }),
+    ).toEqual({
+      title: "Hi",
+      tagline: "",
+      heading: "Kop",
+      highlight: "",
+      body,
+    });
+
+    expect(normalizeAbout({ highlight: "Wow", body: [] })).toEqual({
+      title: ABOUT_DEFAULTS.title,
+      tagline: "",
+      heading: ABOUT_DEFAULTS.heading,
+      highlight: "Wow",
+      body: ABOUT_DEFAULTS.body,
+    });
   });
 
   it("gets initials", () => {

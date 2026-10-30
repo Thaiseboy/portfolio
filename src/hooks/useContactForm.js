@@ -15,6 +15,8 @@ export function useContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
   const [submitError, setSubmitError] = useState("");
+  // One id per message: a repeat after a timeout is stored once; new after sending.
+  const [requestId, setRequestId] = useState(() => window.crypto.randomUUID());
   const validation = useFormValidation(form);
 
   const updateField = (field, value) => {
@@ -42,12 +44,14 @@ export function useContactForm() {
         email: sanitizeInput(form.email),
         message: sanitizeInput(form.message),
         website: form.website,
+        requestId,
       });
 
       if (result.success) {
         // Clear the fields but keep the confirmation visible (resetForm would clear it too).
         setForm(initialForm);
         validation.clearErrors();
+        setRequestId(window.crypto.randomUUID());
         setSubmitMessage(result.message);
         return true;
       }
