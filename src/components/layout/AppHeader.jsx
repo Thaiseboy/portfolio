@@ -5,8 +5,8 @@ import ThemeToggle from "@/components/theme/ThemeToggle.jsx";
 
 export default function AppHeader() {
   return (
-    <header className="sticky top-0 z-[1000] border-b-2 border-ink bg-paper/90 backdrop-blur">
-      <div className="container flex h-[var(--header-height)] items-center justify-between gap-6">
+    <header className="sticky top-0 z-1000 border-b-2 border-ink bg-paper/90 backdrop-blur-sm">
+      <div className="container flex h-(--header-height) items-center justify-between gap-6">
         <a
           href="#home"
           className="shrink-0"

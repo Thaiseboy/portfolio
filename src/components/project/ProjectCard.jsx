@@ -36,7 +36,7 @@ export default function ProjectCard({ project, index }) {
           </span>
         </div>
 
-        <h3 className="m-0 text-2xl font-bold uppercase leading-tight md:text-3xl">
+        <h3 className="m-0 text-2xl font-bold uppercase leading-tight md:text-3xl md:leading-9">
           {project.title}
         </h3>
 
@@ -123,7 +123,7 @@ export default function ProjectCard({ project, index }) {
         </div>
       </div>
 
-      <div className="relative min-h-[220px] overflow-hidden border-t-2 border-ink bg-paper md:border-l-2 md:border-t-0">
+      <div className="relative min-h-55 overflow-hidden border-t-2 border-ink bg-paper md:border-l-2 md:border-t-0">
         {project.image ? (
           <img
             src={project.image}
@@ -131,7 +131,7 @@ export default function ProjectCard({ project, index }) {
             className="absolute inset-0 h-full w-full object-cover grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
           />
         ) : (
-          <div className="flex h-full min-h-[220px] items-center justify-center">
+          <div className="flex h-full min-h-55 items-center justify-center">
             <span className="font-mono text-5xl font-bold text-ink">
               {getInitials(project.title)}
             </span>

@@ -113,7 +113,7 @@ export default function LightModeWarning({
       {isOpen && (
         <motion.div
           key="light-mode-warning"
-          className="fixed inset-0 z-[1200] flex items-center justify-center overflow-hidden px-4"
+          className="fixed inset-0 z-1200 flex items-center justify-center overflow-hidden px-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.4, delay: 0.2 } }}

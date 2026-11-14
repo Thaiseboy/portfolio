@@ -122,7 +122,7 @@ export default function ContactPage() {
               {/* Honeypot: hidden from visitors and screen readers; bots fill it in. */}
               <div
                 aria-hidden="true"
-                className="absolute -left-[9999px] h-px w-px overflow-hidden"
+                className="absolute left-[-9999px] h-px w-px overflow-hidden"
               >
                 <label htmlFor="website">Website</label>
                 <input

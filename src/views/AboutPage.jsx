@@ -67,7 +67,7 @@ export default function AboutPage() {
           </h3>
           <RichText
             value={about.body}
-            className="text-base leading-relaxed text-grey md:text-lg"
+            className="text-base leading-relaxed text-grey md:text-lg md:leading-7"
           />
         </Reveal>
 

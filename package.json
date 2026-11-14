@@ -2,6 +2,7 @@
   "name": "portfolio-thaieboy",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "serve": "vite --host 0.0.0.0",
@@ -16,30 +17,30 @@
   },
   "dependencies": {
     "@portabletext/react": "^8.0.1",
-    "@sanity/client": "^6.29.1",
+    "@sanity/client": "^8.16.0",
     "bootstrap-icons": "^1.13.2",
     "lenis": "^1.3.27",
-    "motion": "^14.8.0",
+    "motion": "^14.14.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.9.1",
+    "@tailwindcss/postcss": "^4.3.5",
+    "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@types/estree": "^1.0.10",
     "@types/node": "^22.20.5",
-    "@vitejs/plugin-react": "^5.2.0",
-    "@vitest/coverage-v8": "^4.1.12",
-    "autoprefixer": "^10.6.2",
-    "eslint": "^10.13.0",
-    "jsdom": "^26.1.0",
-    "postcss": "^8.5.32",
-    "tailwindcss": "^3.4.19",
-    "vite": "^7.3.7",
-    "vitest": "^4.1.12"
+    "@vitejs/plugin-react": "^6.3.0",
+    "@vitest/coverage-v8": "^5.1.0",
+    "eslint": "^10.15.0",
+    "jsdom": "^31.0.1",
+    "postcss": "^8.5.33",
+    "tailwindcss": "^4.3.5",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0"
   },
   "engines": {
-    "node": "^22.0.0 || >=24.0.0"
+    "node": "^22.12.0 || >=24.0.0"
   },
   "browserslist": [
     "> 1%",
@@ -47,5 +48,10 @@
     "not dead",
     "not ie 11"
   ],
-  "packageManager": "pnpm@10.9.0+sha512.0486e394640d3c1fb3c9d43d49cf92879ff74f8516959c235308f5a8f62e2e19528a65cdc2a3058f587cde71eba3d5b56327c8c33a97e4c4051ca48a10ca2d5f"
+  "packageManager": "pnpm@10.9.0+sha512.0486e394640d3c1fb3c9d43d49cf92879ff74f8516959c235308f5a8f62e2e19528a65cdc2a3058f587cde71eba3d5b56327c8c33a97e4c4051ca48a10ca2d5f",
+  "pnpm": {
+    "overrides": {
+      "yaml@>=2.0.0 <2.8.3": "^2.9.1"
+    }
+  }
 }

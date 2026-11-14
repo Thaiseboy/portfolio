@@ -109,7 +109,7 @@ export default function AsciiPortrait({ src, alt, columns = 64 }) {
             {ascii.text}
           </pre>
         ) : (
-          <div className="aspect-[3/4] w-full" />
+          <div className="aspect-3/4 w-full" />
         )}
 
         <img
