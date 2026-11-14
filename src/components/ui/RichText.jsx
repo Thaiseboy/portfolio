@@ -3,7 +3,7 @@ import { PortableText } from "@portabletext/react";
 const isExternal = (href = "") => /^https?:\/\//.test(href);
 
 // Renders Sanity rich text; colours follow the surrounding card (currentColor).
-// Blocks carry no margin class: in Tailwind 4 an m-0 would cancel the space-y-4 gap.
+// Blocks get no margin classes: the wrapper's space-y-4 sets the gap between them.
 const components = {
   block: {
     normal: ({ children }) => <p>{children}</p>,

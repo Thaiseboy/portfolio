@@ -1,6 +1,6 @@
 @import "tailwindcss" source(none);
 
-/* Scan only what the site renders (as the v3 content list did), not tests or docs. */
+/* Scan only what the site renders, not tests or docs. */
 @source "../../../index.html";
 @source "../../**/*.{js,jsx,ts,tsx}";
 
@@ -66,14 +66,7 @@
   }
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
+/* A border without a colour class is light grey (gray-200), not the text colour. */
 @layer base {
   *,
   ::after,
