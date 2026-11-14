@@ -8,6 +8,7 @@
     "dev": "sanity dev",
     "start": "sanity start",
     "build": "sanity build",
+    "lint": "eslint .",
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy"
   },
@@ -15,28 +16,36 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/code-input": "^7.3.12",
-    "@sanity/icons": "^5.2.3",
+    "@sanity/code-input": "^7.3.16",
+    "@sanity/icons": "^5.3.0",
     "@sanity/locale-nl-nl": "^1.1.40",
-    "@sanity/ui": "^4.4.9",
-    "@sanity/vision": "^6.19.0",
-    "heic-to": "1.6.5",
+    "@sanity/ui": "^4.4.12",
+    "@sanity/vision": "^6.23.0",
+    "heic-to": "1.6.7",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "sanity": "^6.19.0",
+    "sanity": "^6.23.0",
     "styled-components": "^6.6.0"
   },
   "devDependencies": {
-    "@sanity/eslint-config-studio": "^4.0.0",
+    "@sanity/eslint-config-studio": "^7.0.0",
     "@types/react": "^19.3.0",
-    "eslint": "^8.6.0",
-    "prettier": "^3.0.2",
-    "typescript": "^5.9"
+    "eslint": "^10.15.0",
+    "prettier": "^3.10.1",
+    "typescript": "^6.0.3"
   },
   "prettier": {
     "semi": false,
     "printWidth": 100,
     "bracketSpacing": false,
     "singleQuote": true
+  },
+  "pnpm": {
+    "overrides": {
+      "js-yaml@>=3.0.0 <3.15.2": "^3.15.2",
+      "smol-toml@<1.9.0": "^1.9.1",
+      "prismjs@<1.30.0": "^1.30.0",
+      "minimatch@>=10.0.0 <11.0.1": "^11.0.8"
+    }
   }
 }

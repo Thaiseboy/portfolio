@@ -1,6 +1,279 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss" source(none);
+
+/* Scan only what the site renders, not tests or docs. */
+@source "../../../index.html";
+@source "../../**/*.{js,jsx,ts,tsx}";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  /* Getdeveloper brand colours (logo package "rood"). Theme colours point to the
+     --c-* variables below, so they flip with data-theme. */
+  --color-accent: rgb(var(--c-accent));
+  --color-accent-hover: rgb(var(--c-accent-hover));
+  --color-accent-subtle: rgb(var(--c-accent-subtle));
+  --color-accent-light: #f87171;
+
+  --color-on-accent: rgb(var(--c-on-accent));
+  --color-ink: rgb(var(--c-ink));
+  --color-paper: rgb(var(--c-paper));
+  --color-surface: rgb(var(--c-surface));
+
+  --color-grey: rgb(var(--c-grey));
+  --color-grey-light: rgb(var(--c-grey-light));
+
+  /* Always dark, in both themes (portrait card, footer, dark project cards). */
+  --color-night: #0e1116;
+
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Hard offset shadows are the core of the brutalist look. */
+  --shadow-brutal: 6px 6px 0 0 rgb(var(--c-ink));
+  --shadow-brutal-sm: 3px 3px 0 0 rgb(var(--c-ink));
+  --shadow-brutal-lg: 10px 10px 0 0 rgb(var(--c-ink));
+  --shadow-brutal-accent: 6px 6px 0 0 rgb(var(--c-accent));
+
+  --animate-blink: blink 1s steps(1) infinite;
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-skeleton-pulse: skeletonPulse 1.5s ease-in-out infinite;
+
+  @keyframes blink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes skeletonPulse {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}
+
+/* A border without a colour class is light grey (gray-200), not the text colour. */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility container {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+}
+
+@utility section {
+  @apply py-20 md:py-28;
+}
+
+@utility tag {
+  /* Small mono label with a hard shadow, like a terminal tag. */
+  @apply inline-flex items-center gap-2 border-2 border-ink bg-ink px-3 py-1.5 font-mono text-[0.7rem] font-bold uppercase tracking-wider text-paper shadow-brutal-accent;
+}
+
+@utility tag-light {
+  @apply border-ink bg-surface text-ink shadow-brutal-sm;
+}
+
+@utility chip {
+  @apply inline-flex items-center gap-2 border-2 border-ink/15 bg-surface px-3 py-1.5 font-mono text-xs;
+
+  & b {
+    @apply font-bold text-grey;
+  }
+}
+
+@utility section-heading {
+  @apply text-[clamp(2.25rem,6vw,4.5rem)] font-bold uppercase leading-[0.95] tracking-tight;
+}
+
+@utility btn {
+  /* Buttons press into their shadow on hover. */
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 border-2 border-ink bg-ink px-5 py-3 font-mono text-xs font-bold uppercase tracking-wider text-paper no-underline shadow-brutal transition-[transform,box-shadow,background-color] duration-150;
+
+  &:hover {
+    transform: translate(3px, 3px);
+    @apply shadow-brutal-sm;
+  }
+
+  &:active {
+    transform: translate(6px, 6px);
+    box-shadow: none;
+  }
+
+  &:disabled {
+    @apply cursor-not-allowed opacity-50;
+    transform: none;
+  }
+}
+
+@utility btn-accent {
+  @apply bg-accent text-on-accent;
+
+  &:hover {
+    @apply bg-accent-hover;
+  }
+}
+
+@utility btn-ghost {
+  @apply bg-surface text-ink;
+
+  &:hover {
+    @apply bg-paper;
+  }
+}
+
+@utility card-brutal {
+  @apply border-2 border-ink bg-surface shadow-brutal;
+}
+
+@utility stripes-dark {
+  @apply bg-night;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.07) 0 2px,
+    transparent 2px 14px
+  );
+}
+
+@utility stripes-light {
+  @apply bg-surface;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgb(var(--c-ink) / 0.08) 0 2px,
+    transparent 2px 22px
+  );
+}
+
+@utility grid-paper {
+  background-image:
+    linear-gradient(rgb(var(--c-ink) / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--c-ink) / 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+@utility surface-panel {
+  @apply border-2 border-ink bg-surface;
+}
+
+@utility empty-state {
+  @apply px-6 py-12 text-center font-mono text-sm text-grey;
+
+  & p {
+    @apply m-0;
+  }
+}
+
+@utility form-label {
+  @apply mb-2 block font-mono text-xs font-bold uppercase tracking-wider;
+}
+
+@utility form-control {
+  @apply w-full border-2 border-ink bg-paper px-4 py-3 text-base text-ink transition-[box-shadow,background-color] duration-150;
+
+  &:focus {
+    @apply bg-surface shadow-brutal-sm outline-hidden;
+  }
+
+  &.is-invalid {
+    @apply border-accent bg-accent-subtle;
+  }
+}
+
+@utility is-invalid {
+  &.form-control {
+    @apply border-accent bg-accent-subtle;
+  }
+}
+
+@utility invalid-feedback {
+  @apply mt-2 block font-mono text-xs text-accent;
+}
+
+@utility alert {
+  @apply mt-4 border-2 border-ink px-4 py-3 font-mono text-sm;
+}
+
+@utility alert-success {
+  @apply bg-surface text-ink shadow-brutal-sm;
+}
+
+@utility alert-danger {
+  @apply bg-accent text-on-accent shadow-brutal-sm;
+}
+
+@utility skeleton {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--c-ink) / 0.06),
+    rgb(var(--c-ink) / 0.14),
+    rgb(var(--c-ink) / 0.06)
+  );
+  background-size: 200% 100%;
+  @apply animate-skeleton-pulse border-2 border-ink/10;
+}
+
+@utility skeleton-card {
+  min-height: 220px;
+}
+
+@utility skeleton-list {
+  min-height: 140px;
+}
+
+@utility skeleton-box {
+  display: inline-block;
+  min-width: 120px;
+  min-height: 40px;
+}
+
+@utility nav-link {
+  @apply relative font-mono text-xs font-bold uppercase tracking-wider text-ink no-underline;
+
+  &::after {
+    content: "";
+    @apply absolute -bottom-1 left-0 h-[3px] w-0 bg-accent transition-[width] duration-200;
+  }
+
+  &:hover::after {
+    @apply w-full;
+  }
+
+  &.is-active::after {
+    @apply w-full;
+  }
+}
+
+@utility is-active {
+  & .nav-link::after {
+    @apply w-full;
+  }
+}
+
+@utility no-print {
+  @media print {
+    display: none !important;
+  }
+}
 
 @layer base {
   /* Theme colours as "R G B" so Tailwind can add opacity (bg-ink/15). */
@@ -100,193 +373,6 @@
 
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-accent;
-  }
-}
-
-@layer components {
-  .container {
-    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
-  }
-
-  .section {
-    @apply py-20 md:py-28;
-  }
-
-  /* Small mono label with a hard shadow, like a terminal tag. */
-  .tag {
-    @apply inline-flex items-center gap-2 border-2 border-ink bg-ink px-3 py-1.5 font-mono text-[0.7rem] font-bold uppercase tracking-wider text-paper shadow-brutal-accent;
-  }
-
-  .tag-light {
-    @apply border-ink bg-surface text-ink shadow-brutal-sm;
-  }
-
-  .chip {
-    @apply inline-flex items-center gap-2 border-2 border-ink/15 bg-surface px-3 py-1.5 font-mono text-xs;
-  }
-
-  .chip b {
-    @apply font-bold text-grey;
-  }
-
-  .section-heading {
-    @apply text-[clamp(2.25rem,6vw,4.5rem)] font-bold uppercase leading-[0.95] tracking-tight;
-  }
-
-  /* Buttons press into their shadow on hover. */
-  .btn {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 border-2 border-ink bg-ink px-5 py-3 font-mono text-xs font-bold uppercase tracking-wider text-paper no-underline shadow-brutal transition-[transform,box-shadow,background-color] duration-150;
-  }
-
-  .btn:hover {
-    transform: translate(3px, 3px);
-    @apply shadow-brutal-sm;
-  }
-
-  .btn:active {
-    transform: translate(6px, 6px);
-    box-shadow: none;
-  }
-
-  .btn:disabled {
-    @apply cursor-not-allowed opacity-50;
-    transform: none;
-  }
-
-  .btn-accent {
-    @apply bg-accent text-on-accent;
-  }
-
-  .btn-accent:hover {
-    @apply bg-accent-hover;
-  }
-
-  .btn-ghost {
-    @apply bg-surface text-ink;
-  }
-
-  .btn-ghost:hover {
-    @apply bg-paper;
-  }
-
-  .card-brutal {
-    @apply border-2 border-ink bg-surface shadow-brutal;
-  }
-
-  .stripes-dark {
-    @apply bg-night;
-    background-image: repeating-linear-gradient(
-      -45deg,
-      rgba(255, 255, 255, 0.07) 0 2px,
-      transparent 2px 14px
-    );
-  }
-
-  .stripes-light {
-    @apply bg-surface;
-    background-image: repeating-linear-gradient(
-      90deg,
-      rgb(var(--c-ink) / 0.08) 0 2px,
-      transparent 2px 22px
-    );
-  }
-
-  .grid-paper {
-    background-image:
-      linear-gradient(rgb(var(--c-ink) / 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(var(--c-ink) / 0.05) 1px, transparent 1px);
-    background-size: 32px 32px;
-  }
-
-  .surface-panel {
-    @apply border-2 border-ink bg-surface;
-  }
-
-  .empty-state {
-    @apply px-6 py-12 text-center font-mono text-sm text-grey;
-  }
-
-  .empty-state p {
-    @apply m-0;
-  }
-
-  .form-label {
-    @apply mb-2 block font-mono text-xs font-bold uppercase tracking-wider;
-  }
-
-  .form-control {
-    @apply w-full border-2 border-ink bg-paper px-4 py-3 text-base text-ink transition-[box-shadow,background-color] duration-150;
-  }
-
-  .form-control:focus {
-    @apply bg-surface shadow-brutal-sm outline-none;
-  }
-
-  .form-control.is-invalid {
-    @apply border-accent bg-accent-subtle;
-  }
-
-  .invalid-feedback {
-    @apply mt-2 block font-mono text-xs text-accent;
-  }
-
-  .alert {
-    @apply mt-4 border-2 border-ink px-4 py-3 font-mono text-sm;
-  }
-
-  .alert-success {
-    @apply bg-surface text-ink shadow-brutal-sm;
-  }
-
-  .alert-danger {
-    @apply bg-accent text-on-accent shadow-brutal-sm;
-  }
-
-  .skeleton {
-    background: linear-gradient(
-      90deg,
-      rgb(var(--c-ink) / 0.06),
-      rgb(var(--c-ink) / 0.14),
-      rgb(var(--c-ink) / 0.06)
-    );
-    background-size: 200% 100%;
-    @apply animate-skeleton-pulse border-2 border-ink/10;
-  }
-
-  .skeleton-card {
-    min-height: 220px;
-  }
-
-  .skeleton-list {
-    min-height: 140px;
-  }
-
-  .skeleton-box {
-    display: inline-block;
-    min-width: 120px;
-    min-height: 40px;
-  }
-
-  .nav-link {
-    @apply relative font-mono text-xs font-bold uppercase tracking-wider text-ink no-underline;
-  }
-
-  .nav-link::after {
-    content: "";
-    @apply absolute -bottom-1 left-0 h-[3px] w-0 bg-accent transition-[width] duration-200;
-  }
-
-  .nav-link:hover::after,
-  .nav-link.is-active::after {
-    @apply w-full;
-  }
-}
-
-@layer utilities {
-  @media print {
-    .no-print {
-      display: none !important;
-    }
   }
 }
 

@@ -90,7 +90,7 @@ export default function ReplyPage() {
   return (
     <div className="grid-paper min-h-screen">
       <header className="border-b-2 border-ink bg-paper/90">
-        <div className="container flex h-[var(--header-height)] items-center">
+        <div className="container flex h-(--header-height) items-center">
           <a href="/" aria-label="getdeveloper, home">
             <img
               src={wordmarkForLight}
@@ -183,7 +183,7 @@ export default function ReplyPage() {
               {/* Honeypot: hidden from visitors and screen readers; bots fill it in. */}
               <div
                 aria-hidden="true"
-                className="absolute -left-[9999px] h-px w-px overflow-hidden"
+                className="absolute left-[-9999px] h-px w-px overflow-hidden"
               >
                 <label htmlFor="website">Website</label>
                 <input

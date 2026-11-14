@@ -62,7 +62,7 @@ export default function HomePage() {
             <motion.p
               variants={rise}
               custom={3}
-              className="mb-8 max-w-xl text-lg leading-relaxed text-grey md:text-xl"
+              className="mb-8 max-w-xl text-lg leading-relaxed text-grey md:text-xl md:leading-7"
             >
               Hi, my name is{" "}
               <strong className="text-ink">Master Supakon Karanyawad</strong>,
